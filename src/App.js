@@ -1,8 +1,10 @@
 import React from "react";
 import "./App.css";
+import { BrowserRouter as Router } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import AppBar from "./Components/Layout/AppBar";
 import Breadcrumbs from "./Components/Layout/Breadcrumbs";
+import Routes from "./Routes";
 import { green, blueGrey } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
@@ -17,15 +19,18 @@ const theme = createMuiTheme({
   }
 });
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <MuiThemeProvider theme={theme}>
-        <AppBar />
-        <Breadcrumbs />
+        <Router>
+          <AppBar />
+          <Breadcrumbs />
+          <Routes />
+        </Router>
       </MuiThemeProvider>
     </div>
   );
-}
+};
 
 export default App;
