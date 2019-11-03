@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { signin } from "../../Redux/actions/authActions";
+import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { Link } from "react-router-dom";
 import {
   Avatar,
@@ -11,7 +12,8 @@ import {
   Grid,
   Box,
   Typography,
-  Container
+  Container,
+  CircularProgress
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -31,8 +33,35 @@ function Copyright() {
   );
 }
 
-const Signin = () => {
+const Signin = ({
+  signin,
+  success,
+  history,
+  errors,
+  loading,
+  addBreadcrumb,
+  breadcrumbs
+}) => {
   const classes = useStyles();
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
+
+  const onChangeHandler = e => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const redirect = () => history.push("/profile");
+    const addCrumb = () =>
+      addBreadcrumb(breadcrumbs, {
+        name: "Profile",
+        url: "/profile"
+      });
+    signin(user, redirect, addCrumb);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -44,8 +73,15 @@ const Signin = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        {success && (
+          <Typography variant="body2" className={classes.successText}>
+            {success}
+          </Typography>
+        )}
         <form className={classes.form} noValidate>
           <TextField
+            error={errors.email ? true : false}
+            helperText={errors.email && errors.email}
             variant="outlined"
             margin="normal"
             required
@@ -55,8 +91,11 @@ const Signin = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={e => onChangeHandler(e)}
           />
           <TextField
+            error={errors.password ? true : false}
+            helperText={errors.password && errors.password}
             variant="outlined"
             margin="normal"
             required
@@ -66,7 +105,13 @@ const Signin = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={e => onChangeHandler(e)}
           />
+          {errors.signin_message && (
+            <Typography variant="body2" className={classes.errorText}>
+              {errors.signin_message}
+            </Typography>
+          )}
 
           <Button
             type="submit"
@@ -74,12 +119,32 @@ const Signin = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={e => handleSubmit(e)}
           >
-            Sign In
+            <div className={classes.loading_error_wrapper}>
+              {!loading ? (
+                <Typography>SIGN IN</Typography>
+              ) : (
+                <CircularProgress
+                  size={32}
+                  className={classes.buttonProgress}
+                />
+              )}
+            </div>
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/signup" variant="body2" className={classes.link}>
+              <Link
+                to="/signup"
+                variant="body2"
+                className={classes.link}
+                onClick={() =>
+                  addBreadcrumb(breadcrumbs, {
+                    name: "Sign Up",
+                    url: "/signup"
+                  })
+                }
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -95,16 +160,18 @@ const Signin = () => {
 
 Signin.propTypes = {
   loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  breadcrumbs: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
   errors: state.auth.errors,
-  message: state.auth.message
+  success: state.auth.success,
+  breadcrumbs: state.breadcrumbs.breadcrumbs
 });
 
 export default connect(
   mapStateToProps,
-  { signin }
+  { signin, addBreadcrumb }
 )(Signin);

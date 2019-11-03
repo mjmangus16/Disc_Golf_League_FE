@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { signup } from "../../Redux/actions/authActions";
+import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { Link } from "react-router-dom";
 import {
   Avatar,
@@ -32,7 +33,14 @@ function Copyright() {
   );
 }
 
-const Signup = ({ loading, signup, errors, history }) => {
+const Signup = ({
+  loading,
+  signup,
+  errors,
+  history,
+  addBreadcrumb,
+  breadcrumbs
+}) => {
   const classes = useStyles();
   const [newUser, setNewUser] = useState({
     org_name: "",
@@ -49,7 +57,12 @@ const Signup = ({ loading, signup, errors, history }) => {
   const handleSubmit = e => {
     e.preventDefault();
     const redirect = () => history.push("/signin");
-    signup(newUser, redirect);
+    const addCrumb = () =>
+      addBreadcrumb(breadcrumbs, {
+        name: "Sign In",
+        url: "/signin"
+      });
+    signup(newUser, redirect, addCrumb);
   };
 
   return (
@@ -134,13 +147,13 @@ const Signup = ({ loading, signup, errors, history }) => {
               />
             </Grid>
           </Grid>
-          {!errors.message ? (
+          {!errors.signup_message ? (
             <Typography variant="body2" className={classes.errorText}>
               Sorry, we are not currently accepting new users.
             </Typography>
           ) : (
             <Typography variant="body2" className={classes.errorText}>
-              {errors.message}
+              {errors.signup_message}
             </Typography>
           )}
 
@@ -165,7 +178,17 @@ const Signup = ({ loading, signup, errors, history }) => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/signin" variant="body2" className={classes.link}>
+              <Link
+                to="/signin"
+                variant="body2"
+                className={classes.link}
+                onClick={() =>
+                  addBreadcrumb(breadcrumbs, {
+                    name: "Sign In",
+                    url: "/signin"
+                  })
+                }
+              >
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -181,15 +204,17 @@ const Signup = ({ loading, signup, errors, history }) => {
 
 Signup.propTypes = {
   loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  breadcrumbs: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
-  errors: state.auth.errors
+  errors: state.auth.errors,
+  breadcrumbs: state.breadcrumbs.breadcrumbs
 });
 
 export default connect(
   mapStateToProps,
-  { signup }
+  { signup, addBreadcrumb }
 )(Signup);

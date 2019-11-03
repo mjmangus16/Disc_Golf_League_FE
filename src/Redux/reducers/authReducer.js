@@ -8,14 +8,15 @@ import {
 } from "../types";
 
 const initialState = {
-  organization: null,
+  org_name: null,
+  email: null,
   f_name: null,
   l_name: null,
   token: null,
   user_id: null,
   loading: false,
   errors: {},
-  message: null
+  success: null
 };
 
 export default (state = initialState, action) => {
@@ -30,9 +31,33 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         errors: {},
-        message: action.payload
+        success: action.payload
       };
     case SIGNUP_FAILED:
+      return {
+        ...state,
+        errors: action.payload,
+        loading: false
+      };
+    case SIGNIN_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+    case SIGNIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        errors: {},
+        org_name: action.payload.org_name ? action.payload.org_name : null,
+        email: action.payload.email,
+        f_name: action.payload.f_name,
+        l_name: action.payload.l_name,
+        token: action.payload.token,
+        user_id: action.payload.user_id,
+        success: null
+      };
+    case SIGNIN_FAILED:
       return {
         ...state,
         errors: action.payload,

@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -32,6 +33,10 @@ const useStyles = makeStyles(theme => ({
   },
   errorText: {
     color: theme.palette.secondary.main,
+    marginTop: 15
+  },
+  successText: {
+    color: green[700],
     marginTop: 15
   },
   buttonProgress: {

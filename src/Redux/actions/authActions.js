@@ -9,7 +9,7 @@ import {
   SIGNIN_FAILED
 } from "../types";
 
-export const signup = (newUser, redirect) => dispatch => {
+export const signup = (newUser, redirect, addCrumb) => dispatch => {
   dispatch({
     type: SIGNUP_LOADING
   });
@@ -17,6 +17,7 @@ export const signup = (newUser, redirect) => dispatch => {
     .post("/api/users/signup", newUser)
     .then(res => {
       redirect();
+      addCrumb();
       dispatch({
         type: SIGNUP_SUCCESS,
         payload: res.data.message
@@ -30,7 +31,7 @@ export const signup = (newUser, redirect) => dispatch => {
     });
 };
 
-export const signin = (user, redirect) => dispatch => {
+export const signin = (user, redirect, addCrumb) => dispatch => {
   dispatch({
     type: SIGNIN_LOADING
   });
@@ -38,6 +39,7 @@ export const signin = (user, redirect) => dispatch => {
     .post("/api/users/signin", user)
     .then(res => {
       redirect();
+      addCrumb();
       dispatch({
         type: SIGNIN_SUCCESS,
         payload: res.data
