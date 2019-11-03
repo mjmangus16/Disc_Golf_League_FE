@@ -8,6 +8,9 @@ import AppBar from "./Components/Layout/AppBar";
 import Breadcrumbs from "./Components/Layout/Breadcrumbs";
 import Routes from "./Routes";
 import { green, blueGrey } from "@material-ui/core/colors";
+import { decodeToken } from "./utils/decodeToken";
+
+decodeToken(store);
 
 const theme = createMuiTheme({
   palette: {

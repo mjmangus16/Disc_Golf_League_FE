@@ -1,12 +1,13 @@
+import jwt_decode from "jwt-decode";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
-import axios from "axios";
+import { setAuthToken } from "../../utils/decodeToken";
 import {
   SIGNUP_LOADING,
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
   SIGNIN_LOADING,
-  SIGNIN_SUCCESS,
-  SIGNIN_FAILED
+  SIGNIN_FAILED,
+  SET_CURRENT_USER
 } from "../types";
 
 export const signup = (newUser, redirect, addCrumb) => dispatch => {
@@ -40,10 +41,12 @@ export const signin = (user, redirect, addCrumb) => dispatch => {
     .then(res => {
       redirect();
       addCrumb();
-      dispatch({
-        type: SIGNIN_SUCCESS,
-        payload: res.data
-      });
+
+      const { token } = res.data;
+      localStorage.setItem("token", token);
+      setAuthToken(token);
+      const decoded = jwt_decode(token);
+      dispatch(setCurrentUser(decoded));
     })
     .catch(err => {
       dispatch({
@@ -51,4 +54,20 @@ export const signin = (user, redirect, addCrumb) => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const setCurrentUser = decoded => {
+  return {
+    type: SET_CURRENT_USER,
+    payload: decoded
+  };
+};
+
+export const logoutUser = () => dispatch => {
+  // Remove token from localStorage
+  localStorage.removeItem("token");
+  // Remove auth header for future requests
+  setAuthToken(false);
+  // Set current user to {} which will set isAuthenticated to false
+  dispatch(setCurrentUser({}));
 };

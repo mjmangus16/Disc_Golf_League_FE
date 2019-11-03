@@ -22,18 +22,18 @@ export default (state = initialState, action) => {
 };
 
 const handleCrumbs = (crumbs, newCrumb) => {
-  let adjustedCrumbs = crumbs;
   if (newCrumb.name === "Sign Up") {
-    adjustedCrumbs = crumbs.filter(crumb => crumb.name !== "Sign In");
+    return [...crumbs.filter(crumb => crumb.name !== "Sign In"), newCrumb];
   } else if (newCrumb.name === "Sign In") {
-    adjustedCrumbs = crumbs.filter(crumb => crumb.name !== "Sign Up");
+    return [...crumbs.filter(crumb => crumb.name !== "Sign Up"), newCrumb];
   } else if (newCrumb.name === "Profile") {
-    adjustedCrumbs = crumbs.filter(
-      crumb => crumb.name !== "Sign Up" && crumb.name !== "Sign In"
-    );
+    return [
+      ...crumbs.filter(
+        crumb => crumb.name !== "Sign Up" && crumb.name !== "Sign In"
+      ),
+      newCrumb
+    ];
+  } else if (newCrumb.name == "Home") {
+    return [newCrumb];
   }
-
-  adjustedCrumbs = [...adjustedCrumbs, newCrumb];
-
-  return adjustedCrumbs;
 };
