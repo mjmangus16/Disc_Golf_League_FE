@@ -6,8 +6,16 @@ import SignUp from "./Components/AuthForms/SignUp";
 export default () => {
   return (
     <>
-      <Route exact path="/signup" render={() => <SignUp />} />
-      <Route exact path="/signin" render={() => <SignIn />} />
+      <Route
+        exact
+        path="/signup"
+        render={props => <SignUp history={props.history} />}
+      />
+      <Route
+        exact
+        path="/signin"
+        render={props => <SignIn history={props.history} />}
+      />
     </>
   );
 };

@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { signin } from "../../Redux/actions/authActions";
 import { Link } from "react-router-dom";
 import {
   Avatar,
@@ -28,7 +31,7 @@ function Copyright() {
   );
 }
 
-export default function SignIn() {
+const Signin = () => {
   const classes = useStyles();
 
   return (
@@ -88,4 +91,20 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+Signin.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  errors: state.auth.errors,
+  message: state.auth.message
+});
+
+export default connect(
+  mapStateToProps,
+  { signin }
+)(Signin);

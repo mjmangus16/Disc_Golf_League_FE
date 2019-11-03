@@ -33,6 +33,19 @@ const useStyles = makeStyles(theme => ({
   errorText: {
     color: theme.palette.secondary.main,
     marginTop: 15
+  },
+  buttonProgress: {
+    color: theme.palette.secondary.main,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -14,
+    marginLeft: -16.5
+  },
+  loading_error_wrapper: {
+    margin: theme.spacing(1),
+    position: "relative",
+    minHeight: 24
   }
 }));
 

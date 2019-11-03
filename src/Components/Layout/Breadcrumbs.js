@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { selectBreadcrumb } from "../../Redux/actions/actions";
+import { selectBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Breadcrumbs, Paper } from "@material-ui/core";
 
@@ -38,7 +38,12 @@ const Breadcrumbs_ = ({ breadcrumbs, selectBreadcrumb }) => {
                 );
               } else {
                 return (
-                  <Typography color="textPrimary">{crumb.name}</Typography>
+                  <Typography
+                    color="textPrimary"
+                    key={`${crumb.name}${crumb.url}${i}`}
+                  >
+                    {crumb.name}
+                  </Typography>
                 );
               }
             })}

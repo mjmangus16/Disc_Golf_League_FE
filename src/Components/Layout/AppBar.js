@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addBreadcrumb } from "../../Redux/actions/actions";
+import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import {
   AppBar,
   Toolbar,
