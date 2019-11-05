@@ -9,7 +9,8 @@ import { Typography, Breadcrumbs, Paper } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
   root: {
     justifyContent: "center",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    minHeight: 40
   },
   paper: {
     padding: theme.spacing(1, 2)

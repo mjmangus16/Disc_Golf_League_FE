@@ -11,12 +11,9 @@ import isEmpty from "../../utils/isEmpty";
 
 const initialState = {
   isAuthenticated: false,
-  user: {},
-  org_name: null,
   email: null,
-  f_name: null,
-  l_name: null,
-  user_id: null,
+  iat: null,
+  exp: null,
   loading: false,
   errors: {},
   success: null
@@ -53,7 +50,9 @@ export default (state = initialState, action) => {
         isAuthenticated: !isEmpty(action.payload),
         loading: false,
         errors: {},
-        user: action.payload,
+        email: action.payload.email,
+        iat: action.payload.iat,
+        exp: action.payload.exp,
         success: null
       };
     case SIGNIN_FAILED:

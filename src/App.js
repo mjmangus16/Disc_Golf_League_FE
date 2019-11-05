@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
@@ -10,7 +10,7 @@ import Routes from "./Routes";
 import { green, blueGrey } from "@material-ui/core/colors";
 import { decodeToken } from "./utils/decodeToken";
 
-decodeToken(store);
+decodeToken();
 
 const theme = createMuiTheme({
   palette: {

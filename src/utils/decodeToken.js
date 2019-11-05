@@ -1,13 +1,9 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import {
-  setCurrentUser,
-  logoutUser
-  // clearCurrentUser
-} from "../Redux/actions/authActions";
-import { SET_CURRENT_USER } from "../Redux/types";
+import { setCurrentUser, logoutUser } from "../Redux/actions/authActions";
+import store from "../Redux/store";
 
-export const decodeToken = store => {
+export const decodeToken = () => {
   // Check for token
   if (localStorage.token) {
     // Set auth token header auth
@@ -20,11 +16,11 @@ export const decodeToken = store => {
     // Check for expired token
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
-      // Logout user
-      logoutUser();
-      // Clear current Profile
-      // store.dispatch(clearCurrentProfile());
-      // Redirect to home
+      localStorage.removeItem("token");
+      // Remove auth header for future requests
+      setAuthToken(false);
+      // Set current user to {} which will set isAuthenticated to false
+      store.dispatch(setCurrentUser({}));
       window.location.href = "/";
     }
   }
