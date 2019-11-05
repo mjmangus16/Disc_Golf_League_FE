@@ -7,8 +7,10 @@ import {
   updateProfile,
   clearErrors
 } from "../../Redux/actions/profileActions";
+
 import ProfileHeader from "./ProfileHeader";
 import UpdateDialog from "./UpdateDialog";
+import ProfileLeagues from "./ProfileLeagues";
 
 import { CircularProgress } from "@material-ui/core";
 
@@ -30,7 +32,7 @@ const Profile = ({
   update_success
 }) => {
   const classes = useStyles();
-  const [updateOpen, setUpdateOpen] = useState(true);
+  const [updateOpen, setUpdateOpen] = useState(false);
 
   useEffect(() => {
     if (email) {
@@ -77,6 +79,7 @@ const Profile = ({
             get_loading={get_loading}
             success={update_success}
           />
+          <ProfileLeagues />
         </div>
       )}
     </div>

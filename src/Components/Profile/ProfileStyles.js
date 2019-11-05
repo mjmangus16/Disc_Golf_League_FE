@@ -21,6 +21,13 @@ const useStyles = makeStyles(theme => ({
     width: 200,
     justifySelf: "end",
     marginRight: 20
+  },
+  profileLeaguesContainer: {
+    marginTop: "7%",
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    width: "75%",
+    margin: "auto"
   }
 }));
 
