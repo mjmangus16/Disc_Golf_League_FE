@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Tabs, Tab, Typography, Box } from "@material-ui/core";
-import useStyles from "./ProfileStyles";
+import React from "react";
+import { Tabs, Tab } from "@material-ui/core";
 
 function a11yProps(index) {
   return {
@@ -10,8 +9,6 @@ function a11yProps(index) {
 }
 
 const ProfileTabs = ({ handleChange, value }) => {
-  const classes = useStyles();
-
   return (
     <div>
       <Tabs
@@ -24,12 +21,12 @@ const ProfileTabs = ({ handleChange, value }) => {
         variant="fullWidth"
       >
         <Tab
-          label="Participant"
+          label="Member"
           {...a11yProps(0)}
           style={{ borderBottom: "2px solid lightgrey" }}
         />
         <Tab
-          label="Owner"
+          label="Manager"
           {...a11yProps(1)}
           style={{ borderBottom: "2px solid lightgrey" }}
         />

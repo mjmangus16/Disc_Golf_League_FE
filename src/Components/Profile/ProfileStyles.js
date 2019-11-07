@@ -28,6 +28,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     width: "75%",
     margin: "auto"
+  },
+  updateHeading: {
+    flexGrow: 4
+  },
+  deleteButton: {
+    flexGrow: 1
   }
 }));
 

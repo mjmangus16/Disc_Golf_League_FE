@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
+import { logoutUser } from "../../Redux/actions/authActions";
 import {
   getProfile,
   updateProfile,
-  clearErrors
+  clearErrors,
+  logout
 } from "../../Redux/actions/profileActions";
 
 import ProfileHeader from "./ProfileHeader";
@@ -29,10 +31,11 @@ const Profile = ({
   user_id,
   errors,
   clearErrors,
-  update_success
+  update_success,
+  logoutUser
 }) => {
   const classes = useStyles();
-  const [updateOpen, setUpdateOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(true);
 
   useEffect(() => {
     if (email) {
@@ -64,6 +67,7 @@ const Profile = ({
             handleClose={handleUpdateClose}
             handleUpdate={handleUpdate}
             errors={errors}
+            logout={logoutUser}
             user={{
               email,
               f_name,
@@ -105,5 +109,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProfile, updateProfile, clearErrors }
+  { getProfile, updateProfile, clearErrors, logoutUser }
 )(Profile);
