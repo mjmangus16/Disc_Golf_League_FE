@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getManagerLeagues } from "../../Redux/actions/leaguesActions";
 
-import LeagueCard from "./LeagueCard";
+import LeagueCard from "../Leagues/LeagueCard";
 
 import useStyles from "./ProfileStyles";
 
@@ -13,11 +13,23 @@ const ProfileLeagues = ({
   getManagerLeaguesLoading,
   leagues
 }) => {
+  const [hover, setHover] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
     getManagerLeagues();
   }, []);
+
+  // let leaguesDisplay;
+  // console.log(leagues);
+
+  // if (leagues.length > 0) {
+  //   leaguesDisplay = (
+
+  //   );
+  // } else {
+  //   leaguesDisplay =
+  // }
 
   return (
     <div className={classes.profileLeaguesContainer}>
@@ -43,12 +55,22 @@ const ProfileLeagues = ({
       <div className={classes.gridContainer}>
         {getManagerLeaguesLoading ? (
           <CircularProgress size={32} className={classes.buttonProgress} />
-        ) : (
+        ) : leagues.length > 0 ? (
           <Grid container spacing={2}>
             {leagues.map(league => (
-              <LeagueCard league={league} />
+              <LeagueCard
+                league={league}
+                key={`league9231${league.league_id}`}
+              />
             ))}
           </Grid>
+        ) : (
+          <div className={classes.noLeagues}>
+            <Typography variant="body1">
+              You have no leagues to display. Once you create a league, it will
+              show up here.
+            </Typography>
+          </div>
         )}
       </div>
     </div>

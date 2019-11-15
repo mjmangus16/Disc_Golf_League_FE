@@ -2,7 +2,10 @@ import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import {
   GET_MANAGER_LEAGUES_LOADING,
   GET_MANAGER_LEAGUES_SUCCESS,
-  GET_MANAGER_LEAGUES_FAILED
+  GET_MANAGER_LEAGUES_FAILED,
+  GET_LEAGUE_BY_ID_LOADING,
+  GET_LEAGUE_BY_ID_SUCCESS,
+  GET_LEAGUE_BY_ID_FAILED
 } from "../types";
 
 export const getManagerLeagues = () => dispatch => {
@@ -33,4 +36,10 @@ export const getManagerLeagues = () => dispatch => {
         payload: err.response
       });
     });
+};
+
+export const getLeagueById = () => dispatch => {
+  dispatch({
+    type: GET_LEAGUE_BY_ID_LOADING
+  });
 };

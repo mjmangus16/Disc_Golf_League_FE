@@ -5,6 +5,7 @@ import SignIn from "./Components/AuthForms/SignIn";
 import SignUp from "./Components/AuthForms/SignUp";
 import Profile from "./Components/Profile/Profile";
 import Home from "./Components/Home/Home";
+import League from "./Components/Leagues/League";
 
 export default () => {
   return (
@@ -30,6 +31,7 @@ export default () => {
         render={props => <SignIn history={props.history} />}
       />
       <ProtectedRoute path="/profile" component={Profile} />
+      <ProtectedRoute path="/league/:league_id" component={League} />
     </>
   );
 };

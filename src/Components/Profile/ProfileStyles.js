@@ -2,14 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
-  buttonProgress: {
-    color: theme.palette.secondary.main,
-    position: "absolute",
-    top: "25%",
-    left: "50%",
-    marginTop: -14,
-    marginLeft: -40
-  },
   title: {
     gridColumn: 2
   },
@@ -53,6 +45,9 @@ const useStyles = makeStyles(theme => ({
     left: "50%",
     marginTop: -14,
     marginLeft: -16
+  },
+  noLeagues: {
+    paddingTop: 25
   }
 }));
 

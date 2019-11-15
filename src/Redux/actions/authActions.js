@@ -50,6 +50,7 @@ export const signin = (user, redirect, addCrumb) => dispatch => {
       addCrumb();
     })
     .catch(err => {
+      console.log(err);
       dispatch({
         type: SIGNIN_FAILED,
         payload: err.response.data

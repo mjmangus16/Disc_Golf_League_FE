@@ -13,6 +13,7 @@ const ProfileHeader = ({
 }) => {
   const classes = useStyles();
   const [name, setName] = useState("");
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     org_name ? setName(org_name) : setName(f_name);
@@ -20,7 +21,20 @@ const ProfileHeader = ({
 
   return (
     <Grid container>
-      <Grid item xs={0} sm={3}></Grid>
+      <Grid item sm={3}>
+        <Button
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          variant="outlined"
+          size="small"
+          style={{
+            backgroundColor: hover ? green[600] : green[400],
+            borderColor: green[600]
+          }}
+        >
+          Create New League
+        </Button>
+      </Grid>
       <Grid item xs={12} sm={6}>
         <Typography
           variant="h5"
