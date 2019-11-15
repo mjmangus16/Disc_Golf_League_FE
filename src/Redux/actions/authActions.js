@@ -7,7 +7,9 @@ import {
   SIGNUP_FAILED,
   SIGNIN_LOADING,
   SIGNIN_FAILED,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  CLEAR_LEAGUES,
+  CLEAR_PROFILE
 } from "../types";
 
 export const signup = (newUser, redirect, addCrumb) => dispatch => {
@@ -39,14 +41,13 @@ export const signin = (user, redirect, addCrumb) => dispatch => {
   axiosWithAuth()
     .post("/api/users/signin", user)
     .then(res => {
-      redirect();
-      addCrumb();
-
       const { token } = res.data;
       localStorage.setItem("token", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
+      redirect();
+      addCrumb();
     })
     .catch(err => {
       dispatch({
@@ -70,4 +71,10 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+  dispatch({
+    type: CLEAR_LEAGUES
+  });
+  dispatch({
+    type: CLEAR_PROFILE
+  });
 };

@@ -13,8 +13,10 @@ import {
   Box,
   Typography,
   Container,
-  CircularProgress
+  CircularProgress,
+  Tooltip
 } from "@material-ui/core";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
@@ -42,6 +44,8 @@ const Signup = ({
   breadcrumbs
 }) => {
   const classes = useStyles();
+  const [typeSelected, setTypeSelected] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const [newUser, setNewUser] = useState({
     org_name: "",
     email: "",
@@ -54,6 +58,16 @@ const Signup = ({
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
+  const handleManagerSelect = () => {
+    setTypeSelected(true);
+    setAdmin(true);
+  };
+
+  const handleParticipantSelect = () => {
+    setTypeSelected(true);
+    setAdmin(false);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     const redirect = () => history.push("/signin");
@@ -62,11 +76,15 @@ const Signup = ({
         name: "Sign In",
         url: "/signin"
       });
-    signup(newUser, redirect, addCrumb);
+    const userData = {
+      ...newUser,
+      admin
+    };
+    signup(userData, redirect, addCrumb);
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" className={classes.authContainer}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -75,22 +93,61 @@ const Signup = ({
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <div className={classes.toggleUserType}>
+          <Typography variant="body1" paragraph>
+            Please select the type of user you want to create.
+          </Typography>
+          <Grid container>
+            <Grid item xs={6}>
+              <Tooltip
+                placement="top"
+                title="League Managers can create and manage leagues but can not be used to participate in leagues."
+              >
+                <Button
+                  variant={typeSelected && admin ? "contained" : "outlined"}
+                  onClick={handleManagerSelect}
+                  color={typeSelected && admin ? "secondary" : "primary"}
+                >
+                  League Manager
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item xs={6}>
+              <Tooltip
+                placement="top"
+                title="League Participants can join and participate in leagues but can not create a league of their own."
+              >
+                <Button
+                  variant={typeSelected && !admin ? "contained" : "outlined"}
+                  onClick={handleParticipantSelect}
+                  color={typeSelected && !admin ? "secondary" : "primary"}
+                >
+                  League Participant
+                </Button>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        </div>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                id="org_name"
-                label="Organization Name (Not Required)"
-                name="org_name"
-                autoComplete="org_name"
-                onChange={e => onChangeHandler(e)}
-                autoFocus
-              />
-            </Grid>
+            {admin && (
+              <Grid item xs={12}>
+                <TextField
+                  disabled={!typeSelected}
+                  variant="outlined"
+                  fullWidth
+                  id="org_name"
+                  label="Organization Name (Not Required)"
+                  name="org_name"
+                  autoComplete="org_name"
+                  onChange={e => onChangeHandler(e)}
+                />
+              </Grid>
+            )}
+
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!typeSelected}
                 error={errors.f_name ? true : false}
                 helperText={errors.f_name && errors.f_name}
                 autoComplete="fname"
@@ -105,6 +162,7 @@ const Signup = ({
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!typeSelected}
                 error={errors.l_name ? true : false}
                 helperText={errors.l_name && errors.l_name}
                 variant="outlined"
@@ -119,6 +177,7 @@ const Signup = ({
             </Grid>
             <Grid item xs={12}>
               <TextField
+                disabled={!typeSelected}
                 error={errors.email ? true : false}
                 helperText={errors.email && errors.email}
                 variant="outlined"
@@ -133,6 +192,7 @@ const Signup = ({
             </Grid>
             <Grid item xs={12}>
               <TextField
+                disabled={!typeSelected}
                 error={errors.password ? true : false}
                 helperText={errors.password && errors.password}
                 variant="outlined"
@@ -158,6 +218,7 @@ const Signup = ({
           )}
 
           <Button
+            disabled={!typeSelected}
             type="submit"
             fullWidth
             variant="contained"

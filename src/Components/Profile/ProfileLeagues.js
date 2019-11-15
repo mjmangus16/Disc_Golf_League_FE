@@ -1,52 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getManagerLeagues } from "../../Redux/actions/leaguesActions";
 
-import ProfileTabs from "./ProfileTabs";
+import LeagueCard from "./LeagueCard";
 
 import useStyles from "./ProfileStyles";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      <Box p={3}>{children}</Box>
-    </Typography>
-  );
-}
-
-const ProfileLeagues = () => {
+const ProfileLeagues = ({
+  getManagerLeagues,
+  getManagerLeaguesLoading,
+  leagues
+}) => {
   const classes = useStyles();
-  const [tabValue, setTabValue] = useState(0);
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
+  useEffect(() => {
+    getManagerLeagues();
+  }, []);
 
   return (
     <div className={classes.profileLeaguesContainer}>
-      <ProfileTabs value={tabValue} handleChange={handleTabChange} />
-      <TabPanel value={tabValue} index={0}>
-        <table>
-          <tbody>
-            <tr>
-              <th>HELLO</th>
-            </tr>
-          </tbody>
-        </table>
-      </TabPanel>
-      <TabPanel value={tabValue} index={1}>
-        Item Two
-      </TabPanel>
+      <Paper elevation={0} style={{ borderBottom: "1px solid lightgrey" }}>
+        <div className={classes.headingContainer}>
+          <Typography variant="h6">My Leagues</Typography>
+        </div>
+        <Grid container className={classes.headerContainer}>
+          <Grid item xs={4}>
+            <Typography>Name</Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography>Type</Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography>Location</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography>Days</Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+      <div className={classes.gridContainer}>
+        {getManagerLeaguesLoading ? (
+          <CircularProgress size={32} className={classes.buttonProgress} />
+        ) : (
+          <Grid container spacing={2}>
+            {leagues.map(league => (
+              <LeagueCard league={league} />
+            ))}
+          </Grid>
+        )}
+      </div>
     </div>
   );
 };
 
-export default ProfileLeagues;
+ProfileLeagues.propTypes = {};
+
+const mapStateToProps = state => ({
+  getManagerLeaguesLoading: state.leagues.getManagerLeaguesLoading,
+  getManagerLeaguesFailed: state.leagues.getManagerLeaguesFailed,
+  leagues: state.leagues.leagues
+});
+
+export default connect(mapStateToProps, {
+  getManagerLeagues
+})(ProfileLeagues);

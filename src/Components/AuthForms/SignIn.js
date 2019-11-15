@@ -171,7 +171,4 @@ const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs
 });
 
-export default connect(
-  mapStateToProps,
-  { signin, addBreadcrumb }
-)(Signin);
+export default connect(mapStateToProps, { signin, addBreadcrumb })(Signin);

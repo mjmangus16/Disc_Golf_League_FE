@@ -6,8 +6,7 @@ import { logoutUser } from "../../Redux/actions/authActions";
 import {
   getProfile,
   updateProfile,
-  clearErrors,
-  logout
+  clearErrors
 } from "../../Redux/actions/profileActions";
 
 import ProfileHeader from "./ProfileHeader";
@@ -35,7 +34,7 @@ const Profile = ({
   logoutUser
 }) => {
   const classes = useStyles();
-  const [updateOpen, setUpdateOpen] = useState(true);
+  const [updateOpen, setUpdateOpen] = useState(false);
 
   useEffect(() => {
     if (email) {
@@ -107,7 +106,9 @@ const mapStateToProps = state => ({
   update_success: state.profile.update_success
 });
 
-export default connect(
-  mapStateToProps,
-  { getProfile, updateProfile, clearErrors, logoutUser }
-)(Profile);
+export default connect(mapStateToProps, {
+  getProfile,
+  updateProfile,
+  clearErrors,
+  logoutUser
+})(Profile);

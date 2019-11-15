@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MenuItem, Menu } from "@material-ui/core";
-import { logoutUser } from "../../../Redux/actions/authActions";
 
 const AuthNav = ({
   breadcrumbs,
@@ -52,6 +51,19 @@ const AuthNav = ({
           }}
         >
           Profile
+        </MenuItem>
+      </Link>
+      <Link to="/createleague" className={classes.link}>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            addBreadcrumb(breadcrumbs, {
+              name: "Create League",
+              url: "/createleague"
+            });
+          }}
+        >
+          Create League
         </MenuItem>
       </Link>
       <Link to="/" className={classes.link}>

@@ -6,7 +6,8 @@ import {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAILED,
   CLEAR_ERRORS,
-  CLEAR_UPDATE_SUCCESS
+  CLEAR_UPDATE_SUCCESS,
+  CLEAR_PROFILE
 } from "../types";
 
 const initialState = {
@@ -72,6 +73,18 @@ export default (state = initialState, action) => {
     case CLEAR_UPDATE_SUCCESS:
       return {
         ...state,
+        update_success: false
+      };
+    case CLEAR_PROFILE:
+      return {
+        ...state,
+        f_name: null,
+        l_name: null,
+        user_id: null,
+        org_name: null,
+        get_loading: false,
+        update_loading: false,
+        errors: {},
         update_success: false
       };
     default:

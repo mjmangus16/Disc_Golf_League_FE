@@ -15,7 +15,7 @@ decodeToken();
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: blueGrey[300]
+      main: blueGrey[500]
     }
     // secondary: {
     //   main: blue[700]

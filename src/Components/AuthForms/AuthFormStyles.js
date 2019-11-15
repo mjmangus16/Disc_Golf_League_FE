@@ -2,6 +2,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
+  authContainer: {
+    maxWidth: 500
+  },
   "@global": {
     body: {
       backgroundColor: theme.palette.common.white
@@ -51,6 +54,10 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     position: "relative",
     minHeight: 24
+  },
+  toggleUserType: {
+    margin: "25px auto",
+    width: "100%"
   }
 }));
 

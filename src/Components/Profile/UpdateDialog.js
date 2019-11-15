@@ -132,7 +132,7 @@ const UpdateDialog = ({
           )}
 
           <DialogActions>
-            <Button onClick={handleCancel} color="primary">
+            <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
             <Button onClick={() => handleUpdate(userData)} color="primary">

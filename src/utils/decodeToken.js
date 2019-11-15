@@ -22,6 +22,9 @@ export const decodeToken = () => {
       // Set current user to {} which will set isAuthenticated to false
       store.dispatch(setCurrentUser({}));
       window.location.href = "/";
+      return false;
+    } else {
+      return true;
     }
   }
 };

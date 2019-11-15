@@ -22,18 +22,26 @@ export default (state = initialState, action) => {
 };
 
 const handleCrumbs = (crumbs, newCrumb) => {
-  if (newCrumb.name === "Sign Up") {
+  if (newCrumb.name == "Home") {
+    return [newCrumb];
+  } else if (newCrumb.name === "Sign Up") {
     return [...crumbs.filter(crumb => crumb.name !== "Sign In"), newCrumb];
   } else if (newCrumb.name === "Sign In") {
     return [...crumbs.filter(crumb => crumb.name !== "Sign Up"), newCrumb];
   } else if (newCrumb.name === "Profile") {
     return [
       ...crumbs.filter(
-        crumb => crumb.name !== "Sign Up" && crumb.name !== "Sign In"
+        crumb =>
+          crumb.name !== "Sign Up" &&
+          crumb.name !== "Sign In" &&
+          crumb.name !== "Profile"
       ),
       newCrumb
     ];
-  } else if (newCrumb.name == "Home") {
-    return [newCrumb];
+  } else if (newCrumb.name === "Create League") {
+    return [
+      ...crumbs.filter(crumb => crumb.name !== "Create League"),
+      newCrumb
+    ];
   }
 };

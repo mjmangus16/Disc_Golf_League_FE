@@ -10,15 +10,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: -14,
     marginLeft: -40
   },
-  header: {
-    display: "grid",
-    gridTemplateColumns: "1fr 2fr 1fr"
-  },
   title: {
     gridColumn: 2
   },
   updateButton: {
-    width: 200,
     justifySelf: "end",
     marginRight: 20
   },
@@ -34,6 +29,30 @@ const useStyles = makeStyles(theme => ({
   },
   deleteButton: {
     flexGrow: 1
+  },
+  headingContainer: {
+    textDecoration: "underline"
+  },
+  headerContainer: {
+    padding: theme.spacing(2)
+  },
+  gridContainer: {
+    flexGrow: 1,
+    marginTop: 10
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    cursor: "pointer"
+  },
+  buttonProgress: {
+    color: theme.palette.secondary.main,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -14,
+    marginLeft: -16
   }
 }));
 
