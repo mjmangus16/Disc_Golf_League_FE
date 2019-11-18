@@ -33,13 +33,28 @@ export const getManagerLeagues = () => dispatch => {
       console.log(err);
       dispatch({
         type: GET_MANAGER_LEAGUES_FAILED,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };
 
-export const getLeagueById = () => dispatch => {
+export const getLeagueById = league_id => dispatch => {
   dispatch({
     type: GET_LEAGUE_BY_ID_LOADING
   });
+  axiosWithAuth()
+    .get(`api/leagues/id/${league_id}`)
+    .then(league => {
+      dispatch({
+        type: GET_LEAGUE_BY_ID_SUCCESS,
+        payload: league.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_LEAGUE_BY_ID_FAILED,
+        payload: err.response.data
+      });
+    });
 };

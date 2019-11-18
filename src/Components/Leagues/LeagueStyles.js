@@ -15,6 +15,23 @@ const useStyles = makeStyles(theme => ({
     left: "50%",
     marginTop: -25,
     marginLeft: -25
+  },
+  headerContainer: {
+    borderTop: "1px solid lightgrey",
+    borderBottom: "1px solid lightgrey",
+    padding: "10px 0px",
+    marginTop: 15
+  },
+  headerSection: {
+    margin: "auto"
+  },
+  typo: {
+    padding: "5px 10px"
+  },
+  spanStyle: {
+    textDecoration: "underline",
+    fontWeight: 500,
+    paddingRight: 7
   }
 }));
 

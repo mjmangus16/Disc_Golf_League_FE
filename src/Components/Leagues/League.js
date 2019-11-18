@@ -5,6 +5,10 @@ import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { getLeagueById } from "../../Redux/actions/leaguesActions";
 import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
 
+import LeagueHeader from "./LeagueHeader";
+import LeagueTabs from "./leagueTabs/LeagueTabs";
+import LeaguePanels from "./leagueTabs/LeaguePanels";
+
 import useStyles from "./LeagueStyles";
 
 const League = ({
@@ -15,18 +19,31 @@ const League = ({
   selectedLeague
 }) => {
   const classes = useStyles();
+  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
-    getLeagueById();
+    getLeagueById(match.params.league_id);
   }, []);
+  console.log(selectedLeague);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
 
   return (
-    <div>
+    <div style={{ maxWidth: 750, margin: "auto" }}>
       {getLeagueByIdLoading ? (
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          <Typography variant="h5">MY LEAGUE</Typography>
+          <LeagueHeader league={selectedLeague} />
+          <LeagueTabs handleChange={handleTabChange} value={tabValue} />
+          <LeaguePanels
+            tabValue={tabValue}
+            schedule={selectedLeague.schedule}
+            roster={selectedLeague.roster}
+            rounds={selectedLeague.rounds}
+          />
         </div>
       )}
     </div>
