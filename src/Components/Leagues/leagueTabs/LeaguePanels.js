@@ -29,7 +29,10 @@ const LeaguePanels = ({
   schedule,
   roster,
   rounds,
-  rosterLoading
+  rosterLoading,
+  rosterFailed,
+  roundsLoading,
+  roundsFailed
 }) => {
   const classes = useStyles();
 
@@ -39,10 +42,18 @@ const LeaguePanels = ({
         <SchedulePanel schedule={schedule} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <RosterPanel roster={roster} loading={rosterLoading} />
+        <RosterPanel
+          roster={roster}
+          loading={rosterLoading}
+          failed={rosterFailed}
+        />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <RoundsPanel rounds={rounds} />
+        <RoundsPanel
+          rounds={rounds}
+          loading={roundsLoading}
+          failed={roundsFailed}
+        />
       </TabPanel>
     </div>
   );

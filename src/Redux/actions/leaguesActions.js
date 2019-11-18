@@ -8,7 +8,10 @@ import {
   GET_LEAGUE_BY_ID_FAILED,
   GET_MEMBERS_BY_LEAGUE_ID_LOADING,
   GET_MEMBERS_BY_LEAGUE_ID_SUCCESS,
-  GET_MEMBERS_BY_LEAGUE_ID_FAILED
+  GET_MEMBERS_BY_LEAGUE_ID_FAILED,
+  GET_ROUNDS_BY_LEAGUE_ID_LOADING,
+  GET_ROUNDS_BY_LEAGUE_ID_SUCCESS,
+  GET_ROUNDS_BY_LEAGUE_ID_FAILED
 } from "../types";
 
 export const getManagerLeagues = () => dispatch => {
@@ -78,6 +81,27 @@ export const getMembersByLeagueId = league_id => dispatch => {
       console.log(err);
       dispatch({
         type: GET_MEMBERS_BY_LEAGUE_ID_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const getRoundsByLeagueId = league_id => dispatch => {
+  dispatch({
+    type: GET_ROUNDS_BY_LEAGUE_ID_LOADING
+  });
+  axiosWithAuth()
+    .get(`api/rounds/league/${league_id}`)
+    .then(rounds => {
+      dispatch({
+        type: GET_ROUNDS_BY_LEAGUE_ID_SUCCESS,
+        payload: rounds.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ROUNDS_BY_LEAGUE_ID_FAILED,
         payload: err.response.data
       });
     });

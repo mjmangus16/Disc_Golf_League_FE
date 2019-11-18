@@ -8,6 +8,9 @@ import {
   GET_MEMBERS_BY_LEAGUE_ID_LOADING,
   GET_MEMBERS_BY_LEAGUE_ID_SUCCESS,
   GET_MEMBERS_BY_LEAGUE_ID_FAILED,
+  GET_ROUNDS_BY_LEAGUE_ID_LOADING,
+  GET_ROUNDS_BY_LEAGUE_ID_SUCCESS,
+  GET_ROUNDS_BY_LEAGUE_ID_FAILED,
   CLEAR_LEAGUES
 } from "../types";
 
@@ -20,7 +23,10 @@ const initialState = {
   selectedLeague: {},
   selectedLeagueMembersLoading: true,
   selectedLeagueMembersFailed: null,
-  selectedLeagueMembers: []
+  selectedLeagueMembers: [],
+  selectedLeagueRoundsLoading: true,
+  selectedLeagueRoundsFailed: null,
+  selecteLeagueRounds: []
 };
 
 export default (state = initialState, action) => {
@@ -45,7 +51,18 @@ export default (state = initialState, action) => {
     case GET_LEAGUE_BY_ID_LOADING:
       return {
         ...state,
-        getLeagueByIdLoading: true
+        getManagerLeaguesLoading: true,
+        getManagerLeaguesFailed: null,
+        getLeagueByIdLoading: true,
+        getLeagueByIdFailed: null,
+        leagues: [],
+        selectedLeague: {},
+        selectedLeagueMembersLoading: true,
+        selectedLeagueMembersFailed: null,
+        selectedLeagueMembers: [],
+        selectedLeagueRoundsLoading: true,
+        selectedLeagueRoundsFailed: null,
+        selecteLeagueRounds: []
       };
     case GET_LEAGUE_BY_ID_SUCCESS:
       return {
@@ -69,6 +86,29 @@ export default (state = initialState, action) => {
         ...state,
         selectedLeagueMembers: action.payload,
         selectedLeagueMembersLoading: false
+      };
+    case GET_MEMBERS_BY_LEAGUE_ID_FAILED:
+      return {
+        ...state,
+        selectedLeagueMembersFailed: action.payload,
+        selectedLeagueMembersLoading: false
+      };
+    case GET_ROUNDS_BY_LEAGUE_ID_LOADING:
+      return {
+        ...state,
+        selectedLeagueRoundsLoading: true
+      };
+    case GET_ROUNDS_BY_LEAGUE_ID_SUCCESS:
+      return {
+        ...state,
+        selectedLeagueRounds: action.payload.reverse(),
+        selectedLeagueRoundsLoading: false
+      };
+    case GET_ROUNDS_BY_LEAGUE_ID_FAILED:
+      return {
+        ...state,
+        selectedLeagueRoundsFailed: action.payload,
+        selectedLeagueRoundsLoading: false
       };
     case CLEAR_LEAGUES:
       return {

@@ -3,7 +3,7 @@ import { Typography, Box, CircularProgress, Button } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
 
-const RosterPanel = ({ roster, loading }) => {
+const RosterPanel = ({ roster, loading, failed }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
 
@@ -26,7 +26,7 @@ const RosterPanel = ({ roster, loading }) => {
           >
             Update Roster
           </Button>
-          {roster ? (
+          {roster.length > 0 ? (
             <div style={{ height: 400, overflow: "auto", marginTop: 25 }}>
               {roster.map((member, i) => (
                 <div
@@ -37,6 +37,8 @@ const RosterPanel = ({ roster, loading }) => {
                 </div>
               ))}
             </div>
+          ) : failed ? (
+            <Typography>{failed.error}</Typography>
           ) : (
             <Typography>
               You have not added any members to the league yet.

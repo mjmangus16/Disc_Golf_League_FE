@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import {
   getLeagueById,
-  getMembersByLeagueId
+  getMembersByLeagueId,
+  getRoundsByLeagueId
 } from "../../Redux/actions/leaguesActions";
 import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
 
@@ -22,7 +23,12 @@ const League = ({
   selectedLeague,
   getMembersByLeagueId,
   selectedLeagueMembers,
-  selectedLeagueMembersLoading
+  selectedLeagueMembersLoading,
+  selectedLeagueMembersFailed,
+  selectedLeagueRounds,
+  selectedLeagueRoundsLoading,
+  selectedLeagueRoundsFailed,
+  getRoundsByLeagueId
 }) => {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
@@ -30,9 +36,8 @@ const League = ({
   useEffect(() => {
     getLeagueById(match.params.league_id);
     getMembersByLeagueId(match.params.league_id);
+    getRoundsByLeagueId(match.params.league_id);
   }, []);
-  console.log(selectedLeague);
-  console.log(selectedLeagueMembers);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -51,7 +56,10 @@ const League = ({
             schedule={selectedLeague.schedule}
             roster={selectedLeagueMembers}
             rosterLoading={selectedLeagueMembersLoading}
-            rounds={selectedLeague.rounds}
+            rosterFailed={selectedLeagueMembersFailed}
+            rounds={selectedLeagueRounds}
+            roundsLoading={selectedLeagueRoundsLoading}
+            roundsFailed={selectedLeagueRoundsFailed}
           />
         </div>
       )}
@@ -67,10 +75,15 @@ const mapStateToProps = state => ({
   getLeagueByIdFailed: state.leagues.getLeagueByIdFailed,
   selectedLeague: state.leagues.selectedLeague,
   selectedLeagueMembers: state.leagues.selectedLeagueMembers,
-  selectedLeagueMembersLoading: state.leagues.selectedLeagueMembersLoading
+  selectedLeagueMembersLoading: state.leagues.selectedLeagueMembersLoading,
+  selectedLeagueMembersFailed: state.leagues.selectedLeagueMembersFailed,
+  selectedLeagueRounds: state.leagues.selectedLeagueRounds,
+  selectedLeagueRoundsLoading: state.leagues.selectedLeagueRoundsLoading,
+  selectedLeagueRoundsFailed: state.leagues.selectedLeagueRoundsFailed
 });
 
 export default connect(mapStateToProps, {
   getLeagueById,
-  getMembersByLeagueId
+  getMembersByLeagueId,
+  getRoundsByLeagueId
 })(League);
