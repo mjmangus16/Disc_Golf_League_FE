@@ -27,6 +27,13 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "underline",
     fontWeight: 500,
     paddingRight: 7
+  },
+  createLeagueContainer: {
+    maxWidth: 750,
+    margin: "auto auto 75px auto"
+  },
+  createLeagueInfo: {
+    margin: theme.spacing(3)
   }
 }));
 

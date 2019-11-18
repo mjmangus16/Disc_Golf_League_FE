@@ -52,6 +52,7 @@ const League = ({
           <LeagueHeader league={selectedLeague} />
           <LeagueTabs handleChange={handleTabChange} value={tabValue} />
           <LeaguePanels
+            league_id={match.params.league_id}
             tabValue={tabValue}
             schedule={selectedLeague.schedule}
             roster={selectedLeagueMembers}

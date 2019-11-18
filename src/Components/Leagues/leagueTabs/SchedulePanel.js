@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Grid, Button, Box } from "@material-ui/core";
-
+import { Link } from "react-router-dom";
 import { green } from "@material-ui/core/colors";
 
-const SchedulePanel = ({ schedule }) => {
+const SchedulePanel = ({ schedule, league_id }) => {
   const [hover, setHover] = useState(false);
-  console.log(Object.keys(schedule[0]));
 
-  const formattedSchedule = Object.entries(schedule[0]);
-  console.log(formattedSchedule);
   return (
     <div>
       {!schedule ? (
         <div>
-          <Button
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            variant="outlined"
-            size="small"
-            style={{
-              backgroundColor: hover ? green[600] : green[400],
-              borderColor: green[600],
-              margin: "0px auto 0px 0px"
-            }}
+          <Link
+            to={`/league/${league_id}/createSchedule`}
+            style={{ textDecoration: "none" }}
           >
-            Create Schedule
-          </Button>
+            <Button
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              variant="outlined"
+              size="small"
+              style={{
+                backgroundColor: hover ? green[600] : green[400],
+                borderColor: green[600],
+                margin: "0px auto 0px 0px"
+              }}
+            >
+              Create Schedule
+            </Button>
+          </Link>
           <Typography style={{ marginTop: 15 }}>
             You have to not created a schedule yet.
           </Typography>
@@ -59,13 +61,6 @@ const SchedulePanel = ({ schedule }) => {
                       </Typography>
                     </li>
                   ))}
-
-                  {/* <li>
-                    <Typography variant="body1">
-                      <span style={{ fontWeight: 500 }}>Advanced:</span>{" "}
-                      {week.Advanced}
-                    </Typography>
-                  </li> */}
                 </ul>
               </div>
             ))}

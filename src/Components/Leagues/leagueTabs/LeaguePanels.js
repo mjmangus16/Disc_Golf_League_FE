@@ -25,6 +25,7 @@ function TabPanel(props) {
 }
 
 const LeaguePanels = ({
+  league_id,
   tabValue,
   schedule,
   roster,
@@ -39,13 +40,14 @@ const LeaguePanels = ({
   return (
     <div className={classes.profileLeaguesContainer}>
       <TabPanel value={tabValue} index={0}>
-        <SchedulePanel schedule={schedule} />
+        <SchedulePanel schedule={schedule} league_id={league_id} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         <RosterPanel
           roster={roster}
           loading={rosterLoading}
           failed={rosterFailed}
+          league_id={league_id}
         />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
@@ -53,6 +55,7 @@ const LeaguePanels = ({
           rounds={rounds}
           loading={roundsLoading}
           failed={roundsFailed}
+          league_id={league_id}
         />
       </TabPanel>
     </div>

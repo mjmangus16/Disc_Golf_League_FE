@@ -6,6 +6,9 @@ import SignUp from "./Components/AuthForms/SignUp";
 import Profile from "./Components/Profile/Profile";
 import Home from "./Components/Home/Home";
 import League from "./Components/Leagues/League";
+import CreateLeague from "./Components/Leagues/CreateLeague";
+import CreateSchedule from "./Components/Leagues/leagueTabs/CreateSchedule";
+import CreateRound from "./Components/Leagues/leagueTabs/CreateRound";
 
 export default () => {
   return (
@@ -30,8 +33,19 @@ export default () => {
         path="/signin"
         render={props => <SignIn history={props.history} />}
       />
-      <ProtectedRoute path="/profile" component={Profile} />
-      <ProtectedRoute path="/league/:league_id" component={League} />
+      <ProtectedRoute exact path="/profile" component={Profile} />
+      <ProtectedRoute exact path="/createLeague" component={CreateLeague} />
+      <ProtectedRoute exact path="/league/:league_id" component={League} />
+      <ProtectedRoute
+        exact
+        path="/league/:league_id/createSchedule"
+        component={CreateSchedule}
+      />
+      <ProtectedRoute
+        exact
+        path="/league/:league_id/createRound"
+        component={CreateRound}
+      />
     </>
   );
 };

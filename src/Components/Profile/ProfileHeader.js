@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Button, Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import useStyles from "./ProfileStyles";
 
 import { green } from "@material-ui/core/colors";
@@ -22,18 +23,20 @@ const ProfileHeader = ({
   return (
     <Grid container>
       <Grid item sm={3}>
-        <Button
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          variant="outlined"
-          size="small"
-          style={{
-            backgroundColor: hover ? green[600] : green[400],
-            borderColor: green[600]
-          }}
-        >
-          Create New League
-        </Button>
+        <Link to="/createLeague" style={{ textDecoration: "none" }}>
+          <Button
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            variant="outlined"
+            size="small"
+            style={{
+              backgroundColor: hover ? green[600] : green[400],
+              borderColor: green[600]
+            }}
+          >
+            Create New League
+          </Button>
+        </Link>
       </Grid>
       <Grid item xs={12} sm={6}>
         <Typography

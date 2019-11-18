@@ -38,7 +38,7 @@ function Copyright() {
 const Signup = ({
   loading,
   signup,
-  errors,
+  signUpErrors,
   history,
   addBreadcrumb,
   breadcrumbs
@@ -148,8 +148,8 @@ const Signup = ({
             <Grid item xs={12} sm={6}>
               <TextField
                 disabled={!typeSelected}
-                error={errors.f_name ? true : false}
-                helperText={errors.f_name && errors.f_name}
+                error={signUpErrors.f_name ? true : false}
+                helperText={signUpErrors.f_name && signUpErrors.f_name}
                 autoComplete="fname"
                 name="f_name"
                 variant="outlined"
@@ -163,8 +163,8 @@ const Signup = ({
             <Grid item xs={12} sm={6}>
               <TextField
                 disabled={!typeSelected}
-                error={errors.l_name ? true : false}
-                helperText={errors.l_name && errors.l_name}
+                error={signUpErrors.l_name ? true : false}
+                helperText={signUpErrors.l_name && signUpErrors.l_name}
                 variant="outlined"
                 required
                 fullWidth
@@ -178,8 +178,8 @@ const Signup = ({
             <Grid item xs={12}>
               <TextField
                 disabled={!typeSelected}
-                error={errors.email ? true : false}
-                helperText={errors.email && errors.email}
+                error={signUpErrors.email ? true : false}
+                helperText={signUpErrors.email && signUpErrors.email}
                 variant="outlined"
                 required
                 fullWidth
@@ -193,8 +193,8 @@ const Signup = ({
             <Grid item xs={12}>
               <TextField
                 disabled={!typeSelected}
-                error={errors.password ? true : false}
-                helperText={errors.password && errors.password}
+                error={signUpErrors.password ? true : false}
+                helperText={signUpErrors.password && signUpErrors.password}
                 variant="outlined"
                 required
                 fullWidth
@@ -207,13 +207,13 @@ const Signup = ({
               />
             </Grid>
           </Grid>
-          {!errors.signup_message ? (
+          {!signUpErrors.signup_message ? (
             <Typography variant="body2" className={classes.errorText}>
               Sorry, we are not currently accepting new users.
             </Typography>
           ) : (
             <Typography variant="body2" className={classes.errorText}>
-              {errors.signup_message}
+              {signUpErrors.signup_message}
             </Typography>
           )}
 
@@ -226,16 +226,7 @@ const Signup = ({
             className={classes.submit}
             onClick={e => handleSubmit(e)}
           >
-            <div className={classes.loading_error_wrapper}>
-              {!loading ? (
-                <Typography>SIGN UP</Typography>
-              ) : (
-                <CircularProgress
-                  size={32}
-                  className={classes.buttonProgress}
-                />
-              )}
-            </div>
+            {!loading ? "SIGN UP" : "LOADING"}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
@@ -265,17 +256,14 @@ const Signup = ({
 
 Signup.propTypes = {
   loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
+  signUpErrors: PropTypes.object.isRequired,
   breadcrumbs: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
-  errors: state.auth.errors,
+  signUpErrors: state.auth.signUpErrors,
   breadcrumbs: state.breadcrumbs.breadcrumbs
 });
 
-export default connect(
-  mapStateToProps,
-  { signup, addBreadcrumb }
-)(Signup);
+export default connect(mapStateToProps, { signup, addBreadcrumb })(Signup);

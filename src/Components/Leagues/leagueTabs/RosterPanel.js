@@ -38,9 +38,9 @@ const RosterPanel = ({ roster, loading, failed }) => {
               ))}
             </div>
           ) : failed ? (
-            <Typography>{failed.error}</Typography>
+            <Typography style={{ marginTop: 15 }}>{failed.error}</Typography>
           ) : (
-            <Typography>
+            <Typography style={{ marginTop: 15 }}>
               You have not added any members to the league yet.
             </Typography>
           )}

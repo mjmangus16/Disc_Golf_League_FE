@@ -37,7 +37,7 @@ const Signin = ({
   signin,
   success,
   history,
-  errors,
+  signInErrors,
   loading,
   addBreadcrumb,
   breadcrumbs
@@ -80,8 +80,8 @@ const Signin = ({
         )}
         <form className={classes.form} noValidate>
           <TextField
-            error={errors.email ? true : false}
-            helperText={errors.email && errors.email}
+            error={signInErrors.email ? true : false}
+            helperText={signInErrors.email && signInErrors.email}
             variant="outlined"
             margin="normal"
             required
@@ -94,8 +94,8 @@ const Signin = ({
             onChange={e => onChangeHandler(e)}
           />
           <TextField
-            error={errors.password ? true : false}
-            helperText={errors.password && errors.password}
+            error={signInErrors.password ? true : false}
+            helperText={signInErrors.password && signInErrors.password}
             variant="outlined"
             margin="normal"
             required
@@ -107,9 +107,9 @@ const Signin = ({
             autoComplete="current-password"
             onChange={e => onChangeHandler(e)}
           />
-          {errors.signin_message && (
+          {signInErrors.signin_message && (
             <Typography variant="body2" className={classes.errorText}>
-              {errors.signin_message}
+              {signInErrors.signin_message}
             </Typography>
           )}
 
@@ -121,16 +121,7 @@ const Signin = ({
             className={classes.submit}
             onClick={e => handleSubmit(e)}
           >
-            <div className={classes.loading_error_wrapper}>
-              {!loading ? (
-                <Typography>SIGN IN</Typography>
-              ) : (
-                <CircularProgress
-                  size={32}
-                  className={classes.buttonProgress}
-                />
-              )}
-            </div>
+            {!loading ? "SIGN IN" : "LOADING"}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
@@ -160,13 +151,13 @@ const Signin = ({
 
 Signin.propTypes = {
   loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
+  signInErrors: PropTypes.object.isRequired,
   breadcrumbs: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
-  errors: state.auth.errors,
+  signInErrors: state.auth.signInErrors,
   success: state.auth.success,
   breadcrumbs: state.breadcrumbs.breadcrumbs
 });

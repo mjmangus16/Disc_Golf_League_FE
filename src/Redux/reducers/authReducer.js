@@ -15,7 +15,8 @@ const initialState = {
   iat: null,
   exp: null,
   loading: false,
-  errors: {},
+  signInErrors: {},
+  signUpErrors: {},
   success: null
 };
 
@@ -36,7 +37,7 @@ export default (state = initialState, action) => {
     case SIGNUP_FAILED:
       return {
         ...state,
-        errors: action.payload,
+        signUpErrors: action.payload,
         loading: false
       };
     case SIGNIN_LOADING:
@@ -58,7 +59,7 @@ export default (state = initialState, action) => {
     case SIGNIN_FAILED:
       return {
         ...state,
-        errors: action.payload,
+        signInErrors: action.payload,
         loading: false
       };
     default:

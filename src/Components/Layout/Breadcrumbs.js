@@ -23,7 +23,7 @@ const Breadcrumbs_ = ({ breadcrumbs, selectBreadcrumb }) => {
 
   return (
     <div className={classes.root}>
-      <Breadcrumbs aria-label="breadcrumb">
+      {/* <Breadcrumbs aria-label="breadcrumb">
         {breadcrumbs.length > 1 &&
           breadcrumbs.map((crumb, i) => {
             if (i !== breadcrumbs.length - 1) {
@@ -48,7 +48,7 @@ const Breadcrumbs_ = ({ breadcrumbs, selectBreadcrumb }) => {
               );
             }
           })}
-      </Breadcrumbs>
+      </Breadcrumbs> */}
     </div>
   );
 };

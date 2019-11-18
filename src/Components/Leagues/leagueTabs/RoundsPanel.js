@@ -12,7 +12,7 @@ import useStyles from "../LeagueStyles";
 
 import RoundCard from "./RoundCard";
 
-const RoundsPanel = ({ rounds, failed, loading }) => {
+const RoundsPanel = ({ rounds, failed, loading, league_id }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
 
@@ -22,19 +22,24 @@ const RoundsPanel = ({ rounds, failed, loading }) => {
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          <Button
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            variant="outlined"
-            size="small"
-            style={{
-              backgroundColor: hover ? green[600] : green[400],
-              borderColor: green[600],
-              margin: "0px auto 0px 0px"
-            }}
+          <Link
+            to={`/league/${league_id}/createRound`}
+            style={{ textDecoration: "none" }}
           >
-            Add Round
-          </Button>
+            <Button
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              variant="outlined"
+              size="small"
+              style={{
+                backgroundColor: hover ? green[600] : green[400],
+                borderColor: green[600],
+                margin: "0px auto 0px 0px"
+              }}
+            >
+              Add Round
+            </Button>
+          </Link>
           {rounds && rounds.length > 0 ? (
             <Grid
               container
@@ -52,9 +57,9 @@ const RoundsPanel = ({ rounds, failed, loading }) => {
               ))}
             </Grid>
           ) : failed ? (
-            <Typography>{failed.error}</Typography>
+            <Typography style={{ marginTop: 15 }}>{failed.error}</Typography>
           ) : (
-            <Typography>
+            <Typography style={{ marginTop: 15 }}>
               You have not added any rounds to the league yet.
             </Typography>
           )}

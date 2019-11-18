@@ -11,7 +11,10 @@ import {
   GET_MEMBERS_BY_LEAGUE_ID_FAILED,
   GET_ROUNDS_BY_LEAGUE_ID_LOADING,
   GET_ROUNDS_BY_LEAGUE_ID_SUCCESS,
-  GET_ROUNDS_BY_LEAGUE_ID_FAILED
+  GET_ROUNDS_BY_LEAGUE_ID_FAILED,
+  CREATE_NEW_LEAGUE_LOADING,
+  CREATE_NEW_LEAGUE_SUCCESS,
+  CREATE_NEW_LEAGUE_FAILED
 } from "../types";
 
 export const getManagerLeagues = () => dispatch => {
@@ -102,6 +105,28 @@ export const getRoundsByLeagueId = league_id => dispatch => {
       console.log(err);
       dispatch({
         type: GET_ROUNDS_BY_LEAGUE_ID_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const createNewLeague = (league_data, redirect) => dispatch => {
+  dispatch({
+    type: CREATE_NEW_LEAGUE_LOADING
+  });
+  axiosWithAuth()
+    .post("api/leagues/create", league_data)
+    .then(res => {
+      dispatch({
+        type: CREATE_NEW_LEAGUE_SUCCESS,
+        payload: res.data
+      });
+      redirect(res.data.league_id);
+    })
+    .catch(err => {
+      console.log(err.response.data);
+      dispatch({
+        type: CREATE_NEW_LEAGUE_FAILED,
         payload: err.response.data
       });
     });

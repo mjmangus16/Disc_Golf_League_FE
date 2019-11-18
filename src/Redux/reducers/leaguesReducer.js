@@ -11,22 +11,27 @@ import {
   GET_ROUNDS_BY_LEAGUE_ID_LOADING,
   GET_ROUNDS_BY_LEAGUE_ID_SUCCESS,
   GET_ROUNDS_BY_LEAGUE_ID_FAILED,
+  CREATE_NEW_LEAGUE_LOADING,
+  CREATE_NEW_LEAGUE_SUCCESS,
+  CREATE_NEW_LEAGUE_FAILED,
   CLEAR_LEAGUES
 } from "../types";
 
 const initialState = {
-  getManagerLeaguesLoading: true,
+  getManagerLeaguesLoading: false,
   getManagerLeaguesFailed: null,
   getLeagueByIdLoading: true,
   getLeagueByIdFailed: null,
   leagues: [],
   selectedLeague: {},
-  selectedLeagueMembersLoading: true,
+  selectedLeagueMembersLoading: false,
   selectedLeagueMembersFailed: null,
   selectedLeagueMembers: [],
-  selectedLeagueRoundsLoading: true,
+  selectedLeagueRoundsLoading: false,
   selectedLeagueRoundsFailed: null,
-  selecteLeagueRounds: []
+  selecteLeagueRounds: [],
+  createNewLeagueLoading: false,
+  createNewLeagueFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -110,12 +115,41 @@ export default (state = initialState, action) => {
         selectedLeagueRoundsFailed: action.payload,
         selectedLeagueRoundsLoading: false
       };
+    case CREATE_NEW_LEAGUE_LOADING:
+      return {
+        ...state,
+        createNewLeagueLoading: true
+      };
+    case CREATE_NEW_LEAGUE_SUCCESS:
+      return {
+        ...state,
+        selectedLeague: action.payload,
+        createNewLeagueLoading: false,
+        createNewLeagueFailed: {}
+      };
+    case CREATE_NEW_LEAGUE_FAILED:
+      return {
+        ...state,
+        createNewLeagueFailed: action.payload,
+        createNewLeagueLoading: false
+      };
     case CLEAR_LEAGUES:
       return {
         ...state,
         getManagerLeaguesLoading: false,
         getManagerLeaguesFailed: null,
-        leagues: []
+        getLeagueByIdLoading: true,
+        getLeagueByIdFailed: null,
+        leagues: [],
+        selectedLeague: {},
+        selectedLeagueMembersLoading: false,
+        selectedLeagueMembersFailed: null,
+        selectedLeagueMembers: [],
+        selectedLeagueRoundsLoading: false,
+        selectedLeagueRoundsFailed: null,
+        selecteLeagueRounds: [],
+        createNewLeagueLoading: false,
+        createNewLeagueFailed: {}
       };
     default:
       return state;
