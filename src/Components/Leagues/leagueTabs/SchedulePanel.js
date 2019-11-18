@@ -27,7 +27,7 @@ const SchedulePanel = ({ schedule }) => {
           </Button>
           <div style={{ height: 400, overflow: "auto", marginTop: 25 }}>
             {schedule.map((week, i) => (
-              <div style={{ textAlign: "left" }}>
+              <div style={{ textAlign: "left" }} key={`scheduleKey${i}`}>
                 <Typography variant="subtitle2" style={{ margin: "10px auto" }}>
                   Week {i + 1}
                 </Typography>

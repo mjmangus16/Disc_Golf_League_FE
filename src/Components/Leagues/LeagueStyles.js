@@ -9,12 +9,7 @@ const useStyles = makeStyles(theme => ({
     cursor: "pointer"
   },
   loadingCircle: {
-    color: theme.palette.secondary.main,
-    position: "absolute",
-    top: "25%",
-    left: "50%",
-    marginTop: -25,
-    marginLeft: -25
+    color: theme.palette.secondary.main
   },
   headerContainer: {
     borderTop: "1px solid lightgrey",

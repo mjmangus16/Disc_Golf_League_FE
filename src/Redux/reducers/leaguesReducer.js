@@ -5,6 +5,9 @@ import {
   GET_LEAGUE_BY_ID_LOADING,
   GET_LEAGUE_BY_ID_SUCCESS,
   GET_LEAGUE_BY_ID_FAILED,
+  GET_MEMBERS_BY_LEAGUE_ID_LOADING,
+  GET_MEMBERS_BY_LEAGUE_ID_SUCCESS,
+  GET_MEMBERS_BY_LEAGUE_ID_FAILED,
   CLEAR_LEAGUES
 } from "../types";
 
@@ -14,7 +17,10 @@ const initialState = {
   getLeagueByIdLoading: true,
   getLeagueByIdFailed: null,
   leagues: [],
-  selectedLeague: {}
+  selectedLeague: {},
+  selectedLeagueMembersLoading: true,
+  selectedLeagueMembersFailed: null,
+  selectedLeagueMembers: []
 };
 
 export default (state = initialState, action) => {
@@ -52,6 +58,17 @@ export default (state = initialState, action) => {
         ...state,
         getLeagueByIdFailed: action.payload,
         getLeagueByIdLoading: false
+      };
+    case GET_MEMBERS_BY_LEAGUE_ID_LOADING:
+      return {
+        ...state,
+        selectedLeagueMembersLoading: true
+      };
+    case GET_MEMBERS_BY_LEAGUE_ID_SUCCESS:
+      return {
+        ...state,
+        selectedLeagueMembers: action.payload,
+        selectedLeagueMembersLoading: false
       };
     case CLEAR_LEAGUES:
       return {

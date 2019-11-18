@@ -1,16 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, CircularProgress, Button } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
+import useStyles from "../LeagueStyles";
 
-const RosterPanel = ({ roster }) => {
+const RosterPanel = ({ roster, loading }) => {
+  const classes = useStyles();
+  const [hover, setHover] = useState(false);
+
   return (
     <div>
-      {" "}
-      {roster ? (
-        <Typography>There is a roster</Typography>
+      {loading ? (
+        <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
-        <Typography>
-          You have not added any members to the league yet.
-        </Typography>
+        <div>
+          <Button
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            variant="outlined"
+            size="small"
+            style={{
+              backgroundColor: hover ? green[600] : green[400],
+              borderColor: green[600],
+              margin: "0px auto 0px 0px"
+            }}
+          >
+            Update Roster
+          </Button>
+          {roster ? (
+            <div style={{ height: 400, overflow: "auto", marginTop: 25 }}>
+              {roster.map((member, i) => (
+                <div
+                  style={{ textAlign: "left" }}
+                  key={(member.l_name, member.f_name, i)}
+                >
+                  {member.l_name}, {member.f_name}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Typography>
+              You have not added any members to the league yet.
+            </Typography>
+          )}
+        </div>
       )}
     </div>
   );

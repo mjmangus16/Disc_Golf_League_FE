@@ -24,7 +24,13 @@ function TabPanel(props) {
   );
 }
 
-const LeaguePanels = ({ tabValue, schedule, roster, rounds }) => {
+const LeaguePanels = ({
+  tabValue,
+  schedule,
+  roster,
+  rounds,
+  rosterLoading
+}) => {
   const classes = useStyles();
 
   return (
@@ -33,7 +39,7 @@ const LeaguePanels = ({ tabValue, schedule, roster, rounds }) => {
         <SchedulePanel schedule={schedule} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <RosterPanel roster={roster} />
+        <RosterPanel roster={roster} loading={rosterLoading} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <RoundsPanel rounds={rounds} />

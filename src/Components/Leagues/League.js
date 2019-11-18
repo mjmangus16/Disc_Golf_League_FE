@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
-import { getLeagueById } from "../../Redux/actions/leaguesActions";
+import {
+  getLeagueById,
+  getMembersByLeagueId
+} from "../../Redux/actions/leaguesActions";
 import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
 
 import LeagueHeader from "./LeagueHeader";
@@ -16,15 +19,20 @@ const League = ({
   getLeagueById,
   getLeagueByIdLoading,
   getLeagueByIdFailed,
-  selectedLeague
+  selectedLeague,
+  getMembersByLeagueId,
+  selectedLeagueMembers,
+  selectedLeagueMembersLoading
 }) => {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     getLeagueById(match.params.league_id);
+    getMembersByLeagueId(match.params.league_id);
   }, []);
   console.log(selectedLeague);
+  console.log(selectedLeagueMembers);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -41,7 +49,8 @@ const League = ({
           <LeaguePanels
             tabValue={tabValue}
             schedule={selectedLeague.schedule}
-            roster={selectedLeague.roster}
+            roster={selectedLeagueMembers}
+            rosterLoading={selectedLeagueMembersLoading}
             rounds={selectedLeague.rounds}
           />
         </div>
@@ -56,7 +65,12 @@ const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,
   getLeagueByIdLoading: state.leagues.getLeagueByIdLoading,
   getLeagueByIdFailed: state.leagues.getLeagueByIdFailed,
-  selectedLeague: state.leagues.selectedLeague
+  selectedLeague: state.leagues.selectedLeague,
+  selectedLeagueMembers: state.leagues.selectedLeagueMembers,
+  selectedLeagueMembersLoading: state.leagues.selectedLeagueMembersLoading
 });
 
-export default connect(mapStateToProps, { getLeagueById })(League);
+export default connect(mapStateToProps, {
+  getLeagueById,
+  getMembersByLeagueId
+})(League);

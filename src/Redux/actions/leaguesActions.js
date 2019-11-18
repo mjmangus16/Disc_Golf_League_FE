@@ -5,7 +5,10 @@ import {
   GET_MANAGER_LEAGUES_FAILED,
   GET_LEAGUE_BY_ID_LOADING,
   GET_LEAGUE_BY_ID_SUCCESS,
-  GET_LEAGUE_BY_ID_FAILED
+  GET_LEAGUE_BY_ID_FAILED,
+  GET_MEMBERS_BY_LEAGUE_ID_LOADING,
+  GET_MEMBERS_BY_LEAGUE_ID_SUCCESS,
+  GET_MEMBERS_BY_LEAGUE_ID_FAILED
 } from "../types";
 
 export const getManagerLeagues = () => dispatch => {
@@ -54,6 +57,27 @@ export const getLeagueById = league_id => dispatch => {
       console.log(err);
       dispatch({
         type: GET_LEAGUE_BY_ID_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const getMembersByLeagueId = league_id => dispatch => {
+  dispatch({
+    type: GET_MEMBERS_BY_LEAGUE_ID_LOADING
+  });
+  axiosWithAuth()
+    .get(`api/members/league/${league_id}`)
+    .then(members => {
+      dispatch({
+        type: GET_MEMBERS_BY_LEAGUE_ID_SUCCESS,
+        payload: members.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_MEMBERS_BY_LEAGUE_ID_FAILED,
         payload: err.response.data
       });
     });
