@@ -9,7 +9,8 @@ import {
   SIGNIN_FAILED,
   SET_CURRENT_USER,
   CLEAR_LEAGUES,
-  CLEAR_PROFILE
+  CLEAR_PROFILE,
+  CLEAR_LEAGUE_DATA
 } from "../types";
 
 export const signup = (newUser, redirect, addCrumb) => dispatch => {
@@ -74,6 +75,9 @@ export const logoutUser = () => dispatch => {
   dispatch(setCurrentUser({}));
   dispatch({
     type: CLEAR_LEAGUES
+  });
+  dispatch({
+    type: CLEAR_LEAGUE_DATA
   });
   dispatch({
     type: CLEAR_PROFILE

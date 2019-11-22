@@ -8,6 +8,7 @@ import {
   updateProfile,
   clearErrors
 } from "../../Redux/actions/profileActions";
+import { clearLeagueData } from "../../Redux/actions/leaguesActions";
 
 import ProfileHeader from "./ProfileHeader";
 import UpdateDialog from "./UpdateDialog";
@@ -31,10 +32,15 @@ const Profile = ({
   errors,
   clearErrors,
   update_success,
-  logoutUser
+  logoutUser,
+  clearLeagueData
 }) => {
   const classes = useStyles();
   const [updateOpen, setUpdateOpen] = useState(false);
+
+  useEffect(() => {
+    clearLeagueData();
+  }, []);
 
   useEffect(() => {
     if (email) {
@@ -110,5 +116,6 @@ export default connect(mapStateToProps, {
   getProfile,
   updateProfile,
   clearErrors,
-  logoutUser
+  logoutUser,
+  clearLeagueData
 })(Profile);

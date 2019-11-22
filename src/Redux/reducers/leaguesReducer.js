@@ -14,13 +14,14 @@ import {
   CREATE_NEW_LEAGUE_LOADING,
   CREATE_NEW_LEAGUE_SUCCESS,
   CREATE_NEW_LEAGUE_FAILED,
+  CLEAR_LEAGUE_DATA,
   CLEAR_LEAGUES
 } from "../types";
 
 const initialState = {
   getManagerLeaguesLoading: false,
   getManagerLeaguesFailed: null,
-  getLeagueByIdLoading: true,
+  getLeagueByIdLoading: false,
   getLeagueByIdFailed: null,
   leagues: [],
   selectedLeague: {},
@@ -29,7 +30,7 @@ const initialState = {
   selectedLeagueMembers: [],
   selectedLeagueRoundsLoading: false,
   selectedLeagueRoundsFailed: null,
-  selecteLeagueRounds: [],
+  selectedLeagueRounds: [],
   createNewLeagueLoading: false,
   createNewLeagueFailed: {}
 };
@@ -133,23 +134,27 @@ export default (state = initialState, action) => {
         createNewLeagueFailed: action.payload,
         createNewLeagueLoading: false
       };
-    case CLEAR_LEAGUES:
+    case CLEAR_LEAGUE_DATA:
       return {
         ...state,
-        getManagerLeaguesLoading: false,
-        getManagerLeaguesFailed: null,
-        getLeagueByIdLoading: true,
+        getLeagueByIdLoading: false,
         getLeagueByIdFailed: null,
-        leagues: [],
         selectedLeague: {},
         selectedLeagueMembersLoading: false,
         selectedLeagueMembersFailed: null,
         selectedLeagueMembers: [],
         selectedLeagueRoundsLoading: false,
         selectedLeagueRoundsFailed: null,
-        selecteLeagueRounds: [],
+        selectedLeagueRounds: [],
         createNewLeagueLoading: false,
         createNewLeagueFailed: {}
+      };
+    case CLEAR_LEAGUES:
+      return {
+        ...state,
+        leagues: [],
+        getManagerLeaguesLoading: false,
+        getManagerLeaguesFailed: null
       };
     default:
       return state;

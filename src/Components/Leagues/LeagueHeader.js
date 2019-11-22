@@ -9,9 +9,20 @@ const LeagueHeader = ({ league }) => {
 
   return (
     <div style={{ borderBottom: "1px solid lightgrey" }}>
-      <Typography variant="h5" gutterBottom>
-        {league.name}
-      </Typography>
+      <Grid container>
+        <Grid item xs={1}></Grid>
+        <Grid item xs={10}>
+          <Typography variant="h5" gutterBottom>
+            {league.name}
+          </Typography>
+        </Grid>
+        <Grid item xs={1}>
+          <Button variant="outlined" color="secondary" size="small">
+            Edit
+          </Button>
+        </Grid>
+      </Grid>
+
       <div className={classes.headerContainer}>
         <Grid container>
           <Grid item xs={6} className={classes.headerSection}>

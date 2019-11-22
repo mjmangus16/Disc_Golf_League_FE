@@ -14,7 +14,8 @@ import {
   GET_ROUNDS_BY_LEAGUE_ID_FAILED,
   CREATE_NEW_LEAGUE_LOADING,
   CREATE_NEW_LEAGUE_SUCCESS,
-  CREATE_NEW_LEAGUE_FAILED
+  CREATE_NEW_LEAGUE_FAILED,
+  CLEAR_LEAGUE_DATA
 } from "../types";
 
 export const getManagerLeagues = () => dispatch => {
@@ -130,4 +131,8 @@ export const createNewLeague = (league_data, redirect) => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const clearLeagueData = () => dispatch => {
+  dispatch({ type: CLEAR_LEAGUE_DATA });
 };
