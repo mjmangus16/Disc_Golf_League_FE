@@ -14,6 +14,9 @@ import {
   CREATE_NEW_LEAGUE_LOADING,
   CREATE_NEW_LEAGUE_SUCCESS,
   CREATE_NEW_LEAGUE_FAILED,
+  EDIT_LEAGUE_LOADING,
+  EDIT_LEAGUE_SUCCESS,
+  EDIT_LEAGUE_FAILED,
   CLEAR_LEAGUE_DATA,
   CLEAR_LEAGUES
 } from "../types";
@@ -32,7 +35,9 @@ const initialState = {
   selectedLeagueRoundsFailed: null,
   selectedLeagueRounds: [],
   createNewLeagueLoading: false,
-  createNewLeagueFailed: {}
+  createNewLeagueFailed: {},
+  editLeagueLoading: false,
+  editLeagueFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -133,6 +138,23 @@ export default (state = initialState, action) => {
         ...state,
         createNewLeagueFailed: action.payload,
         createNewLeagueLoading: false
+      };
+    case EDIT_LEAGUE_LOADING:
+      return {
+        ...state,
+        editLeagueLoading: true
+      };
+    case EDIT_LEAGUE_SUCCESS:
+      return {
+        ...state,
+        selectedLeague: action.payload,
+        editLeagueLoading: false
+      };
+    case EDIT_LEAGUE_FAILED:
+      return {
+        ...state,
+        editLeagueFailed: action.payload,
+        editLeagueLoading: false
       };
     case CLEAR_LEAGUE_DATA:
       return {

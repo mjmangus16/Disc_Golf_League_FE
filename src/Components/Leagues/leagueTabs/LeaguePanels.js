@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Box } from "@material-ui/core";
 
-import SchedulePanel from "./SchedulePanel";
-import RosterPanel from "./RosterPanel";
-import RoundsPanel from "./RoundsPanel";
+import SchedulePanel from "../LeagueSchedule/SchedulePanel";
+import RosterPanel from "../LeagueRoster/RosterPanel";
+import RoundsPanel from "../LeagueRounds/RoundsPanel";
 
 import useStyles from "../LeagueStyles";
 

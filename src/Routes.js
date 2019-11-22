@@ -7,8 +7,8 @@ import Profile from "./Components/Profile/Profile";
 import Home from "./Components/Home/Home";
 import League from "./Components/Leagues/League";
 import CreateLeague from "./Components/Leagues/CreateLeague";
-import CreateSchedule from "./Components/Leagues/leagueTabs/CreateSchedule";
-import CreateRound from "./Components/Leagues/leagueTabs/CreateRound";
+import UpdateSchedule from "./Components/Leagues/LeagueSchedule/UpdateSchedule";
+import CreateRound from "./Components/Leagues/LeagueRounds/CreateRound";
 
 export default () => {
   return (
@@ -38,8 +38,8 @@ export default () => {
       <ProtectedRoute exact path="/league/:league_id" component={League} />
       <ProtectedRoute
         exact
-        path="/league/:league_id/createSchedule"
-        component={CreateSchedule}
+        path="/league/:league_id/updateSchedule"
+        component={UpdateSchedule}
       />
       <ProtectedRoute
         exact

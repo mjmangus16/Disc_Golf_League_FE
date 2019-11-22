@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Button, Grid } from "@material-ui/core";
-import useStyles from "./LeagueStyles";
+import useStyles from "../LeagueStyles";
 
-import { green } from "@material-ui/core/colors";
-
-const LeagueHeader = ({ league }) => {
+const LeagueHeader = ({ league, handler }) => {
   const classes = useStyles();
 
   return (
@@ -17,7 +15,12 @@ const LeagueHeader = ({ league }) => {
           </Typography>
         </Grid>
         <Grid item xs={1}>
-          <Button variant="outlined" color="secondary" size="small">
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            onClick={() => handler(true)}
+          >
             Edit
           </Button>
         </Grid>

@@ -15,6 +15,9 @@ import {
   CREATE_NEW_LEAGUE_LOADING,
   CREATE_NEW_LEAGUE_SUCCESS,
   CREATE_NEW_LEAGUE_FAILED,
+  EDIT_LEAGUE_LOADING,
+  EDIT_LEAGUE_SUCCESS,
+  EDIT_LEAGUE_FAILED,
   CLEAR_LEAGUE_DATA
 } from "../types";
 
@@ -128,6 +131,28 @@ export const createNewLeague = (league_data, redirect) => dispatch => {
       console.log(err.response.data);
       dispatch({
         type: CREATE_NEW_LEAGUE_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const editLeague = (league_data, redirect) => dispatch => {
+  dispatch({
+    type: EDIT_LEAGUE_LOADING
+  });
+  axiosWithAuth()
+    .put(`api/leagues/update/${league_data.league_id}`, league_data)
+    .then(res => {
+      dispatch({
+        type: EDIT_LEAGUE_SUCCESS,
+        payload: res.data
+      });
+      redirect(false);
+    })
+    .catch(err => {
+      console.log(err.response.data);
+      dispatch({
+        type: EDIT_LEAGUE_FAILED,
         payload: err.response.data
       });
     });

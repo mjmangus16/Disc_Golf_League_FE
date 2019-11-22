@@ -14,7 +14,6 @@ import RoundCard from "./RoundCard";
 
 const RoundsPanel = ({ rounds, failed, loading, league_id }) => {
   const classes = useStyles();
-  const [hover, setHover] = useState(false);
 
   return (
     <div>
@@ -27,13 +26,9 @@ const RoundsPanel = ({ rounds, failed, loading, league_id }) => {
             style={{ textDecoration: "none" }}
           >
             <Button
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-              variant="outlined"
+              variant="contained"
               size="small"
               style={{
-                backgroundColor: hover ? green[600] : green[400],
-                borderColor: green[600],
                 margin: "0px auto 0px 0px"
               }}
             >

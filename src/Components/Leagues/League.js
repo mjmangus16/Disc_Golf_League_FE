@@ -5,13 +5,14 @@ import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import {
   getLeagueById,
   getMembersByLeagueId,
-  getRoundsByLeagueId
+  getRoundsByLeagueId,
+  editLeague
 } from "../../Redux/actions/leaguesActions";
 import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
 
-import LeagueHeader from "./LeagueHeader";
-import LeagueTabs from "./leagueTabs/LeagueTabs";
-import LeaguePanels from "./leagueTabs/LeaguePanels";
+import LeagueHeaderContainer from "./LeagueHeader/LeagueHeaderContainer";
+import LeagueTabs from "./LeagueTabs/LeagueTabs";
+import LeaguePanels from "./LeagueTabs/LeaguePanels";
 
 import useStyles from "./LeagueStyles";
 
@@ -28,10 +29,14 @@ const League = ({
   selectedLeagueRounds,
   selectedLeagueRoundsLoading,
   selectedLeagueRoundsFailed,
-  getRoundsByLeagueId
+  getRoundsByLeagueId,
+  editLeague,
+  editLeagueLoading,
+  editLeagueFailed
 }) => {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     getLeagueById(match.params.league_id);
@@ -49,19 +54,31 @@ const League = ({
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          <LeagueHeader league={selectedLeague} />
-          <LeagueTabs handleChange={handleTabChange} value={tabValue} />
-          <LeaguePanels
-            league_id={match.params.league_id}
-            tabValue={tabValue}
-            schedule={selectedLeague.schedule}
-            roster={selectedLeagueMembers}
-            rosterLoading={selectedLeagueMembersLoading}
-            rosterFailed={selectedLeagueMembersFailed}
-            rounds={selectedLeagueRounds}
-            roundsLoading={selectedLeagueRoundsLoading}
-            roundsFailed={selectedLeagueRoundsFailed}
+          <LeagueHeaderContainer
+            league={selectedLeague}
+            edit={edit}
+            setEdit={setEdit}
+            editLeague={editLeague}
+            editLeagueFailed={editLeagueFailed}
+            editLeagueLoading={editLeagueLoading}
           />
+
+          {!edit && (
+            <>
+              <LeagueTabs handleChange={handleTabChange} value={tabValue} />
+              <LeaguePanels
+                league_id={match.params.league_id}
+                tabValue={tabValue}
+                schedule={selectedLeague.schedule}
+                roster={selectedLeagueMembers}
+                rosterLoading={selectedLeagueMembersLoading}
+                rosterFailed={selectedLeagueMembersFailed}
+                rounds={selectedLeagueRounds}
+                roundsLoading={selectedLeagueRoundsLoading}
+                roundsFailed={selectedLeagueRoundsFailed}
+              />
+            </>
+          )}
         </div>
       )}
     </div>
@@ -80,11 +97,14 @@ const mapStateToProps = state => ({
   selectedLeagueMembersFailed: state.leagues.selectedLeagueMembersFailed,
   selectedLeagueRounds: state.leagues.selectedLeagueRounds,
   selectedLeagueRoundsLoading: state.leagues.selectedLeagueRoundsLoading,
-  selectedLeagueRoundsFailed: state.leagues.selectedLeagueRoundsFailed
+  selectedLeagueRoundsFailed: state.leagues.selectedLeagueRoundsFailed,
+  editLeagueFailed: state.leagues.editLeagueFailed,
+  editLeagueLoading: state.leagues.editLeagueLoading
 });
 
 export default connect(mapStateToProps, {
   getLeagueById,
   getMembersByLeagueId,
-  getRoundsByLeagueId
+  getRoundsByLeagueId,
+  editLeague
 })(League);

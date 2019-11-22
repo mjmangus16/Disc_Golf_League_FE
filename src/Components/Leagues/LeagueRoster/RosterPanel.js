@@ -5,7 +5,6 @@ import useStyles from "../LeagueStyles";
 
 const RosterPanel = ({ roster, loading, failed }) => {
   const classes = useStyles();
-  const [hover, setHover] = useState(false);
 
   return (
     <div>
@@ -14,13 +13,9 @@ const RosterPanel = ({ roster, loading, failed }) => {
       ) : (
         <div>
           <Button
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            variant="outlined"
+            variant="contained"
             size="small"
             style={{
-              backgroundColor: hover ? green[600] : green[400],
-              borderColor: green[600],
               margin: "0px auto 0px 0px"
             }}
           >
