@@ -17,6 +17,11 @@ import {
   EDIT_LEAGUE_LOADING,
   EDIT_LEAGUE_SUCCESS,
   EDIT_LEAGUE_FAILED,
+  ADD_WEEK_TO_SCHEDULE_SUCCESS,
+  REMOVE_WEEK_FROM_SCHEDULE_SUCCESS,
+  UPDATE_SCHEDULE_LOADING,
+  UPDATE_SCHEDULE_SUCCESS,
+  UPDATE_SCHEDULE_FAILED,
   CLEAR_LEAGUE_DATA,
   CLEAR_LEAGUES
 } from "../types";
@@ -37,7 +42,9 @@ const initialState = {
   createNewLeagueLoading: false,
   createNewLeagueFailed: {},
   editLeagueLoading: false,
-  editLeagueFailed: {}
+  editLeagueFailed: {},
+  updateScheduleLoading: false,
+  updateScheduleFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -155,6 +162,36 @@ export default (state = initialState, action) => {
         ...state,
         editLeagueFailed: action.payload,
         editLeagueLoading: false
+      };
+    case ADD_WEEK_TO_SCHEDULE_SUCCESS:
+      return {
+        ...state,
+        selectedLeague: {
+          ...state.selectedLeague,
+          schedule: action.payload
+        }
+      };
+    case REMOVE_WEEK_FROM_SCHEDULE_SUCCESS:
+      return {
+        ...state,
+        selectedLeague: action.payload
+      };
+    case UPDATE_SCHEDULE_LOADING:
+      return {
+        ...state,
+        updateScheduleLoading: true
+      };
+    case UPDATE_SCHEDULE_SUCCESS:
+      return {
+        ...state,
+        selectedLeague: action.payload,
+        updateScheduleLoading: false
+      };
+    case UPDATE_SCHEDULE_FAILED:
+      return {
+        ...state,
+        updateScheduleFailed: action.payload,
+        updateScheduleLoading: false
       };
     case CLEAR_LEAGUE_DATA:
       return {

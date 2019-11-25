@@ -12,8 +12,7 @@ import {
   Grid,
   Box,
   Typography,
-  Container,
-  CircularProgress
+  Container
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";

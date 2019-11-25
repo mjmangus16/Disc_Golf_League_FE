@@ -34,6 +34,10 @@ const useStyles = makeStyles(theme => ({
   },
   createLeagueInfo: {
     margin: theme.spacing(3)
+  },
+  updateScheduleContainer: {
+    maxWidth: 750,
+    margin: "auto auto 75px auto"
   }
 }));
 

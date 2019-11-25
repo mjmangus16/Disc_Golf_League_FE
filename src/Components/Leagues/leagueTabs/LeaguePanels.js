@@ -38,7 +38,7 @@ const LeaguePanels = ({
   const classes = useStyles();
 
   return (
-    <div className={classes.profileLeaguesContainer}>
+    <div style={{ marginBottom: 25 }}>
       <TabPanel value={tabValue} index={0}>
         <SchedulePanel schedule={schedule} league_id={league_id} />
       </TabPanel>
