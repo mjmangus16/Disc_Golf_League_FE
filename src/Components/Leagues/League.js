@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
-import {
-  getLeagueById,
-  getMembersByLeagueId,
-  getRoundsByLeagueId,
-  editLeague
-} from "../../Redux/actions/leaguesActions";
-import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
+import { getLeagueById, editLeague } from "../../Redux/actions/leaguesActions";
+import { getRoundsByLeagueId } from "../../Redux/actions/roundsActions";
+import { getScheduleByLeagueId } from "../../Redux/actions/scheduleActions";
+import { getMembersByLeagueId } from "../../Redux/actions/membersActions";
+import { CircularProgress } from "@material-ui/core";
 
 import LeagueHeaderContainer from "./LeagueHeader/LeagueHeaderContainer";
 import LeagueTabs from "./LeagueTabs/LeagueTabs";
@@ -20,16 +18,13 @@ const League = ({
   match,
   getLeagueById,
   getLeagueByIdLoading,
-  getLeagueByIdFailed,
   selectedLeague,
-  getMembersByLeagueId,
-  selectedLeagueMembers,
-  selectedLeagueMembersLoading,
-  selectedLeagueMembersFailed,
   selectedLeagueRounds,
   selectedLeagueRoundsLoading,
   selectedLeagueRoundsFailed,
   getRoundsByLeagueId,
+  getScheduleByLeagueId,
+  getMembersByLeagueId,
   editLeague,
   editLeagueLoading,
   editLeagueFailed
@@ -39,9 +34,11 @@ const League = ({
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    getLeagueById(match.params.league_id);
-    getMembersByLeagueId(match.params.league_id);
-    getRoundsByLeagueId(match.params.league_id);
+    const league_id = match.params.league_id;
+    getLeagueById(league_id);
+    getRoundsByLeagueId(league_id);
+    getScheduleByLeagueId(league_id);
+    getMembersByLeagueId(league_id);
   }, []);
 
   const handleTabChange = (event, newValue) => {
@@ -69,10 +66,6 @@ const League = ({
               <LeaguePanels
                 league_id={match.params.league_id}
                 tabValue={tabValue}
-                schedule={selectedLeague.schedule}
-                roster={selectedLeagueMembers}
-                rosterLoading={selectedLeagueMembersLoading}
-                rosterFailed={selectedLeagueMembersFailed}
                 rounds={selectedLeagueRounds}
                 roundsLoading={selectedLeagueRoundsLoading}
                 roundsFailed={selectedLeagueRoundsFailed}
@@ -92,9 +85,6 @@ const mapStateToProps = state => ({
   getLeagueByIdLoading: state.leagues.getLeagueByIdLoading,
   getLeagueByIdFailed: state.leagues.getLeagueByIdFailed,
   selectedLeague: state.leagues.selectedLeague,
-  selectedLeagueMembers: state.leagues.selectedLeagueMembers,
-  selectedLeagueMembersLoading: state.leagues.selectedLeagueMembersLoading,
-  selectedLeagueMembersFailed: state.leagues.selectedLeagueMembersFailed,
   selectedLeagueRounds: state.leagues.selectedLeagueRounds,
   selectedLeagueRoundsLoading: state.leagues.selectedLeagueRoundsLoading,
   selectedLeagueRoundsFailed: state.leagues.selectedLeagueRoundsFailed,
@@ -104,7 +94,8 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getLeagueById,
-  getMembersByLeagueId,
   getRoundsByLeagueId,
+  getScheduleByLeagueId,
+  getMembersByLeagueId,
   editLeague
 })(League);

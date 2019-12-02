@@ -1,39 +1,169 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Box, CircularProgress, Button } from "@material-ui/core";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  submitMemberToLeague,
+  removeMemberFromLeague
+} from "../../../Redux/actions/membersActions";
+import {
+  Typography,
+  Grid,
+  CircularProgress,
+  Button,
+  TextField,
+  Paper
+} from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
+import RosterCard from "./RosterCard";
 
-const RosterPanel = ({ roster, loading, failed }) => {
+const RosterPanel = ({
+  league_id,
+  members,
+  membersLoading,
+  membersFailed,
+  submitLoading,
+  submitFailed,
+  submitMemberToLeague,
+  removeMemberFromLeague,
+  removeMemberFailed
+}) => {
   const classes = useStyles();
+  const [hover, setHover] = useState(false);
+  const [trigger, setTrigger] = useState(false);
+  const [newMember, setNewMember] = useState({
+    f_name: "",
+    l_name: "",
+    email: ""
+  });
+
+  const handler = e => {
+    setNewMember({ ...newMember, [e.target.name]: e.target.value });
+  };
+
+  const submitMember = () => {
+    submitMemberToLeague(newMember, league_id, setTrigger, setNewMember);
+  };
 
   return (
     <div>
-      {loading ? (
+      {membersLoading ? (
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          <Button
-            variant="contained"
-            size="small"
-            style={{
-              margin: "0px auto 0px 0px"
-            }}
-          >
-            Update Roster
-          </Button>
-          {roster.length > 0 ? (
-            <div style={{ height: 400, overflow: "auto", marginTop: 25 }}>
-              {roster.map((member, i) => (
-                <div
-                  style={{ textAlign: "left" }}
-                  key={(member.l_name, member.f_name, i)}
-                >
-                  {member.l_name}, {member.f_name}
-                </div>
+          {trigger ? (
+            <Button
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              variant="outlined"
+              size="small"
+              style={{
+                backgroundColor: hover ? green[600] : green[400],
+                borderColor: green[600],
+                width: 150
+              }}
+              onClick={submitMember}
+            >
+              {submitLoading ? "Loading..." : "Submit Member"}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              size="small"
+              style={{
+                margin: "0px auto 0px 0px"
+              }}
+              onClick={() => setTrigger(true)}
+            >
+              Add Member
+            </Button>
+          )}
+          {removeMemberFailed.error && (
+            <Typography color="error" align="center">
+              {removeMemberFailed.error}
+            </Typography>
+          )}
+          {members.length > 0 || trigger ? (
+            <Grid
+              container
+              spacing={1}
+              style={{
+                height: 500,
+                overflow: "auto",
+                marginTop: 25
+              }}
+            >
+              {trigger && (
+                <Grid item xs={12}>
+                  <Paper
+                    className={classes.paper}
+                    elevation={4}
+                    style={{ width: 550, margin: "auto" }}
+                  >
+                    <Grid container spacing={1}>
+                      {submitFailed.error && (
+                        <Grid item xs={12}>
+                          <Typography
+                            color="error"
+                            align="center"
+                            variant="body2"
+                          >
+                            {submitFailed.error}
+                          </Typography>
+                        </Grid>
+                      )}
+                      <Grid item xs={4}>
+                        <TextField
+                          label="First Name"
+                          margin="dense"
+                          variant="outlined"
+                          fullWidth
+                          required
+                          value={newMember.f_name}
+                          name="f_name"
+                          onChange={e => handler(e)}
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField
+                          label="Last Name"
+                          margin="dense"
+                          variant="outlined"
+                          fullWidth
+                          required
+                          value={newMember.l_name}
+                          name="l_name"
+                          onChange={e => handler(e)}
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField
+                          label="Email"
+                          margin="dense"
+                          variant="outlined"
+                          fullWidth
+                          value={newMember.email}
+                          name="email"
+                          onChange={e => handler(e)}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Paper>
+                </Grid>
+              )}
+              {members.map((member, i) => (
+                <RosterCard
+                  key={(member.f_name, member.l_name, i)}
+                  member={member}
+                  remove={removeMemberFromLeague}
+                  league_id={league_id}
+                />
               ))}
-            </div>
-          ) : failed ? (
-            <Typography style={{ marginTop: 15 }}>{failed.error}</Typography>
+            </Grid>
+          ) : membersFailed ? (
+            <Typography style={{ marginTop: 15 }}>
+              {membersFailed.error}
+            </Typography>
           ) : (
             <Typography style={{ marginTop: 15 }}>
               You have not added any members to the league yet.
@@ -45,4 +175,20 @@ const RosterPanel = ({ roster, loading, failed }) => {
   );
 };
 
-export default RosterPanel;
+RosterPanel.propTypes = {};
+
+const mapStateToProps = state => ({
+  breadcrumbs: state.breadcrumbs.breadcrumbs,
+  league_id: state.leagues.selectedLeague.league_id,
+  members: state.members.members,
+  getMembersLoading: state.members.getMembersLoading,
+  getMembersFailed: state.members.getMembersFailed,
+  submitLoading: state.members.submitMemberLoading,
+  submitFailed: state.members.submitMemberFailed,
+  removeMemberFailed: state.members.removeMemberFailed
+});
+
+export default connect(mapStateToProps, {
+  submitMemberToLeague,
+  removeMemberFromLeague
+})(RosterPanel);

@@ -2,56 +2,80 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
-  scheduleUpdate,
-  addWeekToSchedule,
-  removeWeekFromSchedule
-} from "../../../Redux/actions/leaguesActions";
+  submitSchedule,
+  removeWeekFromSchedule,
+  getScheduleByLeagueId,
+  updateWeekInSchedule
+} from "../../../Redux/actions/scheduleActions";
 import { Typography, Grid, Button } from "@material-ui/core";
-
+import moment from "moment";
 import WeekItem from "./WeekItem";
 
 import useStyles from "../LeagueStyles";
 
 const UpdateSchedule = ({
   schedule,
-  selectedLeague,
-  match,
-  scheduleUpdate,
-  addWeekToSchedule,
-  removeWeekFromSchedule
+  updateWeekInSchedule,
+  submitSchedule,
+  removeWeekFromSchedule,
+  editLeagueFailed,
+  getScheduleByLeagueId,
+  match
 }) => {
   const classes = useStyles();
   const [sched, setSched] = useState([]);
+  const [addError, setAddError] = useState(false);
+
+  useEffect(() => {
+    getScheduleByLeagueId(match.params.league_id);
+  }, []);
 
   useEffect(() => {
     if (schedule) {
-      const container = schedule
-        .map((s, i) => (
-          <WeekItem
-            key={`${(s.date, i)}`}
-            data={s}
-            i={i}
-            length={schedule.length}
-            remove={removeWeek}
-            submit={submitWeek}
-          />
-        ))
-        .reverse();
+      const container = schedule.map((s, i) => (
+        <WeekItem
+          key={`${(s.date, i)}`}
+          data={s}
+          i={i}
+          length={schedule.length}
+          remove={removeWeek}
+          update={updateWeek}
+        />
+      ));
 
-      setSched(container);
+      setSched([
+        <WeekItem
+          data={{
+            date: moment(new Date()).format("YYYYMMDD"),
+            all: "",
+            rec: "",
+            int: "",
+            adv: "",
+            open: ""
+          }}
+          key={`thisIsTheAddedWeekItem`}
+          i={container.length}
+          submit={submitWeek}
+          blank={true}
+        />,
+        ...container.reverse()
+      ]);
     }
   }, [schedule]);
 
-  const removeWeek = index => {
+  const removeWeek = schedule_id => {
     const league_id = match.params.league_id;
-    removeWeekFromSchedule(schedule, index, league_id, selectedLeague);
+    removeWeekFromSchedule(schedule_id, league_id);
   };
 
-  const submitWeek = (week, index) => {
+  const submitWeek = data => {
     const league_id = match.params.league_id;
-    const container = [...schedule];
-    container[index] = week;
-    scheduleUpdate(container, league_id, selectedLeague);
+    submitSchedule(league_id, data);
+  };
+
+  const updateWeek = week => {
+    const league_id = match.params.league_id;
+    updateWeekInSchedule(league_id, week);
   };
 
   return (
@@ -60,23 +84,24 @@ const UpdateSchedule = ({
         Update Schedule
       </Typography>
 
-      <Grid container style={{ margin: "15px auto", width: "50%" }}>
-        <Grid item xs={12}>
-          <Button
-            fullWidth
-            variant="outlined"
-            onClick={() => addWeekToSchedule(schedule)}
-          >
-            Add Week
-          </Button>
-        </Grid>
-      </Grid>
       <div
         style={{
-          borderTop: "1px solid lightgrey"
+          marginTop: 25
         }}
       >
-        {sched ? sched : <WeekItem index={1} />}
+        {editLeagueFailed.error && (
+          <Typography color="error" style={{ marginTop: 10 }}>
+            {editLeagueFailed.error}
+          </Typography>
+        )}
+        {addError && (
+          <Typography>
+            You must submit the blank week before you can add another one.
+          </Typography>
+        )}
+        <Grid container spacing={4}>
+          {sched ? sched : <WeekItem index={1} />}
+        </Grid>
       </div>
     </div>
   );
@@ -86,12 +111,14 @@ UpdateSchedule.propTypes = {};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,
-  schedule: state.leagues.selectedLeague.schedule,
-  selectedLeague: state.leagues.selectedLeague
+  schedule: state.schedule.schedule,
+  editLeagueFailed: state.leagues.editLeagueFailed,
+  league_id: state.leagues.selectedLeague.league_id
 });
 
 export default connect(mapStateToProps, {
-  scheduleUpdate,
-  addWeekToSchedule,
-  removeWeekFromSchedule
+  submitSchedule,
+  removeWeekFromSchedule,
+  updateWeekInSchedule,
+  getScheduleByLeagueId
 })(UpdateSchedule);

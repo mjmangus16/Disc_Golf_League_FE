@@ -33,30 +33,21 @@ const LeaguePanels = ({
   rosterLoading,
   rosterFailed,
   roundsLoading,
-  roundsFailed
+  roundsFailed,
+  addMember
 }) => {
   const classes = useStyles();
 
   return (
     <div style={{ marginBottom: 25 }}>
       <TabPanel value={tabValue} index={0}>
-        <SchedulePanel schedule={schedule} league_id={league_id} />
+        <SchedulePanel />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <RosterPanel
-          roster={roster}
-          loading={rosterLoading}
-          failed={rosterFailed}
-          league_id={league_id}
-        />
+        <RosterPanel />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <RoundsPanel
-          rounds={rounds}
-          loading={roundsLoading}
-          failed={roundsFailed}
-          league_id={league_id}
-        />
+        <RoundsPanel />
       </TabPanel>
     </div>
   );

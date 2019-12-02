@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 import {
   Typography,
   Grid,
@@ -12,12 +15,12 @@ import useStyles from "../LeagueStyles";
 
 import RoundCard from "./RoundCard";
 
-const RoundsPanel = ({ rounds, failed, loading, league_id }) => {
+const RoundsPanel = ({ league_id, rounds, roundsFailed, roundsLoading }) => {
   const classes = useStyles();
 
   return (
     <div>
-      {loading ? (
+      {roundsLoading ? (
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
@@ -39,7 +42,7 @@ const RoundsPanel = ({ rounds, failed, loading, league_id }) => {
             <Grid
               container
               spacing={2}
-              style={{ height: 400, overflow: "auto", marginTop: 25 }}
+              style={{ height: 500, overflow: "auto", marginTop: 25 }}
             >
               {rounds.map((round, i) => (
                 <Grid
@@ -51,8 +54,10 @@ const RoundsPanel = ({ rounds, failed, loading, league_id }) => {
                 </Grid>
               ))}
             </Grid>
-          ) : failed ? (
-            <Typography style={{ marginTop: 15 }}>{failed.error}</Typography>
+          ) : roundsFailed.error ? (
+            <Typography style={{ marginTop: 15 }}>
+              {roundsFailed.error}
+            </Typography>
           ) : (
             <Typography style={{ marginTop: 15 }}>
               You have not added any rounds to the league yet.
@@ -64,4 +69,14 @@ const RoundsPanel = ({ rounds, failed, loading, league_id }) => {
   );
 };
 
-export default RoundsPanel;
+RoundsPanel.propTypes = {};
+
+const mapStateToProps = state => ({
+  breadcrumbs: state.breadcrumbs.breadcrumbs,
+  league_id: state.leagues.selectedLeague.league_id,
+  rounds: state.rounds.rounds,
+  roundsLoading: state.rounds.roundsLoading,
+  roundsFailed: state.rounds.roundsFailed
+});
+
+export default connect(mapStateToProps, {})(RoundsPanel);

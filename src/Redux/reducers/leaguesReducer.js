@@ -5,23 +5,12 @@ import {
   GET_LEAGUE_BY_ID_LOADING,
   GET_LEAGUE_BY_ID_SUCCESS,
   GET_LEAGUE_BY_ID_FAILED,
-  GET_MEMBERS_BY_LEAGUE_ID_LOADING,
-  GET_MEMBERS_BY_LEAGUE_ID_SUCCESS,
-  GET_MEMBERS_BY_LEAGUE_ID_FAILED,
-  GET_ROUNDS_BY_LEAGUE_ID_LOADING,
-  GET_ROUNDS_BY_LEAGUE_ID_SUCCESS,
-  GET_ROUNDS_BY_LEAGUE_ID_FAILED,
   CREATE_NEW_LEAGUE_LOADING,
   CREATE_NEW_LEAGUE_SUCCESS,
   CREATE_NEW_LEAGUE_FAILED,
   EDIT_LEAGUE_LOADING,
   EDIT_LEAGUE_SUCCESS,
   EDIT_LEAGUE_FAILED,
-  ADD_WEEK_TO_SCHEDULE_SUCCESS,
-  REMOVE_WEEK_FROM_SCHEDULE_SUCCESS,
-  UPDATE_SCHEDULE_LOADING,
-  UPDATE_SCHEDULE_SUCCESS,
-  UPDATE_SCHEDULE_FAILED,
   CLEAR_LEAGUE_DATA,
   CLEAR_LEAGUES
 } from "../types";
@@ -33,18 +22,10 @@ const initialState = {
   getLeagueByIdFailed: null,
   leagues: [],
   selectedLeague: {},
-  selectedLeagueMembersLoading: false,
-  selectedLeagueMembersFailed: null,
-  selectedLeagueMembers: [],
-  selectedLeagueRoundsLoading: false,
-  selectedLeagueRoundsFailed: null,
-  selectedLeagueRounds: [],
   createNewLeagueLoading: false,
   createNewLeagueFailed: {},
   editLeagueLoading: false,
-  editLeagueFailed: {},
-  updateScheduleLoading: false,
-  updateScheduleFailed: {}
+  editLeagueFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -94,40 +75,6 @@ export default (state = initialState, action) => {
         getLeagueByIdFailed: action.payload,
         getLeagueByIdLoading: false
       };
-    case GET_MEMBERS_BY_LEAGUE_ID_LOADING:
-      return {
-        ...state,
-        selectedLeagueMembersLoading: true
-      };
-    case GET_MEMBERS_BY_LEAGUE_ID_SUCCESS:
-      return {
-        ...state,
-        selectedLeagueMembers: action.payload,
-        selectedLeagueMembersLoading: false
-      };
-    case GET_MEMBERS_BY_LEAGUE_ID_FAILED:
-      return {
-        ...state,
-        selectedLeagueMembersFailed: action.payload,
-        selectedLeagueMembersLoading: false
-      };
-    case GET_ROUNDS_BY_LEAGUE_ID_LOADING:
-      return {
-        ...state,
-        selectedLeagueRoundsLoading: true
-      };
-    case GET_ROUNDS_BY_LEAGUE_ID_SUCCESS:
-      return {
-        ...state,
-        selectedLeagueRounds: action.payload.reverse(),
-        selectedLeagueRoundsLoading: false
-      };
-    case GET_ROUNDS_BY_LEAGUE_ID_FAILED:
-      return {
-        ...state,
-        selectedLeagueRoundsFailed: action.payload,
-        selectedLeagueRoundsLoading: false
-      };
     case CREATE_NEW_LEAGUE_LOADING:
       return {
         ...state,
@@ -149,7 +96,8 @@ export default (state = initialState, action) => {
     case EDIT_LEAGUE_LOADING:
       return {
         ...state,
-        editLeagueLoading: true
+        editLeagueLoading: true,
+        editLeagueFailed: {}
       };
     case EDIT_LEAGUE_SUCCESS:
       return {
@@ -163,36 +111,7 @@ export default (state = initialState, action) => {
         editLeagueFailed: action.payload,
         editLeagueLoading: false
       };
-    case ADD_WEEK_TO_SCHEDULE_SUCCESS:
-      return {
-        ...state,
-        selectedLeague: {
-          ...state.selectedLeague,
-          schedule: action.payload
-        }
-      };
-    case REMOVE_WEEK_FROM_SCHEDULE_SUCCESS:
-      return {
-        ...state,
-        selectedLeague: action.payload
-      };
-    case UPDATE_SCHEDULE_LOADING:
-      return {
-        ...state,
-        updateScheduleLoading: true
-      };
-    case UPDATE_SCHEDULE_SUCCESS:
-      return {
-        ...state,
-        selectedLeague: action.payload,
-        updateScheduleLoading: false
-      };
-    case UPDATE_SCHEDULE_FAILED:
-      return {
-        ...state,
-        updateScheduleFailed: action.payload,
-        updateScheduleLoading: false
-      };
+
     case CLEAR_LEAGUE_DATA:
       return {
         ...state,

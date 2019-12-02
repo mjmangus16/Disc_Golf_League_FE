@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Typography, Button, Grid } from "@material-ui/core";
-import useStyles from "../LeagueStyles";
+import React from "react";
 import EditLeagueHeader from "./EditLeagueHeader";
 import LeagueHeader from "./LeagueHeader";
 
