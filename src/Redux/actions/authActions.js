@@ -46,6 +46,7 @@ export const signin = (user, redirect, addCrumb) => dispatch => {
       localStorage.setItem("token", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
+      console.log(decoded);
       dispatch(setCurrentUser(decoded));
       redirect();
       addCrumb();

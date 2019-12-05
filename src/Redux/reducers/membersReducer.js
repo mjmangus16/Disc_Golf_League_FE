@@ -10,7 +10,11 @@ import {
   SUBMIT_MEMBER_TO_LEAGUE_FAILED,
   REMOVE_MEMBER_FROM_LEAGUE_LOADING,
   REMOVE_MEMBER_FROM_LEAGUE_SUCCESS,
-  REMOVE_MEMBER_FROM_LEAGUE_FAILED
+  REMOVE_MEMBER_FROM_LEAGUE_FAILED,
+  UPDATE_MEMBER_LOADING,
+  UPDATE_MEMBER_SUCCESS,
+  UPDATE_MEMBER_FAILED,
+  CLEAR_MEMBER_UPDATE_SUCCESS
 } from "../types";
 
 const initialState = {
@@ -22,7 +26,10 @@ const initialState = {
   member: {},
   submitMemberLoading: false,
   submitMemberFailed: {},
-  removeMemberFailed: {}
+  removeMemberFailed: {},
+  updateMemberLoading: false,
+  updateMemberFailed: {},
+  update_success: false
 };
 
 export default (state = initialState, action) => {
@@ -94,6 +101,30 @@ export default (state = initialState, action) => {
       return {
         ...state,
         removeMemberFailed: action.payload
+      };
+    case UPDATE_MEMBER_LOADING:
+      return {
+        ...state,
+        updateMemberLoading: true,
+        updateMemberFailed: {}
+      };
+    case UPDATE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        updateMemberLoading: false,
+        member: { ...state.member, email: action.payload.email },
+        update_success: true
+      };
+    case UPDATE_MEMBER_FAILED:
+      return {
+        ...state,
+        updateMemberLoading: false,
+        updateMemberFailed: action.payload
+      };
+    case CLEAR_MEMBER_UPDATE_SUCCESS:
+      return {
+        ...state,
+        update_success: false
       };
     default:
       return state;

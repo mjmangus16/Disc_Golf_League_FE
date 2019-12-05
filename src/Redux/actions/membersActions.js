@@ -11,7 +11,11 @@ import {
   SUBMIT_MEMBER_TO_LEAGUE_FAILED,
   REMOVE_MEMBER_FROM_LEAGUE_LOADING,
   REMOVE_MEMBER_FROM_LEAGUE_SUCCESS,
-  REMOVE_MEMBER_FROM_LEAGUE_FAILED
+  REMOVE_MEMBER_FROM_LEAGUE_FAILED,
+  UPDATE_MEMBER_LOADING,
+  UPDATE_MEMBER_SUCCESS,
+  UPDATE_MEMBER_FAILED,
+  CLEAR_MEMBER_UPDATE_SUCCESS
 } from "../types";
 
 export const getMembersByLeagueId = league_id => dispatch => {
@@ -100,7 +104,12 @@ export const submitMemberToLeague = (
   }
 };
 
-export const removeMemberFromLeague = (member_id, league_id) => dispatch => {
+export const removeMemberFromLeague = (
+  member_id,
+  league_id,
+  redirect
+) => dispatch => {
+  console.log(member_id, league_id);
   if (
     window.confirm(
       "Deleting this member will remove all of this members rounds too. Are you sure you want to do this?"
@@ -116,6 +125,7 @@ export const removeMemberFromLeague = (member_id, league_id) => dispatch => {
           type: REMOVE_MEMBER_FROM_LEAGUE_SUCCESS,
           payload: member_id
         });
+        redirect();
       })
       .catch(err => {
         console.log(err.response.data);
@@ -125,4 +135,30 @@ export const removeMemberFromLeague = (member_id, league_id) => dispatch => {
         });
       });
   }
+};
+
+export const updateMember = (member_id, league_id, email) => dispatch => {
+  dispatch({ type: UPDATE_MEMBER_LOADING });
+  console.log(league_id, member_id);
+  axiosWithAuth()
+    .put(`api/members/update/${member_id}/league/${league_id}`, { email })
+    .then(res => {
+      dispatch({
+        type: UPDATE_MEMBER_SUCCESS,
+        payload: res.data
+      });
+
+      setTimeout(() => {
+        dispatch({
+          type: CLEAR_MEMBER_UPDATE_SUCCESS
+        });
+      }, 10000);
+    })
+    .catch(err => {
+      console.log(err.response.data);
+      dispatch({
+        type: UPDATE_MEMBER_FAILED,
+        payload: err.response.data
+      });
+    });
 };

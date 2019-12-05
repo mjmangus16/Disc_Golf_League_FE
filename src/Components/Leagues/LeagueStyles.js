@@ -38,6 +38,9 @@ const useStyles = makeStyles(theme => ({
   updateScheduleContainer: {
     maxWidth: 750,
     margin: "auto auto 75px auto"
+  },
+  memberOptions: {
+    flexGrow: 4
   }
 }));
 

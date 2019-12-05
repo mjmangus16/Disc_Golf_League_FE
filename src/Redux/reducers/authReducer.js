@@ -17,7 +17,8 @@ const initialState = {
   loading: false,
   signInErrors: {},
   signUpErrors: {},
-  success: null
+  success: null,
+  admin: false
 };
 
 export default (state = initialState, action) => {
@@ -54,7 +55,8 @@ export default (state = initialState, action) => {
         email: action.payload.email,
         iat: action.payload.iat,
         exp: action.payload.exp,
-        success: null
+        success: null,
+        admin: action.payload.admin ? true : false
       };
     case SIGNIN_FAILED:
       return {

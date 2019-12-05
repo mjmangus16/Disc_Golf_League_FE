@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  submitMemberToLeague,
-  removeMemberFromLeague
-} from "../../../Redux/actions/membersActions";
+import { submitMemberToLeague } from "../../../Redux/actions/membersActions";
 import {
   Typography,
   Grid,
@@ -24,9 +21,7 @@ const RosterPanel = ({
   membersFailed,
   submitLoading,
   submitFailed,
-  submitMemberToLeague,
-  removeMemberFromLeague,
-  removeMemberFailed
+  submitMemberToLeague
 }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
@@ -77,11 +72,6 @@ const RosterPanel = ({
             >
               Add Member
             </Button>
-          )}
-          {removeMemberFailed.error && (
-            <Typography color="error" align="center">
-              {removeMemberFailed.error}
-            </Typography>
           )}
           {members.length > 0 || trigger ? (
             <Grid
@@ -155,7 +145,6 @@ const RosterPanel = ({
                 <RosterCard
                   key={(member.f_name, member.l_name, i)}
                   member={member}
-                  remove={removeMemberFromLeague}
                   league_id={league_id}
                 />
               ))}
@@ -184,11 +173,9 @@ const mapStateToProps = state => ({
   getMembersLoading: state.members.getMembersLoading,
   getMembersFailed: state.members.getMembersFailed,
   submitLoading: state.members.submitMemberLoading,
-  submitFailed: state.members.submitMemberFailed,
-  removeMemberFailed: state.members.removeMemberFailed
+  submitFailed: state.members.submitMemberFailed
 });
 
 export default connect(mapStateToProps, {
-  submitMemberToLeague,
-  removeMemberFromLeague
+  submitMemberToLeague
 })(RosterPanel);
