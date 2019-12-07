@@ -41,6 +41,11 @@ const useStyles = makeStyles(theme => ({
   },
   memberOptions: {
     flexGrow: 4
+  },
+  createRoundContainer: {
+    width: "auto",
+    maxWidth: 700,
+    margin: "auto"
   }
 }));
 

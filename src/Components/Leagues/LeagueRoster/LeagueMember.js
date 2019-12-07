@@ -9,7 +9,7 @@ import {
 import {
   Typography,
   Grid,
-  Paper,
+  Toolbar,
   Button,
   CircularProgress
 } from "@material-ui/core";
@@ -72,16 +72,24 @@ const LeagueMember = ({
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <>
-          <Typography variant="h4">{`${member.l_name}, ${member.f_name}`}</Typography>
-          <Button
-            variant="outlined"
-            size="small"
-            style={{ margin: "10px auto" }}
-            onClick={() => setTrigger(true)}
-          >
-            Member Options
-          </Button>
-
+          <Grid container>
+            <Grid item xs={3} />
+            <Grid item xs={6}>
+              <Typography variant="h4">{`${member.l_name}, ${member.f_name}`}</Typography>
+            </Grid>
+            <Grid item xs={3}>
+              {" "}
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="small"
+                style={{ margin: "10px auto" }}
+                onClick={() => setTrigger(true)}
+              >
+                Member Options
+              </Button>
+            </Grid>
+          </Grid>
           <Grid
             container
             justify="center"
@@ -127,24 +135,28 @@ const LeagueMember = ({
             {member.rounds &&
               member.rounds.map(r => (
                 <Grid item xs={8} key={r.type + r.date + r.score}>
-                  <Paper style={{ padding: "15px 0px" }} elevation={4}>
-                    <Grid container>
-                      <Grid item xs={3}>
-                        <Typography variant="body2">{r.date}</Typography>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Typography variant="body2">{r.type}</Typography>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Typography variant="body2">
-                          {r.location ? r.location : "N/A"}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Typography variant="body2">{r.score}</Typography>
-                      </Grid>
+                  <Grid
+                    container
+                    style={{
+                      borderBottom: "1px solid lightGrey",
+                      padding: "10px 0px"
+                    }}
+                  >
+                    <Grid item xs={3}>
+                      <Typography variant="body2">{r.date}</Typography>
                     </Grid>
-                  </Paper>
+                    <Grid item xs={3}>
+                      <Typography variant="body2">{r.type}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant="body2">
+                        {r.location ? r.location : "N/A"}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant="body2">{r.score}</Typography>
+                    </Grid>
+                  </Grid>
                 </Grid>
               ))}
           </Grid>
