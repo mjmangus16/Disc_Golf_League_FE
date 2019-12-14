@@ -1,13 +1,19 @@
 import {
   GET_ROUNDS_BY_LEAGUE_ID_LOADING,
   GET_ROUNDS_BY_LEAGUE_ID_SUCCESS,
-  GET_ROUNDS_BY_LEAGUE_ID_FAILED
+  GET_ROUNDS_BY_LEAGUE_ID_FAILED,
+  GET_ROUND_BY_ROUND_ID_LOADING,
+  GET_ROUND_BY_ROUND_ID_SUCCESS,
+  GET_ROUND_BY_ROUND_ID_FAILED
 } from "../types";
 
 const initialState = {
   rounds: [],
   roundsLoading: false,
-  roundsFailed: {}
+  roundsFailed: {},
+  round: {},
+  roundLoading: false,
+  roundFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -29,6 +35,24 @@ export default (state = initialState, action) => {
         ...state,
         roundsFailed: action.payload,
         roundsLoading: false
+      };
+    case GET_ROUND_BY_ROUND_ID_LOADING:
+      return {
+        ...state,
+        roundLoading: true,
+        roundFailed: {}
+      };
+    case GET_ROUND_BY_ROUND_ID_SUCCESS:
+      return {
+        ...state,
+        round: action.payload,
+        roundLoading: false
+      };
+    case GET_ROUND_BY_ROUND_ID_FAILED:
+      return {
+        ...state,
+        roundFailed: action.payload,
+        roundLoading: false
       };
     default:
       return state;

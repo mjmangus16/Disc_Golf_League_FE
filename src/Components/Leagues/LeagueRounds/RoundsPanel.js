@@ -50,7 +50,7 @@ const RoundsPanel = ({ league_id, rounds, roundsFailed, roundsLoading }) => {
                   xs={12}
                   key={round.date + round.type + round.round_id}
                 >
-                  <RoundCard round={round} />
+                  <RoundCard round={round} league_id={league_id} />
                 </Grid>
               ))}
             </Grid>

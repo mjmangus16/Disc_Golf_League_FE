@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid, TextField, Button } from "@material-ui/core";
 
-const Score = ({ player }) => {
+const Score = ({ player, handleScore, index }) => {
   console.log(player);
   return (
     <div
@@ -17,7 +17,13 @@ const Score = ({ player }) => {
           <Typography>{player.name}</Typography>
         </Grid>
         <Grid item xs={6}>
-          <TextField label="Score" name="type" required style={{ width: 65 }} />
+          <TextField
+            label="Score"
+            name="type"
+            required
+            style={{ width: 65 }}
+            onChange={e => handleScore(e, index)}
+          />
         </Grid>
       </Grid>
     </div>

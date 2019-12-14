@@ -9,6 +9,7 @@ import League from "./Components/Leagues/League";
 import CreateLeague from "./Components/Leagues/CreateLeague";
 import UpdateSchedule from "./Components/Leagues/LeagueSchedule/UpdateSchedule";
 import CreateRound from "./Components/Leagues/LeagueRounds/CreateRound";
+import ViewRound from "./Components/Leagues/LeagueRounds/ViewRound";
 import LeagueMember from "./Components/Leagues/LeagueRoster/LeagueMember";
 
 export default () => {
@@ -51,6 +52,11 @@ export default () => {
         exact
         path="/league/:league_id/createRound"
         component={CreateRound}
+      />
+      <ProtectedRoute
+        exact
+        path="/league/:league_id/round/:round_id/viewRound"
+        component={ViewRound}
       />
     </>
   );

@@ -16,7 +16,7 @@ import {
 
 import useStyles from "../LeagueStyles";
 
-const TransferList = ({ members, left, setLeft, right, setRight }) => {
+const TransferList = ({ left, setLeft, right, setRight }) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
 
