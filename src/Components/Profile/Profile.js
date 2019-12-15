@@ -58,6 +58,7 @@ const Profile = ({
   };
 
   const handleUpdate = userData => {
+    console.log(userData);
     updateProfile(user_id, userData, setUpdateOpen);
   };
 

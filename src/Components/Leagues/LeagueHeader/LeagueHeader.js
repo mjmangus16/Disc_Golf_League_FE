@@ -16,7 +16,7 @@ const LeagueHeader = ({ league, handler }) => {
         </Grid>
         <Grid item xs={1}>
           <Button
-            variant="outlined"
+            variant="contained"
             color="secondary"
             size="small"
             onClick={() => handler(true)}

@@ -19,7 +19,8 @@ const CreateRound = ({
   getMembersByLeagueId,
   addRoundAndParticipants,
   members,
-  match
+  match,
+  history
 }) => {
   const classes = useStyles();
   const [toggle, setToggle] = useState(false);
@@ -64,8 +65,9 @@ const CreateRound = ({
       type
     };
     const participants = right;
+    const redirect = () => history.push(`/league/${league_id}`);
 
-    addRoundAndParticipants(league_id, 1, round, participants);
+    addRoundAndParticipants(league_id, round, participants, redirect);
   };
 
   return (

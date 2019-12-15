@@ -47,7 +47,7 @@ const ProfileHeader = ({
       <Grid item xs={12} sm={3}>
         {!get_loading && (
           <Button
-            variant={!success ? "outlined" : "contained"}
+            variant="contained"
             color="secondary"
             size="small"
             onClick={handleOpen}
