@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getManagerLeagues } from "../../Redux/actions/leaguesActions";
+import {
+  getManagerLeagues,
+  getUserLeagues
+} from "../../Redux/actions/leaguesActions";
 
 import LeagueCard from "../Leagues/LeagueCard";
 
@@ -10,26 +13,24 @@ import useStyles from "./ProfileStyles";
 
 const ProfileLeagues = ({
   getManagerLeagues,
+  getUserLeagues,
   getManagerLeaguesLoading,
-  leagues
+  getUserLeaguesLoading,
+  leagues,
+  admin
 }) => {
   const [hover, setHover] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
-    getManagerLeagues();
+    if (admin) {
+      getManagerLeagues();
+    } else {
+      getUserLeagues();
+    }
   }, []);
 
-  // let leaguesDisplay;
-  // console.log(leagues);
-
-  // if (leagues.length > 0) {
-  //   leaguesDisplay = (
-
-  //   );
-  // } else {
-  //   leaguesDisplay =
-  // }
+  console.log(leagues);
 
   return (
     <div className={classes.profileLeaguesContainer}>
@@ -53,7 +54,7 @@ const ProfileLeagues = ({
         </Grid>
       </Paper>
       <div className={classes.gridContainer}>
-        {getManagerLeaguesLoading ? (
+        {getManagerLeaguesLoading || getUserLeaguesLoading ? (
           <CircularProgress size={32} className={classes.buttonProgress} />
         ) : leagues.length > 0 ? (
           <Grid container spacing={2}>
@@ -67,8 +68,7 @@ const ProfileLeagues = ({
         ) : (
           <div className={classes.noLeagues}>
             <Typography variant="body1">
-              You have no leagues to display. Once you create a league, it will
-              show up here.
+              You have no leagues to display.
             </Typography>
           </div>
         )}
@@ -82,9 +82,13 @@ ProfileLeagues.propTypes = {};
 const mapStateToProps = state => ({
   getManagerLeaguesLoading: state.leagues.getManagerLeaguesLoading,
   getManagerLeaguesFailed: state.leagues.getManagerLeaguesFailed,
-  leagues: state.leagues.leagues
+  getUserLeaguesLoading: state.leagues.getUserLeaguesLoading,
+  getUserLeaguesFailed: state.leagues.getUserLeaguesFailed,
+  leagues: state.leagues.leagues,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {
-  getManagerLeagues
+  getManagerLeagues,
+  getUserLeagues
 })(ProfileLeagues);

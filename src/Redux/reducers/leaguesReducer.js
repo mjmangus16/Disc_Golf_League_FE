@@ -2,6 +2,9 @@ import {
   GET_MANAGER_LEAGUES_LOADING,
   GET_MANAGER_LEAGUES_SUCCESS,
   GET_MANAGER_LEAGUES_FAILED,
+  GET_USER_LEAGUES_LOADING,
+  GET_USER_LEAGUES_SUCCESS,
+  GET_USER_LEAGUES_FAILED,
   GET_LEAGUE_BY_ID_LOADING,
   GET_LEAGUE_BY_ID_SUCCESS,
   GET_LEAGUE_BY_ID_FAILED,
@@ -17,9 +20,11 @@ import {
 
 const initialState = {
   getManagerLeaguesLoading: false,
-  getManagerLeaguesFailed: null,
+  getManagerLeaguesFailed: {},
+  getUserLeaguesLoading: false,
+  getUserLeaguesFailed: {},
   getLeagueByIdLoading: false,
-  getLeagueByIdFailed: null,
+  getLeagueByIdFailed: {},
   leagues: [],
   selectedLeague: {},
   createNewLeagueLoading: false,
@@ -46,6 +51,24 @@ export default (state = initialState, action) => {
         ...state,
         getManagerLeaguesFailed: action.payload,
         getManagerLeaguesLoading: false
+      };
+    case GET_USER_LEAGUES_LOADING:
+      return {
+        ...state,
+        getUserLeaguesLoading: true,
+        getUserLeaguesFailed: {}
+      };
+    case GET_USER_LEAGUES_SUCCESS:
+      return {
+        ...state,
+        getUserLeaguesLoading: false,
+        leagues: action.payload
+      };
+    case GET_USER_LEAGUES_FAILED:
+      return {
+        ...state,
+        getUserLeaguesLoading: false,
+        getUserLeaguesFailed: action.payload
       };
     case GET_LEAGUE_BY_ID_LOADING:
       return {

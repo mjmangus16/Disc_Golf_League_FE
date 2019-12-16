@@ -10,7 +10,8 @@ const ProfileHeader = ({
   f_name,
   handleOpen,
   get_loading,
-  success
+  success,
+  admin
 }) => {
   const classes = useStyles();
   const [name, setName] = useState("");
@@ -23,20 +24,22 @@ const ProfileHeader = ({
   return (
     <Grid container>
       <Grid item sm={3}>
-        <Link to="/createLeague" style={{ textDecoration: "none" }}>
-          <Button
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            variant="outlined"
-            size="small"
-            style={{
-              backgroundColor: hover ? green[600] : green[400],
-              borderColor: green[600]
-            }}
-          >
-            Create New League
-          </Button>
-        </Link>
+        {admin && (
+          <Link to="/createLeague" style={{ textDecoration: "none" }}>
+            <Button
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              variant="outlined"
+              size="small"
+              style={{
+                backgroundColor: hover ? green[600] : green[400],
+                borderColor: green[600]
+              }}
+            >
+              Create New League
+            </Button>
+          </Link>
+        )}
       </Grid>
       <Grid item xs={12} sm={6}>
         <Typography

@@ -3,6 +3,9 @@ import {
   GET_MANAGER_LEAGUES_LOADING,
   GET_MANAGER_LEAGUES_SUCCESS,
   GET_MANAGER_LEAGUES_FAILED,
+  GET_USER_LEAGUES_LOADING,
+  GET_USER_LEAGUES_SUCCESS,
+  GET_USER_LEAGUES_FAILED,
   GET_LEAGUE_BY_ID_LOADING,
   GET_LEAGUE_BY_ID_SUCCESS,
   GET_LEAGUE_BY_ID_FAILED,
@@ -40,6 +43,22 @@ export const getManagerLeagues = () => dispatch => {
       console.log(err);
       dispatch({
         type: GET_MANAGER_LEAGUES_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const getUserLeagues = () => dispatch => {
+  dispatch({ type: GET_USER_LEAGUES_LOADING });
+  axiosWithAuth()
+    .get("/api/leagues/user")
+    .then(res => {
+      dispatch({ type: GET_USER_LEAGUES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_USER_LEAGUES_FAILED,
         payload: err.response.data
       });
     });

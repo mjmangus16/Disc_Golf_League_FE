@@ -19,6 +19,7 @@ import { CircularProgress } from "@material-ui/core";
 import useStyles from "./ProfileStyles";
 
 const Profile = ({
+  admin,
   email,
   breadcrumbs,
   history,
@@ -58,7 +59,6 @@ const Profile = ({
   };
 
   const handleUpdate = userData => {
-    console.log(userData);
     updateProfile(user_id, userData, setUpdateOpen);
   };
 
@@ -88,6 +88,7 @@ const Profile = ({
             handleOpen={handleUpdateOpen}
             get_loading={get_loading}
             success={update_success}
+            admin={admin}
           />
           <ProfileLeagues />
         </div>
@@ -110,7 +111,8 @@ const mapStateToProps = state => ({
   user_id: state.profile.user_id,
   org_name: state.profile.org_name,
   get_loading: state.profile.get_loading,
-  update_success: state.profile.update_success
+  update_success: state.profile.update_success,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {
