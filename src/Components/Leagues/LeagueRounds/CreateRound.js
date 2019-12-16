@@ -138,7 +138,12 @@ const CreateRound = ({
       ) : (
         <div>
           {right.map((p, i) => (
-            <Score player={p} index={i} handleScore={handleScore} />
+            <Score
+              key={p.name + i}
+              player={p}
+              index={i}
+              handleScore={handleScore}
+            />
           ))}
           <Grid container spacing={4}>
             <Grid item xs={6}>

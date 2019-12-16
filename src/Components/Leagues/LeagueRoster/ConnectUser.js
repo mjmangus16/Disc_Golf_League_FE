@@ -7,7 +7,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  DialogContentText
+  DialogContentText,
+  Toolbar
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 
@@ -25,7 +26,17 @@ const ConnectUser = ({
   const [hover, setHover] = useState(false);
   return (
     <Dialog open={status} onClose={() => close(false)}>
-      <DialogTitle>Member Options</DialogTitle>
+      <Toolbar>
+        <DialogTitle style={{ flexGrow: 4 }}>Member Options</DialogTitle>
+        <Button
+          variant="outlined"
+          color="secondary"
+          size="small"
+          onClick={deleteMember}
+        >
+          DELETE MEMBER
+        </Button>
+      </Toolbar>
 
       <DialogContent>
         <DialogContentText>
@@ -68,14 +79,7 @@ const ConnectUser = ({
             ? "Connect To User"
             : "Successfully Connected"}
         </Button>
-        <Button
-          variant="outlined"
-          color="secondary"
-          size="small"
-          onClick={deleteMember}
-        >
-          DELETE MEMBER
-        </Button>
+
         <Button onClick={() => close(false)}>Cancel</Button>
       </DialogActions>
     </Dialog>

@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import {
   getRoundByRoundId,
   addParticipant,
-  deleteParticipant
+  deleteParticipant,
+  updateMultipleParticipants
 } from "../../../Redux/actions/roundsActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import {
@@ -32,9 +33,11 @@ const ViewRound = ({
   addParticipant,
   addParticipantLoading,
   addParticipantFailed,
-  deleteParticipant
+  deleteParticipant,
+  updateMultipleParticipants
 }) => {
-  const [hover, setHover] = useState(false);
+  const [hover1, setHover1] = useState(false);
+  const [hover2, setHover2] = useState(false);
   const [trigger, setTrigger] = useState(false);
   const [changes, setChanges] = useState(false);
   const [member, setMember] = useState("");
@@ -115,20 +118,43 @@ const ViewRound = ({
     );
   };
 
-  console.log(participants);
+  const updateParticipants = () => {
+    const { round_id, league_id } = match.params;
+    updateMultipleParticipants(league_id, round_id, participants);
+    setChanges(false);
+  };
 
   return (
     <div style={{ width: "90%", margin: "auto" }}>
       <Grid container>
         <Grid item xs={3}>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            onClick={() => setChanges(!changes)}
-          >
-            Make Changes
-          </Button>
+          {!changes ? (
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => {
+                setChanges(true);
+                setTrigger(false);
+              }}
+            >
+              Make Changes
+            </Button>
+          ) : (
+            <Button
+              onMouseEnter={() => setHover1(true)}
+              onMouseLeave={() => setHover1(false)}
+              variant="contained"
+              size="small"
+              onClick={updateParticipants}
+              style={{
+                backgroundColor: hover1 ? green[600] : green[400],
+                borderColor: green[600]
+              }}
+            >
+              Submit Changes
+            </Button>
+          )}
         </Grid>
         <Grid item xs={6}>
           <Typography variant="h5" gutterBottom>
@@ -142,19 +168,22 @@ const ViewRound = ({
               variant="contained"
               color="secondary"
               size="small"
-              onClick={() => setTrigger(true)}
+              onClick={() => {
+                setChanges(false);
+                setTrigger(true);
+              }}
             >
               Add Score
             </Button>
           ) : (
             <Button
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-              variant="outlined"
+              onMouseEnter={() => setHover2(true)}
+              onMouseLeave={() => setHover2(false)}
+              variant="contained"
               size="small"
               onClick={submitParticipant}
               style={{
-                backgroundColor: hover ? green[600] : green[400],
+                backgroundColor: hover2 ? green[600] : green[400],
                 borderColor: green[600]
               }}
             >
@@ -328,5 +357,6 @@ export default connect(mapStateToProps, {
   getRoundByRoundId,
   getMembersByLeagueId,
   addParticipant,
-  deleteParticipant
+  deleteParticipant,
+  updateMultipleParticipants
 })(ViewRound);

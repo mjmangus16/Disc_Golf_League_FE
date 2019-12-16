@@ -96,6 +96,28 @@ export const addParticipant = (
     });
 };
 
+export const updateMultipleParticipants = (
+  league_id,
+  round_id,
+  participants
+) => dispatch => {
+  participants = participants.map(pa => {
+    return {
+      member_id: pa.member_id,
+      participant_id: pa.participant_id,
+      score: pa.score
+    };
+  });
+  console.log(participants);
+
+  participants.forEach(async p => {
+    await axiosWithAuth().put(
+      `api/participants/league/${league_id}/round/${round_id}/member/${p.member_id}/participant/${p.participant_id}`,
+      p
+    );
+  });
+};
+
 export const deleteParticipant = (
   league_id,
   round_id,
