@@ -9,7 +9,8 @@ const AuthNav = ({
   classes,
   open,
   anchorEl,
-  logout
+  logout,
+  admin
 }) => {
   return (
     <Menu
@@ -53,19 +54,22 @@ const AuthNav = ({
           Profile
         </MenuItem>
       </Link>
-      <Link to="/createleague" className={classes.link}>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            addBreadcrumb(breadcrumbs, {
-              name: "Create League",
-              url: "/createleague"
-            });
-          }}
-        >
-          Create League
-        </MenuItem>
-      </Link>
+      {admin && (
+        <Link to="/createleague" className={classes.link}>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              addBreadcrumb(breadcrumbs, {
+                name: "Create League",
+                url: "/createleague"
+              });
+            }}
+          >
+            Create League
+          </MenuItem>
+        </Link>
+      )}
+
       <Link to="/" className={classes.link}>
         <MenuItem
           onClick={() => {

@@ -27,7 +27,8 @@ const League = ({
   getMembersByLeagueId,
   editLeague,
   editLeagueLoading,
-  editLeagueFailed
+  editLeagueFailed,
+  admin
 }) => {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
@@ -58,6 +59,7 @@ const League = ({
             editLeague={editLeague}
             editLeagueFailed={editLeagueFailed}
             editLeagueLoading={editLeagueLoading}
+            admin={admin}
           />
 
           {!edit && (
@@ -89,7 +91,8 @@ const mapStateToProps = state => ({
   selectedLeagueRoundsLoading: state.leagues.selectedLeagueRoundsLoading,
   selectedLeagueRoundsFailed: state.leagues.selectedLeagueRoundsFailed,
   editLeagueFailed: state.leagues.editLeagueFailed,
-  editLeagueLoading: state.leagues.editLeagueLoading
+  editLeagueLoading: state.leagues.editLeagueLoading,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {

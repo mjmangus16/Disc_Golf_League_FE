@@ -73,18 +73,8 @@ export default (state = initialState, action) => {
     case GET_LEAGUE_BY_ID_LOADING:
       return {
         ...state,
-        getManagerLeaguesLoading: true,
-        getManagerLeaguesFailed: null,
         getLeagueByIdLoading: true,
-        getLeagueByIdFailed: null,
-        leagues: [],
-        selectedLeague: {},
-        selectedLeagueMembersLoading: true,
-        selectedLeagueMembersFailed: null,
-        selectedLeagueMembers: [],
-        selectedLeagueRoundsLoading: true,
-        selectedLeagueRoundsFailed: null,
-        selecteLeagueRounds: []
+        getLeagueByIdFailed: {}
       };
     case GET_LEAGUE_BY_ID_SUCCESS:
       return {

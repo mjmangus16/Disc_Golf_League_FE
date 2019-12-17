@@ -29,7 +29,8 @@ const LeagueMember = ({
   updateMemberFailed,
   update_success,
   match,
-  history
+  history,
+  admin
 }) => {
   const classes = useStyles();
   const [trigger, setTrigger] = useState(false);
@@ -57,17 +58,20 @@ const LeagueMember = ({
 
   return (
     <div>
-      <ConnectUser
-        status={trigger}
-        close={setTrigger}
-        email={email}
-        change={setEmail}
-        deleteMember={deleteMember}
-        loading={updateMemberLoading}
-        failed={updateMemberFailed}
-        success={update_success}
-        update={handleUpdate}
-      />
+      {admin && (
+        <ConnectUser
+          status={trigger}
+          close={setTrigger}
+          email={email}
+          change={setEmail}
+          deleteMember={deleteMember}
+          loading={updateMemberLoading}
+          failed={updateMemberFailed}
+          success={update_success}
+          update={handleUpdate}
+        />
+      )}
+
       {memberLoading ? (
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
@@ -78,16 +82,17 @@ const LeagueMember = ({
               <Typography variant="h4">{`${member.l_name}, ${member.f_name}`}</Typography>
             </Grid>
             <Grid item xs={3}>
-              {" "}
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="small"
-                style={{ margin: "10px auto" }}
-                onClick={() => setTrigger(true)}
-              >
-                Member Options
-              </Button>
+              {admin && (
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  style={{ margin: "10px auto" }}
+                  onClick={() => setTrigger(true)}
+                >
+                  Member Options
+                </Button>
+              )}
             </Grid>
           </Grid>
           <Grid
@@ -174,7 +179,8 @@ const mapStateToProps = state => ({
   memberFailed: state.members.getMemberFailed,
   updateMemberLoading: state.members.updateMemberLoading,
   updateMemberFailed: state.members.updateMemberFailed,
-  update_success: state.members.update_success
+  update_success: state.members.update_success,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {

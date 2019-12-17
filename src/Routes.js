@@ -1,6 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import AdminProtectedRoute from "./utils/AdminProtectedRoute";
 import SignIn from "./Components/AuthForms/SignIn";
 import SignUp from "./Components/AuthForms/SignUp";
 import Profile from "./Components/Profile/Profile";
@@ -36,9 +37,13 @@ export default () => {
         render={props => <SignIn history={props.history} />}
       />
       <ProtectedRoute exact path="/profile" component={Profile} />
-      <ProtectedRoute exact path="/createLeague" component={CreateLeague} />
+      <AdminProtectedRoute
+        exact
+        path="/createLeague"
+        component={CreateLeague}
+      />
       <ProtectedRoute exact path="/league/:league_id" component={League} />
-      <ProtectedRoute
+      <AdminProtectedRoute
         exact
         path="/league/:league_id/updateSchedule"
         component={UpdateSchedule}
@@ -48,7 +53,7 @@ export default () => {
         path="/league/:league_id/member/:member_id"
         component={LeagueMember}
       />
-      <ProtectedRoute
+      <AdminProtectedRoute
         exact
         path="/league/:league_id/createRound"
         component={CreateRound}

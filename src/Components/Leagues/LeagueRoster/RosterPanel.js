@@ -21,7 +21,8 @@ const RosterPanel = ({
   membersFailed,
   submitLoading,
   submitFailed,
-  submitMemberToLeague
+  submitMemberToLeague,
+  admin
 }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
@@ -62,16 +63,18 @@ const RosterPanel = ({
               {submitLoading ? "Loading..." : "Submit Member"}
             </Button>
           ) : (
-            <Button
-              variant="contained"
-              size="small"
-              style={{
-                margin: "0px auto 0px 0px"
-              }}
-              onClick={() => setTrigger(true)}
-            >
-              Add Member
-            </Button>
+            admin && (
+              <Button
+                variant="contained"
+                size="small"
+                style={{
+                  margin: "0px auto 0px 0px"
+                }}
+                onClick={() => setTrigger(true)}
+              >
+                Add Member
+              </Button>
+            )
           )}
           {members.length > 0 || trigger ? (
             <Grid
@@ -155,7 +158,9 @@ const RosterPanel = ({
             </Typography>
           ) : (
             <Typography style={{ marginTop: 15 }}>
-              You have not added any members to the league yet.
+              {admin
+                ? "You have not added any members to the league yet."
+                : "The league manager has not added any members to this league yet."}
             </Typography>
           )}
         </div>
@@ -173,7 +178,8 @@ const mapStateToProps = state => ({
   getMembersLoading: state.members.getMembersLoading,
   getMembersFailed: state.members.getMembersFailed,
   submitLoading: state.members.submitMemberLoading,
-  submitFailed: state.members.submitMemberFailed
+  submitFailed: state.members.submitMemberFailed,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {

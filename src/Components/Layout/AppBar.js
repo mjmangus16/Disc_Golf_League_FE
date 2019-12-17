@@ -15,6 +15,7 @@ const AppBar_ = ({
   breadcrumbs,
   addBreadcrumb,
   isAuthenticated,
+  admin,
   logoutUser
 }) => {
   const classes = useStyles();
@@ -66,6 +67,7 @@ const AppBar_ = ({
                 open={open}
                 anchorEl={anchorEl}
                 logout={logoutUser}
+                admin={admin}
               />
             )}
           </div>
@@ -81,10 +83,8 @@ AppBar_.propTypes = {
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  admin: state.auth.admin
 });
 
-export default connect(
-  mapStateToProps,
-  { addBreadcrumb, logoutUser }
-)(AppBar_);
+export default connect(mapStateToProps, { addBreadcrumb, logoutUser })(AppBar_);

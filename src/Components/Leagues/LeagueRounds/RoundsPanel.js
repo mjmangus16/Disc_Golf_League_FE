@@ -15,7 +15,13 @@ import useStyles from "../LeagueStyles";
 
 import RoundCard from "./RoundCard";
 
-const RoundsPanel = ({ league_id, rounds, roundsFailed, roundsLoading }) => {
+const RoundsPanel = ({
+  league_id,
+  rounds,
+  roundsFailed,
+  roundsLoading,
+  admin
+}) => {
   const classes = useStyles();
 
   return (
@@ -24,20 +30,23 @@ const RoundsPanel = ({ league_id, rounds, roundsFailed, roundsLoading }) => {
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          <Link
-            to={`/league/${league_id}/createRound`}
-            style={{ textDecoration: "none" }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              style={{
-                margin: "0px auto 0px 0px"
-              }}
+          {admin && (
+            <Link
+              to={`/league/${league_id}/createRound`}
+              style={{ textDecoration: "none" }}
             >
-              Add Round
-            </Button>
-          </Link>
+              <Button
+                variant="contained"
+                size="small"
+                style={{
+                  margin: "0px auto 0px 0px"
+                }}
+              >
+                Add Round
+              </Button>
+            </Link>
+          )}
+
           {rounds && rounds.length > 0 ? (
             <Grid
               container
@@ -60,7 +69,9 @@ const RoundsPanel = ({ league_id, rounds, roundsFailed, roundsLoading }) => {
             </Typography>
           ) : (
             <Typography style={{ marginTop: 15 }}>
-              You have not added any rounds to the league yet.
+              {admin
+                ? "You have not added any rounds to the league yet."
+                : "The league manager has not added any rounds to this league yet."}
             </Typography>
           )}
         </div>
@@ -76,7 +87,8 @@ const mapStateToProps = state => ({
   league_id: state.leagues.selectedLeague.league_id,
   rounds: state.rounds.rounds,
   roundsLoading: state.rounds.roundsLoading,
-  roundsFailed: state.rounds.roundsFailed
+  roundsFailed: state.rounds.roundsFailed,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {})(RoundsPanel);

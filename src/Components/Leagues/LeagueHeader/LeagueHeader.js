@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, Button, Grid } from "@material-ui/core";
 import useStyles from "../LeagueStyles";
 
-const LeagueHeader = ({ league, handler }) => {
+const LeagueHeader = ({ league, handler, admin }) => {
   const classes = useStyles();
 
   return (
@@ -15,14 +15,16 @@ const LeagueHeader = ({ league, handler }) => {
           </Typography>
         </Grid>
         <Grid item xs={1}>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            onClick={() => handler(true)}
-          >
-            Edit
-          </Button>
+          {admin && (
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => handler(true)}
+            >
+              Edit
+            </Button>
+          )}
         </Grid>
       </Grid>
 

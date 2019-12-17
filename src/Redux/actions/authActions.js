@@ -42,11 +42,10 @@ export const signin = (user, redirect, addCrumb) => dispatch => {
   axiosWithAuth()
     .post("/api/users/signin", user)
     .then(res => {
-      const { token } = res.data;
+      const { token, admin } = res.data;
       localStorage.setItem("token", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
-      console.log(decoded);
       dispatch(setCurrentUser(decoded));
       redirect();
       addCrumb();

@@ -5,26 +5,31 @@ import { Typography, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-const SchedulePanel = ({ league_id, schedule }) => {
+const SchedulePanel = ({ league_id, schedule, admin }) => {
   return (
     <div>
-      <Link
-        to={`/league/${league_id}/updateSchedule`}
-        style={{ textDecoration: "none" }}
-      >
-        <Button
-          variant="contained"
-          size="small"
-          style={{
-            margin: "0px auto 0px 0px"
-          }}
+      {admin && (
+        <Link
+          to={`/league/${league_id}/updateSchedule`}
+          style={{ textDecoration: "none" }}
         >
-          Update Schedule
-        </Button>
-      </Link>
+          <Button
+            variant="contained"
+            size="small"
+            style={{
+              margin: "0px auto 0px 0px"
+            }}
+          >
+            Update Schedule
+          </Button>
+        </Link>
+      )}
+
       {!schedule || schedule.length === 0 ? (
         <Typography style={{ marginTop: 15 }}>
-          You have to not created a schedule yet.
+          {admin
+            ? "You have to not created a schedule yet."
+            : "The league manager has not created a schedule yet."}
         </Typography>
       ) : (
         <div style={{ height: 500, overflow: "auto", marginTop: 25 }}>
@@ -80,7 +85,8 @@ SchedulePanel.propTypes = {};
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,
   schedule: state.schedule.schedule,
-  league_id: state.leagues.selectedLeague.league_id
+  league_id: state.leagues.selectedLeague.league_id,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {})(SchedulePanel);

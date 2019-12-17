@@ -8,12 +8,13 @@ const LeagueHeaderContainer = ({
   setEdit,
   editLeague,
   editLeagueFailed,
-  editLeagueLoading
+  editLeagueLoading,
+  admin
 }) => {
   return (
     <div>
       {!edit ? (
-        <LeagueHeader league={league} handler={setEdit} />
+        <LeagueHeader league={league} handler={setEdit} admin={admin} />
       ) : (
         <EditLeagueHeader
           league={league}

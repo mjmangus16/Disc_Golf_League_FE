@@ -19,7 +19,8 @@ const UpdateDialog = ({
   handleUpdate,
   user,
   errors,
-  logout
+  logout,
+  admin
 }) => {
   const classes = useStyles();
   const [userData, setUserData] = useState({
@@ -90,16 +91,19 @@ const UpdateDialog = ({
               To update your profile, edit the text fields and then click the
               submit button.
             </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="org_name"
-              name="org_name"
-              label="Organization Name"
-              fullWidth
-              defaultValue={userData.org_name}
-              onChange={e => onChangeHandler(e)}
-            />
+            {admin && (
+              <TextField
+                autoFocus
+                margin="dense"
+                id="org_name"
+                name="org_name"
+                label="Organization Name"
+                fullWidth
+                defaultValue={userData.org_name}
+                onChange={e => onChangeHandler(e)}
+              />
+            )}
+
             <TextField
               error={errors.f_name ? true : false}
               helperText={errors.f_name && errors.f_name}

@@ -34,7 +34,8 @@ const ViewRound = ({
   addParticipantLoading,
   addParticipantFailed,
   deleteParticipant,
-  updateMultipleParticipants
+  updateMultipleParticipants,
+  admin
 }) => {
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
@@ -101,7 +102,6 @@ const ViewRound = ({
 
   const handleDelete = (member_id, participant_id) => {
     const { round_id, league_id } = match.params;
-    console.log(participant_id);
     const removePart = () => {
       const container = participants.filter(
         p => p.participant_id !== participant_id
@@ -128,7 +128,7 @@ const ViewRound = ({
     <div style={{ width: "90%", margin: "auto" }}>
       <Grid container>
         <Grid item xs={3}>
-          {!changes ? (
+          {admin && !changes ? (
             <Button
               variant="contained"
               color="secondary"
@@ -141,19 +141,21 @@ const ViewRound = ({
               Make Changes
             </Button>
           ) : (
-            <Button
-              onMouseEnter={() => setHover1(true)}
-              onMouseLeave={() => setHover1(false)}
-              variant="contained"
-              size="small"
-              onClick={updateParticipants}
-              style={{
-                backgroundColor: hover1 ? green[600] : green[400],
-                borderColor: green[600]
-              }}
-            >
-              Submit Changes
-            </Button>
+            admin && (
+              <Button
+                onMouseEnter={() => setHover1(true)}
+                onMouseLeave={() => setHover1(false)}
+                variant="contained"
+                size="small"
+                onClick={updateParticipants}
+                style={{
+                  backgroundColor: hover1 ? green[600] : green[400],
+                  borderColor: green[600]
+                }}
+              >
+                Submit Changes
+              </Button>
+            )
           )}
         </Grid>
         <Grid item xs={6}>
@@ -163,7 +165,7 @@ const ViewRound = ({
         </Grid>
 
         <Grid item xs={3}>
-          {!trigger ? (
+          {admin && !trigger ? (
             <Button
               variant="contained"
               color="secondary"
@@ -176,19 +178,21 @@ const ViewRound = ({
               Add Score
             </Button>
           ) : (
-            <Button
-              onMouseEnter={() => setHover2(true)}
-              onMouseLeave={() => setHover2(false)}
-              variant="contained"
-              size="small"
-              onClick={submitParticipant}
-              style={{
-                backgroundColor: hover2 ? green[600] : green[400],
-                borderColor: green[600]
-              }}
-            >
-              {addParticipantLoading ? "...Loading" : "Submit Score"}
-            </Button>
+            admin && (
+              <Button
+                onMouseEnter={() => setHover2(true)}
+                onMouseLeave={() => setHover2(false)}
+                variant="contained"
+                size="small"
+                onClick={submitParticipant}
+                style={{
+                  backgroundColor: hover2 ? green[600] : green[400],
+                  borderColor: green[600]
+                }}
+              >
+                {addParticipantLoading ? "...Loading" : "Submit Score"}
+              </Button>
+            )
           )}
         </Grid>
       </Grid>
@@ -350,7 +354,8 @@ const mapStateToProps = state => ({
   roundFailed: state.rounds.roundFailed,
   members: state.members.members,
   addParticipantLoading: state.rounds.addParticipantLoading,
-  addParticipantFailed: state.rounds.addParticipantFailed
+  addParticipantFailed: state.rounds.addParticipantFailed,
+  admin: state.auth.admin
 });
 
 export default connect(mapStateToProps, {

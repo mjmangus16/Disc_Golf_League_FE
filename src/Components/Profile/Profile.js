@@ -81,6 +81,7 @@ const Profile = ({
               org_name,
               user_id
             }}
+            admin={admin}
           />
           <ProfileHeader
             org_name={org_name}
