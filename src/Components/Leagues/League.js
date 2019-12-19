@@ -9,8 +9,8 @@ import { getMembersByLeagueId } from "../../Redux/actions/membersActions";
 import { CircularProgress } from "@material-ui/core";
 
 import LeagueHeaderContainer from "./LeagueHeader/LeagueHeaderContainer";
-// import LeagueTabs from "./LeagueTabs/LeagueTabs";
-// import LeaguePanels from "../Leagues/LeagueTabs/LeaguePanels";
+import LeagueTabs from "./LeagueTabs/LeagueTabs";
+import LeaguePanels from "../Leagues/LeagueTabs/LeaguePanels";
 
 import useStyles from "./LeagueStyles";
 
@@ -64,8 +64,8 @@ const League = ({
 
           {!edit && (
             <>
-              {/* <LeagueTabs handleChange={handleTabChange} value={tabValue} /> */}
-              {/* <LeaguePanels tabValue={tabValue} /> */}
+              <LeagueTabs handleChange={handleTabChange} value={tabValue} />
+              <LeaguePanels tabValue={tabValue} />
             </>
           )}
         </div>
