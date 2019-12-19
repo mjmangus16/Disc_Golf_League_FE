@@ -37,9 +37,9 @@ const League = ({
   useEffect(() => {
     const league_id = match.params.league_id;
     getLeagueById(league_id);
-    // getRoundsByLeagueId(league_id);
-    // getScheduleByLeagueId(league_id);
-    // getMembersByLeagueId(league_id);
+    getRoundsByLeagueId(league_id);
+    getScheduleByLeagueId(league_id);
+    getMembersByLeagueId(league_id);
   }, []);
 
   const handleTabChange = (event, newValue) => {
