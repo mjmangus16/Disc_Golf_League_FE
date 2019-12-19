@@ -10,7 +10,7 @@ export const axiosWithAuth = () => {
 
   if (currentUrl === "http://localhost:3000/") {
     baseURL = "http://localhost:5000/";
-  } else if (currentUrl === "https://bgp-fe-staging.herokuapp.com/") {
+  } else if (currentUrl === "https://dgl-fe-staging.herokuapp.com/") {
     baseURL = "https://dgl-be-staging.herokuapp.com/";
     // } else if (
     //   currentUrl === "http://www.baseballgamepredictor.com/" ||
