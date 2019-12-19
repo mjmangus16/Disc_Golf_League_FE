@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import { addRoundAndParticipants } from "../../../Redux/actions/roundsActions";
-import { Typography, Grid, TextField, Button } from "@material-ui/core";
+import { getLeagueById } from "../../../Redux/actions/leaguesActions";
+import {
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  FormHelperText
+} from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
   MuiPickersUtilsProvider,
@@ -15,24 +26,45 @@ import useStyles from "../LeagueStyles";
 import TransferList from "./TransferList";
 import Score from "./Score";
 
+const types = [
+  "Singles",
+  "Doubles",
+  "Singles Travel",
+  "Doubles Travel",
+  "Putting",
+  "Other"
+];
+
 const CreateRound = ({
   getMembersByLeagueId,
   addRoundAndParticipants,
+  getLeagueById,
+  leagueType,
   members,
   match,
   history
 }) => {
   const classes = useStyles();
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
   const [toggle, setToggle] = useState(false);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
-  const [date, setDate] = useState(moment().format("MM/DD/YYYY"));
+  const [date, setDate] = useState(new Date());
   const [type, setType] = useState("");
 
   useEffect(() => {
     const { league_id } = match.params;
+    getLeagueById(league_id);
     getMembersByLeagueId(league_id);
   }, []);
+
+  useEffect(() => {
+    setType(leagueType);
+  }, [leagueType]);
 
   useEffect(() => {
     setLeft(
@@ -47,7 +79,7 @@ const CreateRound = ({
   }, [members]);
 
   const handleDateChange = newDate => {
-    setDate(moment(newDate).format("MM/DD/YYYY"));
+    setDate(newDate);
   };
 
   const handleScore = (e, index) => {
@@ -61,13 +93,21 @@ const CreateRound = ({
     const { league_id } = match.params;
     const round = {
       league_id,
-      date,
+      date: moment(date).format("MM/DD/YY"),
       type
     };
     const participants = right;
+    let completed = true;
     const redirect = () => history.push(`/league/${league_id}`);
+    participants.forEach(p => {
+      if (p.score == "") {
+        completed = false;
+      }
+    });
 
-    addRoundAndParticipants(league_id, round, participants, redirect);
+    if (completed) {
+      addRoundAndParticipants(league_id, round, participants, redirect);
+    }
   };
 
   return (
@@ -75,7 +115,6 @@ const CreateRound = ({
       <Typography variant="h5" gutterBottom>
         Create Round
       </Typography>
-
       <Grid
         container
         alignItems="center"
@@ -100,14 +139,26 @@ const CreateRound = ({
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={6}>
-          <TextField
-            label="Round Type"
-            margin="dense"
-            name="type"
-            required
-            value={type}
-            onChange={e => setType(e.target.value)}
-          />
+          <FormControl margin="dense" fullWidth required style={{ width: 150 }}>
+            <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
+              Round Type
+            </InputLabel>
+            <Select
+              labelWidth={labelWidth}
+              value={type}
+              name="type"
+              onChange={e => setType(e.target.value)}
+            >
+              {types.map(ty => (
+                <MenuItem value={ty} key={`typeKey${ty}`}>
+                  {ty}
+                </MenuItem>
+              ))}
+            </Select>
+            {/* {createNewLeagueFailed.state && (
+              <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
+            )} */}
+          </FormControl>
         </Grid>
       </Grid>
       {!toggle ? (
@@ -178,10 +229,12 @@ const CreateRound = ({
 CreateRound.propTypes = {};
 
 const mapStateToProps = state => ({
-  members: state.members.members
+  members: state.members.members,
+  leagueType: state.leagues.selectedLeague.type
 });
 
 export default connect(mapStateToProps, {
   getMembersByLeagueId,
-  addRoundAndParticipants
+  addRoundAndParticipants,
+  getLeagueById
 })(CreateRound);

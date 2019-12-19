@@ -1,4 +1,7 @@
 import {
+  GET_ALL_LEAGUES_LOADING,
+  GET_ALL_LEAGUES_SUCCESS,
+  GET_ALL_LEAGUES_FAILED,
   GET_MANAGER_LEAGUES_LOADING,
   GET_MANAGER_LEAGUES_SUCCESS,
   GET_MANAGER_LEAGUES_FAILED,
@@ -19,6 +22,9 @@ import {
 } from "../types";
 
 const initialState = {
+  getAllLeaguesLoading: false,
+  getAllLeaguesFailed: {},
+  allLeagues: [],
   getManagerLeaguesLoading: false,
   getManagerLeaguesFailed: {},
   getUserLeaguesLoading: false,
@@ -35,6 +41,24 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GET_ALL_LEAGUES_LOADING:
+      return {
+        ...state,
+        getAllLeaguesLoading: true,
+        getAllLeaguesFailed: {}
+      };
+    case GET_ALL_LEAGUES_SUCCESS:
+      return {
+        ...state,
+        getAllLeaguesLoading: false,
+        allLeagues: action.payload
+      };
+    case GET_ALL_LEAGUES_FAILED:
+      return {
+        ...state,
+        getAllLeaguesLoading: false,
+        getAllLeaguesFailed: action.payload
+      };
     case GET_MANAGER_LEAGUES_LOADING:
       return {
         ...state,

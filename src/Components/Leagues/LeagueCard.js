@@ -18,7 +18,7 @@ const LeagueCard = ({ league }) => {
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
-          <Grid container>
+          <Grid container alignItems="center">
             <Grid item xs={4}>
               <Typography>{league.name}</Typography>
             </Grid>

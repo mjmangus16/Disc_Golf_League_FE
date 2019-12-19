@@ -80,6 +80,7 @@ const RosterPanel = ({
             <Grid
               container
               spacing={1}
+              alignContent="flex-start"
               style={{
                 height: 500,
                 overflow: "auto",

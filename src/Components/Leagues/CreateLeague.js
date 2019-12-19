@@ -19,65 +19,73 @@ import {
 import useStyles from "./LeagueStyles";
 
 const states = [
-  "AL",
-  "AK",
-  "AS",
-  "AZ",
-  "AR",
-  "CA",
-  "CO",
-  "CT",
-  "DE",
-  "DC",
-  "FM",
-  "FL",
-  "GA",
-  "GU",
-  "HI",
-  "ID",
-  "IL",
-  "IN",
-  "IA",
-  "KS",
-  "KY",
-  "LA",
-  "ME",
-  "MH",
-  "MD",
-  "MA",
-  "MI",
-  "MN",
-  "MS",
-  "MO",
-  "MT",
-  "NE",
-  "NV",
-  "NH",
-  "NJ",
-  "NM",
-  "NY",
-  "NC",
-  "ND",
-  "MP",
-  "OH",
-  "OK",
-  "OR",
-  "PW",
-  "PA",
-  "PR",
-  "RI",
-  "SC",
-  "SD",
-  "TN",
-  "TX",
-  "UT",
-  "VT",
-  "VI",
-  "VA",
-  "WA",
-  "WV",
-  "WI",
-  "WY"
+  "Alabama",
+  "Alaska",
+  "American Samoa",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "District of Columbia",
+  "Federated States of Micronesia",
+  "Florida",
+  "Georgia",
+  "Guam",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Marshall Islands",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Northern Mariana Islands",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Palau",
+  "Pennsylvania",
+  "Puerto Rico",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virgin Island",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming"
+];
+const types = [
+  "Singles",
+  "Doubles",
+  "Singles Travel",
+  "Doubles Travel",
+  "Putting",
+  "Other"
 ];
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -136,7 +144,7 @@ const CreateLeague = ({
         to the league.
       </Typography>
       <Grid container spacing={1} style={{ borderTop: "1px solid lightgrey" }}>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <TextField
             error={createNewLeagueFailed.name ? true : false}
             helperText={
@@ -152,21 +160,34 @@ const CreateLeague = ({
             onChange={e => handleChange(e)}
           />
         </Grid>
-        <Grid item xs={6}>
-          <TextField
+        <Grid item xs={4}>
+          <FormControl
             error={createNewLeagueFailed.type ? true : false}
-            helperText={
-              createNewLeagueFailed.type && createNewLeagueFailed.type
-            }
-            label="League Type"
-            margin="dense"
             variant="outlined"
+            className={classes.formControl}
+            margin="dense"
             fullWidth
             required
-            value={leagueData.type}
-            name="type"
-            onChange={e => handleChange(e)}
-          />
+          >
+            <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
+              League Type
+            </InputLabel>
+            <Select
+              labelWidth={labelWidth}
+              value={leagueData.type}
+              name="type"
+              onChange={e => handleChange(e)}
+            >
+              {types.map(ty => (
+                <MenuItem value={ty} key={`typeKey${ty}`}>
+                  {ty}
+                </MenuItem>
+              ))}
+            </Select>
+            {createNewLeagueFailed.state && (
+              <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
+            )}
+          </FormControl>
         </Grid>
         <Grid item xs={3}>
           <FormControl

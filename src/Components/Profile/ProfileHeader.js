@@ -29,7 +29,7 @@ const ProfileHeader = ({
             <Button
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
-              variant="outlined"
+              variant="contained"
               size="small"
               style={{
                 backgroundColor: hover ? green[600] : green[400],

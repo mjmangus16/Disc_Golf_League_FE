@@ -37,14 +37,6 @@ const RosterCard = ({ league_id, member, remove }) => {
             <Grid item xs={6}>
               <Typography>Rounds: {member.rounds}</Typography>
             </Grid>
-            {/* <Grid item xs={2}>
-              <IconButton
-                color="secondary"
-                onClick={() => remove(member.member_id, member.league_id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Grid> */}
           </Grid>
         </Paper>
       </Link>

@@ -2,7 +2,6 @@ import React from "react";
 import { Typography, Grid, TextField, Button } from "@material-ui/core";
 
 const Score = ({ player, handleScore, index }) => {
-  console.log(player);
   return (
     <div
       style={{

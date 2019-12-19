@@ -50,6 +50,7 @@ const RoundsPanel = ({
           {rounds && rounds.length > 0 ? (
             <Grid
               container
+              alignContent="flex-start"
               spacing={2}
               style={{ height: 500, overflow: "auto", marginTop: 25 }}
             >

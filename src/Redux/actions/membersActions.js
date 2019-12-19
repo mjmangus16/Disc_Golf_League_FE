@@ -85,7 +85,7 @@ export const submitMemberToLeague = (
       .then(res => {
         dispatch({
           type: SUBMIT_MEMBER_TO_LEAGUE_SUCCESS,
-          payload: { ...res.data, rounds: [] }
+          payload: { ...res.data, rounds: 0 }
         });
         setNewMember({
           f_name: "",

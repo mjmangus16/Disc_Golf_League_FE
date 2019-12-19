@@ -1,5 +1,8 @@
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import {
+  GET_ALL_LEAGUES_LOADING,
+  GET_ALL_LEAGUES_SUCCESS,
+  GET_ALL_LEAGUES_FAILED,
   GET_MANAGER_LEAGUES_LOADING,
   GET_MANAGER_LEAGUES_SUCCESS,
   GET_MANAGER_LEAGUES_FAILED,
@@ -17,6 +20,22 @@ import {
   EDIT_LEAGUE_FAILED,
   CLEAR_LEAGUE_DATA
 } from "../types";
+
+export const getAllLeagues = () => dispatch => {
+  dispatch({ type: GET_ALL_LEAGUES_LOADING });
+  axiosWithAuth()
+    .get("api/leagues/")
+    .then(res => {
+      dispatch({ type: GET_ALL_LEAGUES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ALL_LEAGUES_FAILED,
+        payload: err.response.data
+      });
+    });
+};
 
 export const getManagerLeagues = () => dispatch => {
   dispatch({

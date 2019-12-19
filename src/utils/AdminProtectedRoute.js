@@ -4,7 +4,10 @@ import jwt_decode from "jwt-decode";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem("token");
-  const decoded = jwt_decode(token);
+  let decoded;
+  if (token) {
+    decoded = jwt_decode(token);
+  }
 
   return (
     <Route
