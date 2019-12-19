@@ -10,7 +10,7 @@ import { CircularProgress } from "@material-ui/core";
 
 import LeagueHeaderContainer from "./LeagueHeader/LeagueHeaderContainer";
 import LeagueTabs from "./LeagueTabs/LeagueTabs";
-import LeaguePanels from "./LeagueTabs/LeaguePanels";
+import LeaguePanels from "../Leagues/LeagueTabs/LeaguePanels";
 
 import useStyles from "./LeagueStyles";
 
