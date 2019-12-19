@@ -65,13 +65,7 @@ const League = ({
           {!edit && (
             <>
               <LeagueTabs handleChange={handleTabChange} value={tabValue} />
-              <LeaguePanels
-                league_id={match.params.league_id}
-                tabValue={tabValue}
-                rounds={selectedLeagueRounds}
-                roundsLoading={selectedLeagueRoundsLoading}
-                roundsFailed={selectedLeagueRoundsFailed}
-              />
+              <LeaguePanels tabValue={tabValue} />
             </>
           )}
         </div>

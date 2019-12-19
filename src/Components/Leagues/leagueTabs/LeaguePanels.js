@@ -5,8 +5,6 @@ import SchedulePanel from "../LeagueSchedule/SchedulePanel";
 import RosterPanel from "../LeagueRoster/RosterPanel";
 import RoundsPanel from "../LeagueRounds/RoundsPanel";
 
-import useStyles from "../LeagueStyles";
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -24,20 +22,7 @@ function TabPanel(props) {
   );
 }
 
-const LeaguePanels = ({
-  league_id,
-  tabValue,
-  schedule,
-  roster,
-  rounds,
-  rosterLoading,
-  rosterFailed,
-  roundsLoading,
-  roundsFailed,
-  addMember
-}) => {
-  const classes = useStyles();
-
+const LeaguePanels = ({ tabValue }) => {
   return (
     <div style={{ marginBottom: 25 }}>
       <TabPanel value={tabValue} index={0}>
