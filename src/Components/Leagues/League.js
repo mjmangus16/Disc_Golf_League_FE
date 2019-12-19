@@ -64,8 +64,8 @@ const League = ({
 
           {!edit && (
             <>
-              {/* <LeagueTabs handleChange={handleTabChange} value={tabValue} />
-              <LeaguePanels tabValue={tabValue} /> */}
+              <LeagueTabs handleChange={handleTabChange} value={tabValue} />
+              <LeaguePanels tabValue={tabValue} />
             </>
           )}
         </div>
