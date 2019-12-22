@@ -20,14 +20,17 @@ const RoundCard = ({ round, league_id }) => {
           onMouseLeave={() => setHover(false)}
         >
           <Grid container>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Typography>Week {round.round_num}</Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Typography>Date: {round.date}</Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Typography>Type: {round.type}</Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography>Participants: {round.participants}</Typography>
             </Grid>
           </Grid>
         </Paper>
