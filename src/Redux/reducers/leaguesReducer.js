@@ -155,12 +155,6 @@ export default (state = initialState, action) => {
         getLeagueByIdLoading: false,
         getLeagueByIdFailed: null,
         selectedLeague: {},
-        selectedLeagueMembersLoading: false,
-        selectedLeagueMembersFailed: null,
-        selectedLeagueMembers: [],
-        selectedLeagueRoundsLoading: false,
-        selectedLeagueRoundsFailed: null,
-        selectedLeagueRounds: [],
         createNewLeagueLoading: false,
         createNewLeagueFailed: {}
       };

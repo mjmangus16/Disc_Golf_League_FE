@@ -14,7 +14,9 @@ import {
   UPDATE_MEMBER_LOADING,
   UPDATE_MEMBER_SUCCESS,
   UPDATE_MEMBER_FAILED,
-  CLEAR_MEMBER_UPDATE_SUCCESS
+  CLEAR_MEMBER_UPDATE_SUCCESS,
+  CLEAR_MEMBERS,
+  CLEAR_SELECTED_MEMBER_DATA
 } from "../types";
 
 const initialState = {
@@ -125,6 +127,27 @@ export default (state = initialState, action) => {
       return {
         ...state,
         update_success: false
+      };
+    case CLEAR_MEMBERS:
+      return {
+        ...state,
+        getMembersLoading: false,
+        getMembersFailed: null,
+        members: [],
+        getMemberLoading: false,
+        getMemberFailed: {},
+        member: {},
+        submitMemberLoading: false,
+        submitMemberFailed: {},
+        removeMemberFailed: {},
+        updateMemberLoading: false,
+        updateMemberFailed: {},
+        update_success: false
+      };
+    case CLEAR_SELECTED_MEMBER_DATA:
+      return {
+        ...state,
+        member: {}
       };
     default:
       return state;

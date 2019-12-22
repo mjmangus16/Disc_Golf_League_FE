@@ -11,7 +11,9 @@ import {
   ADD_PARTICIPANT_FAILED,
   UPDATE_ROUND_LOADING,
   UPDATE_ROUND_SUCCESS,
-  UPDATE_ROUND_FAILED
+  UPDATE_ROUND_FAILED,
+  CLEAR_ROUNDS,
+  CLEAR_SELECTED_ROUND_DATA
 } from "../types";
 
 export const getRoundsByLeagueId = league_id => dispatch => {
@@ -153,4 +155,12 @@ export const deleteParticipant = (
       console.log("SUCCESS");
       removePart();
     });
+};
+
+export const clearRoundsData = () => dispatch => {
+  dispatch({ type: CLEAR_ROUNDS });
+};
+
+export const clearSelectedRoundData = () => dispatch => {
+  dispatch({ type: CLEAR_SELECTED_ROUND_DATA });
 };

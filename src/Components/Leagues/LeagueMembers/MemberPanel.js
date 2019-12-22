@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
-import RosterCard from "./RosterCard";
+import MemberCard from "./MemberCard";
 
 const RosterPanel = ({
   league_id,
@@ -147,7 +147,7 @@ const RosterPanel = ({
                 </Grid>
               )}
               {members.map((member, i) => (
-                <RosterCard
+                <MemberCard
                   key={(member.f_name, member.l_name, i)}
                   member={member}
                   league_id={league_id}

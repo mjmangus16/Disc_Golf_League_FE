@@ -6,7 +6,8 @@ import {
   addParticipant,
   deleteParticipant,
   updateMultipleParticipants,
-  updateRound
+  updateRound,
+  clearSelectedRoundData
 } from "../../../Redux/actions/roundsActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import {
@@ -32,6 +33,7 @@ const ViewRound = ({
   roundFailed,
   members,
   getRoundByRoundId,
+  clearSelectedRoundData,
   getMembersByLeagueId,
   addParticipant,
   addParticipantLoading,
@@ -57,6 +59,10 @@ const ViewRound = ({
 
     getRoundByRoundId(league_id, round_id);
     getMembersByLeagueId(league_id);
+
+    return () => {
+      clearSelectedRoundData();
+    };
   }, []);
 
   useEffect(() => {
@@ -375,6 +381,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getRoundByRoundId,
+  clearSelectedRoundData,
   getMembersByLeagueId,
   addParticipant,
   deleteParticipant,

@@ -93,7 +93,7 @@ const CreateRound = ({
     const { league_id } = match.params;
     const round = {
       league_id,
-      date: moment(date).format("MM/DD/YY"),
+      date: moment(date).format("MM/DD/YYYY"),
       type
     };
     const participants = right;

@@ -8,7 +8,8 @@ import {
   SUBMIT_SCHEDULE_FAILED,
   UPDATE_SCHEDULE_LOADING,
   UPDATE_SCHEDULE_SUCCESS,
-  UPDATE_SCHEDULE_FAILED
+  UPDATE_SCHEDULE_FAILED,
+  CLEAR_SCHEDULE
 } from "../types";
 
 const initialState = {
@@ -82,6 +83,17 @@ export default (state = initialState, action) => {
         ...state,
         updateScheduleLoading: false,
         submitScheduleFailed: action.payload
+      };
+    case CLEAR_SCHEDULE:
+      return {
+        ...state,
+        schedule: [],
+        getScheduleLoading: false,
+        getScheduleFailed: {},
+        submitScheduleLoading: false,
+        submitScheduleFailed: {},
+        updateScheduleLoading: false,
+        updateScheduleFailed: {}
       };
     default:
       return state;

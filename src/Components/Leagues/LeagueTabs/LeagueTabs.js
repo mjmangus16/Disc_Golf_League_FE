@@ -26,7 +26,7 @@ const LeagueTabs = ({ handleChange, value }) => {
           style={{ borderBottom: "2px solid lightgrey" }}
         />
         <Tab
-          label="Roster"
+          label="Members"
           {...a11yProps(1)}
           style={{ borderBottom: "2px solid lightgrey" }}
         />

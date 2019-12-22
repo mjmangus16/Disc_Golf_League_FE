@@ -2,10 +2,23 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
-import { getLeagueById, editLeague } from "../../Redux/actions/leaguesActions";
-import { getRoundsByLeagueId } from "../../Redux/actions/roundsActions";
-import { getScheduleByLeagueId } from "../../Redux/actions/scheduleActions";
-import { getMembersByLeagueId } from "../../Redux/actions/membersActions";
+import {
+  getLeagueById,
+  editLeague,
+  clearLeagueData
+} from "../../Redux/actions/leaguesActions";
+import {
+  getRoundsByLeagueId,
+  clearRoundsData
+} from "../../Redux/actions/roundsActions";
+import {
+  getScheduleByLeagueId,
+  clearScheduleData
+} from "../../Redux/actions/scheduleActions";
+import {
+  getMembersByLeagueId,
+  clearMembersData
+} from "../../Redux/actions/membersActions";
 import { CircularProgress } from "@material-ui/core";
 
 import LeagueHeaderContainer from "./LeagueHeader/LeagueHeaderContainer";
@@ -18,14 +31,15 @@ const League = ({
   match,
   history,
   getLeagueById,
+  clearLeagueData,
   getLeagueByIdLoading,
   selectedLeague,
-  selectedLeagueRounds,
-  selectedLeagueRoundsLoading,
-  selectedLeagueRoundsFailed,
   getRoundsByLeagueId,
+  clearRoundsData,
   getScheduleByLeagueId,
+  clearScheduleData,
   getMembersByLeagueId,
+  clearMembersData,
   editLeague,
   editLeagueLoading,
   editLeagueFailed,
@@ -41,6 +55,13 @@ const League = ({
     getRoundsByLeagueId(league_id);
     getScheduleByLeagueId(league_id);
     getMembersByLeagueId(league_id);
+
+    return () => {
+      clearScheduleData();
+      clearLeagueData();
+      clearMembersData();
+      clearRoundsData();
+    };
   }, []);
 
   const handleTabChange = (event, newValue) => {
@@ -92,8 +113,12 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getLeagueById,
+  clearLeagueData,
   getRoundsByLeagueId,
+  clearRoundsData,
   getScheduleByLeagueId,
+  clearScheduleData,
   getMembersByLeagueId,
+  clearMembersData,
   editLeague
 })(League);

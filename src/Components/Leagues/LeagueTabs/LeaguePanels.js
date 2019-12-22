@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Box } from "@material-ui/core";
 
 import SchedulePanel from "../LeagueSchedule/SchedulePanel";
-import RosterPanel from "../LeagueRoster/RosterPanel";
+import MembersPanel from "../LeagueMembers/MemberPanel";
 import RoundsPanel from "../LeagueRounds/RoundsPanel";
 
 function TabPanel(props) {
@@ -29,7 +29,7 @@ const LeaguePanels = ({ tabValue, history }) => {
         <SchedulePanel history={history} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <RosterPanel />
+        <MembersPanel />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <RoundsPanel history={history} />

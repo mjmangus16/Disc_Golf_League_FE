@@ -3,17 +3,12 @@ import { Route, Redirect } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const token = localStorage.getItem("token");
-  let decoded;
-  if (token) {
-    decoded = jwt_decode(token);
-  }
-
   return (
     <Route
       {...rest}
       render={props =>
-        token && decoded.admin ? (
+        localStorage.getItem("token") &&
+        jwt_decode(localStorage.getItem("token")).admin ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: "/profile" }} />

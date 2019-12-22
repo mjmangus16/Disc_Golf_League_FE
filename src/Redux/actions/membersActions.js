@@ -15,7 +15,9 @@ import {
   UPDATE_MEMBER_LOADING,
   UPDATE_MEMBER_SUCCESS,
   UPDATE_MEMBER_FAILED,
-  CLEAR_MEMBER_UPDATE_SUCCESS
+  CLEAR_MEMBER_UPDATE_SUCCESS,
+  CLEAR_MEMBERS,
+  CLEAR_SELECTED_MEMBER_DATA
 } from "../types";
 
 export const getMembersByLeagueId = league_id => dispatch => {
@@ -161,4 +163,12 @@ export const updateMember = (member_id, league_id, email) => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const clearMembersData = () => dispatch => {
+  dispatch({ type: CLEAR_MEMBERS });
+};
+
+export const clearSelectedMemberData = () => dispatch => {
+  dispatch({ type: CLEAR_SELECTED_MEMBER_DATA });
 };

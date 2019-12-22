@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import {
   getMemberByMemberId,
   removeMemberFromLeague,
-  updateMember
+  updateMember,
+  clearSelectedMemberData
 } from "../../../Redux/actions/membersActions";
 import {
   Typography,
@@ -20,6 +21,7 @@ import ConnectUser from "./ConnectUser";
 
 const LeagueMember = ({
   getMemberByMemberId,
+  clearSelectedMemberData,
   removeMemberFromLeague,
   member,
   memberLoading,
@@ -39,6 +41,10 @@ const LeagueMember = ({
   useEffect(() => {
     const { league_id, member_id } = match.params;
     getMemberByMemberId(league_id, member_id);
+
+    return () => {
+      clearSelectedMemberData();
+    };
   }, []);
 
   useEffect(() => {
@@ -185,6 +191,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getMemberByMemberId,
+  clearSelectedMemberData,
   removeMemberFromLeague,
   updateMember
 })(LeagueMember);

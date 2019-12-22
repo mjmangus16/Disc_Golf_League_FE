@@ -11,7 +11,7 @@ import CreateLeague from "./Components/Leagues/CreateLeague";
 import UpdateSchedule from "./Components/Leagues/LeagueSchedule/UpdateSchedule";
 import CreateRound from "./Components/Leagues/LeagueRounds/CreateRound";
 import ViewRound from "./Components/Leagues/LeagueRounds/ViewRound";
-import LeagueMember from "./Components/Leagues/LeagueRoster/LeagueMember";
+import LeagueMember from "./Components/Leagues/LeagueMembers/LeagueMember";
 
 export default () => {
   return (
@@ -36,17 +36,12 @@ export default () => {
         path="/signin"
         render={props => <SignIn history={props.history} />}
       />
+      <Route exact path="/league/:league_id" component={League} />
       <ProtectedRoute exact path="/profile" component={Profile} />
-      <AdminProtectedRoute
+      <ProtectedRoute
         exact
-        path="/createLeague"
-        component={CreateLeague}
-      />
-      <ProtectedRoute exact path="/league/:league_id" component={League} />
-      <AdminProtectedRoute
-        exact
-        path="/league/:league_id/updateSchedule"
-        component={UpdateSchedule}
+        path="/league/:league_id/round/:round_id/viewRound"
+        component={ViewRound}
       />
       <ProtectedRoute
         exact
@@ -55,13 +50,18 @@ export default () => {
       />
       <AdminProtectedRoute
         exact
+        path="/createLeague"
+        component={CreateLeague}
+      />
+      <AdminProtectedRoute
+        exact
+        path="/league/:league_id/updateSchedule"
+        component={UpdateSchedule}
+      />
+      <AdminProtectedRoute
+        exact
         path="/league/:league_id/createRound"
         component={CreateRound}
-      />
-      <ProtectedRoute
-        exact
-        path="/league/:league_id/round/:round_id/viewRound"
-        component={ViewRound}
       />
     </>
   );

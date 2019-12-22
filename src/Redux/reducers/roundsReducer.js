@@ -10,7 +10,9 @@ import {
   ADD_PARTICIPANT_FAILED,
   UPDATE_ROUND_LOADING,
   UPDATE_ROUND_SUCCESS,
-  UPDATE_ROUND_FAILED
+  UPDATE_ROUND_FAILED,
+  CLEAR_ROUNDS,
+  CLEAR_SELECTED_ROUND_DATA
 } from "../types";
 
 const initialState = {
@@ -102,6 +104,25 @@ export default (state = initialState, action) => {
         ...state,
         updateRoundLoading: false,
         updateROundFailed: action.payload
+      };
+    case CLEAR_ROUNDS:
+      return {
+        ...state,
+        rounds: [],
+        roundsLoading: false,
+        roundsFailed: {},
+        round: {},
+        roundLoading: false,
+        roundFailed: {},
+        addParticipantLoading: false,
+        addParticipantFailed: {},
+        updateRoundLoading: false,
+        updateRoundFailed: {}
+      };
+    case CLEAR_SELECTED_ROUND_DATA:
+      return {
+        ...state,
+        round: {}
       };
     default:
       return state;

@@ -9,7 +9,8 @@ import {
   SUBMIT_SCHEDULE_FAILED,
   UPDATE_SCHEDULE_LOADING,
   UPDATE_SCHEDULE_SUCCESS,
-  UPDATE_SCHEDULE_FAILED
+  UPDATE_SCHEDULE_FAILED,
+  CLEAR_SCHEDULE
 } from "../types";
 
 export const getScheduleByLeagueId = league_id => dispatch => {
@@ -87,4 +88,8 @@ export const removeWeekFromSchedule = (schedule_id, league_id) => dispatch => {
     .catch(err => {
       console.log(err.response.data);
     });
+};
+
+export const clearScheduleData = () => dispatch => {
+  dispatch({ type: CLEAR_SCHEDULE });
 };
