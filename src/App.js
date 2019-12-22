@@ -7,7 +7,13 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import AppBar from "./Components/Layout/AppBar";
 import Breadcrumbs from "./Components/Layout/Breadcrumbs";
 import Routes from "./Routes";
-import { green, blueGrey, blue } from "@material-ui/core/colors";
+import {
+  red,
+  blueGrey,
+  blue,
+  lightBlue,
+  brown
+} from "@material-ui/core/colors";
 import { decodeToken } from "./utils/decodeToken";
 
 decodeToken();
@@ -15,10 +21,10 @@ decodeToken();
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: blueGrey[600]
+      main: brown[500]
     },
     secondary: {
-      main: blue[800]
+      main: blue[700]
     }
     // type: "dark"
   }

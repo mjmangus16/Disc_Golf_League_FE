@@ -7,7 +7,10 @@ import {
   GET_ROUND_BY_ROUND_ID_FAILED,
   ADD_PARTICIPANT_LOADING,
   ADD_PARTICIPANT_SUCCESS,
-  ADD_PARTICIPANT_FAILED
+  ADD_PARTICIPANT_FAILED,
+  UPDATE_ROUND_LOADING,
+  UPDATE_ROUND_SUCCESS,
+  UPDATE_ROUND_FAILED
 } from "../types";
 
 const initialState = {
@@ -18,7 +21,9 @@ const initialState = {
   roundLoading: false,
   roundFailed: {},
   addParticipantLoading: false,
-  addParticipantFailed: {}
+  addParticipantFailed: {},
+  updateRoundLoading: false,
+  updateRoundFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -80,7 +85,24 @@ export default (state = initialState, action) => {
         addParticipantLoading: false,
         addParticipantFailed: action.payload
       };
-
+    case UPDATE_ROUND_LOADING:
+      return {
+        ...state,
+        updateRoundLoading: true,
+        updateRoundFailed: {}
+      };
+    case UPDATE_ROUND_SUCCESS:
+      return {
+        ...state,
+        updateRoundLoading: false,
+        round: action.payload
+      };
+    case UPDATE_ROUND_FAILED:
+      return {
+        ...state,
+        updateRoundLoading: false,
+        updateROundFailed: action.payload
+      };
     default:
       return state;
   }

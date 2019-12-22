@@ -1,28 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Typography, Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import moment from "moment";
 
-const SchedulePanel = ({ league_id, schedule, admin }) => {
+const SchedulePanel = ({ league_id, schedule, history, admin }) => {
   return (
     <div>
       {admin && (
-        <Link
-          to={`/league/${league_id}/updateSchedule`}
-          style={{ textDecoration: "none" }}
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={() => history.push(`/league/${league_id}/updateSchedule`)}
+          style={{
+            margin: "0px auto 0px 0px"
+          }}
         >
-          <Button
-            variant="contained"
-            size="small"
-            style={{
-              margin: "0px auto 0px 0px"
-            }}
-          >
-            Update Schedule
-          </Button>
-        </Link>
+          Update Schedule
+        </Button>
       )}
 
       {!schedule || schedule.length === 0 ? (

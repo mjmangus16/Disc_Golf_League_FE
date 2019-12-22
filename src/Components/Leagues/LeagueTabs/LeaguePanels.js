@@ -22,17 +22,17 @@ function TabPanel(props) {
   );
 }
 
-const LeaguePanels = ({ tabValue }) => {
+const LeaguePanels = ({ tabValue, history }) => {
   return (
     <div style={{ marginBottom: 25 }}>
       <TabPanel value={tabValue} index={0}>
-        <SchedulePanel />
+        <SchedulePanel history={history} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         <RosterPanel />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <RoundsPanel />
+        <RoundsPanel history={history} />
       </TabPanel>
     </div>
   );

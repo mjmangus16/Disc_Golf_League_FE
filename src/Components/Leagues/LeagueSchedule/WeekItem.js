@@ -7,8 +7,8 @@ import {
   Paper,
   IconButton
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { green } from "@material-ui/core/colors";
+import DeleteIcon from "@material-ui/icons/DeleteOutlined";
+import { green, red } from "@material-ui/core/colors";
 
 import MomentUtils from "@date-io/moment";
 import {
@@ -106,8 +106,8 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
         <Grid item xs={1}>
           {!blank && (
             <IconButton
-              color="secondary"
               onClick={() => remove(data.schedule_id)}
+              style={{ color: red[500] }}
             >
               <DeleteIcon />
             </IconButton>
@@ -208,10 +208,10 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
               fullWidth
               variant="contained"
               size="small"
-              color="primary"
               onClick={() => setTrigger(true)}
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
+              style={{ boxShadow: "none" }}
             >
               Edit
             </Button>

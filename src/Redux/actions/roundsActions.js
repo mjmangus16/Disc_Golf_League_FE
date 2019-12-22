@@ -8,7 +8,10 @@ import {
   GET_ROUND_BY_ROUND_ID_FAILED,
   ADD_PARTICIPANT_LOADING,
   ADD_PARTICIPANT_SUCCESS,
-  ADD_PARTICIPANT_FAILED
+  ADD_PARTICIPANT_FAILED,
+  UPDATE_ROUND_LOADING,
+  UPDATE_ROUND_SUCCESS,
+  UPDATE_ROUND_FAILED
 } from "../types";
 
 export const getRoundsByLeagueId = league_id => dispatch => {
@@ -93,6 +96,23 @@ export const addParticipant = (
     .catch(err => {
       console.log(err);
       dispatch({ type: ADD_PARTICIPANT_FAILED, payload: err.response.data });
+    });
+};
+
+export const updateRound = (league_id, round_id, changes) => dispatch => {
+  dispatch({ type: UPDATE_ROUND_LOADING });
+  axiosWithAuth()
+    .put(`api/rounds/update/${round_id}/league/${league_id}`, changes)
+    .then(res => {
+      console.log(res.data);
+      dispatch({
+        type: UPDATE_ROUND_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: UPDATE_ROUND_FAILED, payload: err.response.data });
     });
 };
 

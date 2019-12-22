@@ -66,6 +66,7 @@ const RosterPanel = ({
             admin && (
               <Button
                 variant="contained"
+                color="secondary"
                 size="small"
                 style={{
                   margin: "0px auto 0px 0px"

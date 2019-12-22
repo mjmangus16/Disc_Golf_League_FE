@@ -258,6 +258,7 @@ const EditLeagueHeader = ({
         onMouseLeave={() => setHover(false)}
         variant="outlined"
         fullWidth
+        size="small"
         style={{
           backgroundColor: hover ? green[600] : green[400],
           borderColor: green[600],
@@ -267,7 +268,12 @@ const EditLeagueHeader = ({
       >
         {!loading ? "Submit Changes" : "Loading..."}
       </Button>
-      <Button variant="outlined" fullWidth onClick={() => handler(false)}>
+      <Button
+        variant="outlined"
+        fullWidth
+        size="small"
+        onClick={() => handler(false)}
+      >
         Cancel
       </Button>
     </>

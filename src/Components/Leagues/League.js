@@ -16,6 +16,7 @@ import useStyles from "./LeagueStyles";
 
 const League = ({
   match,
+  history,
   getLeagueById,
   getLeagueByIdLoading,
   selectedLeague,
@@ -65,7 +66,7 @@ const League = ({
           {!edit && (
             <>
               <LeagueTabs handleChange={handleTabChange} value={tabValue} />
-              <LeaguePanels tabValue={tabValue} />
+              <LeaguePanels tabValue={tabValue} history={history} />
             </>
           )}
         </div>

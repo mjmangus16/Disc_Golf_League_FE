@@ -90,6 +90,7 @@ const Profile = ({
             get_loading={get_loading}
             success={update_success}
             admin={admin}
+            history={history}
           />
           <ProfileLeagues />
         </div>

@@ -5,7 +5,8 @@ import {
   getRoundByRoundId,
   addParticipant,
   deleteParticipant,
-  updateMultipleParticipants
+  updateMultipleParticipants,
+  updateRound
 } from "../../../Redux/actions/roundsActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import {
@@ -22,6 +23,8 @@ import {
 import { green } from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
 
+import TypesComp from "./TypesComp";
+
 const ViewRound = ({
   match,
   round,
@@ -35,6 +38,7 @@ const ViewRound = ({
   addParticipantFailed,
   deleteParticipant,
   updateMultipleParticipants,
+  updateRound,
   admin
 }) => {
   const [hover1, setHover1] = useState(false);
@@ -46,6 +50,7 @@ const ViewRound = ({
   const [availMem, setAvailMem] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [error, setError] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     const { round_id, league_id } = match.params;
@@ -53,6 +58,10 @@ const ViewRound = ({
     getRoundByRoundId(league_id, round_id);
     getMembersByLeagueId(league_id);
   }, []);
+
+  useEffect(() => {
+    setType(round.type);
+  }, [round.type]);
 
   useEffect(() => {
     if (round && round.participants) {
@@ -118,9 +127,11 @@ const ViewRound = ({
     );
   };
 
-  const updateParticipants = () => {
+  const handleUpdate = () => {
     const { round_id, league_id } = match.params;
+
     updateMultipleParticipants(league_id, round_id, participants);
+    updateRound(league_id, round_id, { type });
     setChanges(false);
   };
 
@@ -147,7 +158,7 @@ const ViewRound = ({
                 onMouseLeave={() => setHover1(false)}
                 variant="contained"
                 size="small"
-                onClick={updateParticipants}
+                onClick={handleUpdate}
                 style={{
                   backgroundColor: hover1 ? green[600] : green[400],
                   borderColor: green[600]
@@ -198,12 +209,16 @@ const ViewRound = ({
       </Grid>
       <Grid container spacing={1} style={{ width: "50%", margin: "auto" }}>
         <Grid item xs={12}>
-          <Typography
-            variant="subtitle1"
-            style={{ textTransform: "capitalize" }}
-          >
-            {round.type} Round # {round.round_num}
-          </Typography>
+          {!changes ? (
+            <Typography
+              variant="subtitle1"
+              style={{ textTransform: "capitalize" }}
+            >
+              {round.type} Round # {round.round_num}
+            </Typography>
+          ) : (
+            <TypesComp type={type} setType={setType} />
+          )}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1">{round.date}</Typography>
@@ -363,5 +378,6 @@ export default connect(mapStateToProps, {
   getMembersByLeagueId,
   addParticipant,
   deleteParticipant,
-  updateMultipleParticipants
+  updateMultipleParticipants,
+  updateRound
 })(ViewRound);

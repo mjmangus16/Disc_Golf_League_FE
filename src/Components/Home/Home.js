@@ -15,7 +15,12 @@ const Home = ({ getAllLeagues, allLeagues }) => {
       <Typography variant="h5">All Available Leagues</Typography>
       <Grid container spacing={4} style={{ width: "75%", margin: "auto" }}>
         {allLeagues.length > 0 &&
-          allLeagues.map(league => <LeagueCard league={league} />)}
+          allLeagues.map((league, index) => (
+            <LeagueCard
+              key={league.name + index + league.league_id}
+              league={league}
+            />
+          ))}
       </Grid>
     </div>
   );

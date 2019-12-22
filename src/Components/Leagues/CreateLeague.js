@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { createNewLeague } from "../../Redux/actions/leaguesActions";
+import { green } from "@material-ui/core/colors";
 
 import {
   Typography,
@@ -97,6 +98,7 @@ const CreateLeague = ({
   history
 }) => {
   const classes = useStyles();
+  const [hover, setHover] = useState(false);
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
   React.useEffect(() => {
@@ -143,235 +145,262 @@ const CreateLeague = ({
         is submitted, you can create a schedule, add members and submit rounds
         to the league.
       </Typography>
-      <Grid container spacing={1} style={{ borderTop: "1px solid lightgrey" }}>
-        <Grid item xs={8}>
-          <TextField
-            error={createNewLeagueFailed.name ? true : false}
-            helperText={
-              createNewLeagueFailed.name && createNewLeagueFailed.name
-            }
-            label="League Name"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-            value={leagueData.name}
-            name="name"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <FormControl
-            error={createNewLeagueFailed.type ? true : false}
-            variant="outlined"
-            className={classes.formControl}
-            margin="dense"
-            fullWidth
-            required
-          >
-            <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
-              League Type
-            </InputLabel>
-            <Select
-              labelWidth={labelWidth}
-              value={leagueData.type}
-              name="type"
+      <div className={classes.headerContainer}>
+        <Grid container spacing={1}>
+          <Grid item xs={8}>
+            <TextField
+              error={createNewLeagueFailed.name ? true : false}
+              helperText={
+                createNewLeagueFailed.name && createNewLeagueFailed.name
+              }
+              label="League Name"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              required
+              value={leagueData.name}
+              name="name"
               onChange={e => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControl
+              error={createNewLeagueFailed.type ? true : false}
+              variant="outlined"
+              className={classes.formControl}
+              margin="dense"
+              fullWidth
+              required
             >
-              {types.map(ty => (
-                <MenuItem value={ty} key={`typeKey${ty}`}>
-                  {ty}
-                </MenuItem>
-              ))}
-            </Select>
-            {createNewLeagueFailed.state && (
-              <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
-            )}
-          </FormControl>
-        </Grid>
-        <Grid item xs={3}>
-          <FormControl
-            error={createNewLeagueFailed.state ? true : false}
-            variant="outlined"
-            className={classes.formControl}
-            margin="dense"
-            fullWidth
-            required
-          >
-            <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
-              State
-            </InputLabel>
-            <Select
-              labelWidth={labelWidth}
-              value={leagueData.state}
-              name="state"
+              <InputLabel
+                id="demo-simple-select-outlined-label"
+                ref={inputLabel}
+              >
+                League Type
+              </InputLabel>
+              <Select
+                labelWidth={labelWidth}
+                value={leagueData.type}
+                name="type"
+                onChange={e => handleChange(e)}
+              >
+                {types.map(ty => (
+                  <MenuItem value={ty} key={`typeKey${ty}`}>
+                    {ty}
+                  </MenuItem>
+                ))}
+              </Select>
+              {createNewLeagueFailed.state && (
+                <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid item xs={3}>
+            <FormControl
+              error={createNewLeagueFailed.state ? true : false}
+              variant="outlined"
+              className={classes.formControl}
+              margin="dense"
+              fullWidth
+              required
+            >
+              <InputLabel
+                id="demo-simple-select-outlined-label"
+                ref={inputLabel}
+              >
+                State
+              </InputLabel>
+              <Select
+                labelWidth={labelWidth}
+                value={leagueData.state}
+                name="state"
+                onChange={e => handleChange(e)}
+              >
+                {states.map(st => (
+                  <MenuItem value={st} key={`statekey${st}`}>
+                    {st}
+                  </MenuItem>
+                ))}
+              </Select>
+              {createNewLeagueFailed.state && (
+                <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid item xs={3}>
+            <TextField
+              error={createNewLeagueFailed.zip ? true : false}
+              helperText={
+                createNewLeagueFailed.zip && createNewLeagueFailed.zip
+              }
+              label="Zip Code"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              required
+              value={leagueData.zip}
+              name="zip"
               onChange={e => handleChange(e)}
-            >
-              {states.map(st => (
-                <MenuItem value={st} key={`statekey${st}`}>
-                  {st}
-                </MenuItem>
-              ))}
-            </Select>
-            {createNewLeagueFailed.state && (
-              <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
-            )}
-          </FormControl>
-        </Grid>
-        <Grid item xs={3}>
-          <TextField
-            error={createNewLeagueFailed.zip ? true : false}
-            helperText={createNewLeagueFailed.zip && createNewLeagueFailed.zip}
-            label="Zip Code"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-            value={leagueData.zip}
-            name="zip"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            error={createNewLeagueFailed.location ? true : false}
-            helperText={
-              createNewLeagueFailed.location && createNewLeagueFailed.location
-            }
-            label="Location ( Course )"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-            value={leagueData.location}
-            name="location"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            error={createNewLeagueFailed.year ? true : false}
-            helperText={
-              createNewLeagueFailed.year && createNewLeagueFailed.year
-            }
-            label="Year"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-            value={leagueData.year}
-            name="year"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <FormControl
-            error={createNewLeagueFailed.days ? true : false}
-            variant="outlined"
-            className={classes.formControl}
-            margin="dense"
-            fullWidth
-            required
-          >
-            <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
-              Days Played
-            </InputLabel>
-            <Select
-              labelWidth={labelWidth}
-              value={leagueData.days}
-              name="days"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              error={createNewLeagueFailed.location ? true : false}
+              helperText={
+                createNewLeagueFailed.location && createNewLeagueFailed.location
+              }
+              label="Location ( Course )"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              required
+              value={leagueData.location}
+              name="location"
               onChange={e => handleChange(e)}
-              renderValue={selected => selected.join(", ")}
-              multiple
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              error={createNewLeagueFailed.year ? true : false}
+              helperText={
+                createNewLeagueFailed.year && createNewLeagueFailed.year
+              }
+              label="Year"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              required
+              value={leagueData.year}
+              name="year"
+              onChange={e => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControl
+              error={createNewLeagueFailed.days ? true : false}
+              variant="outlined"
+              className={classes.formControl}
+              margin="dense"
+              fullWidth
+              required
             >
-              {days.map(d => (
-                <MenuItem value={d} key={`statekey${d}`}>
-                  {d}
-                </MenuItem>
-              ))}
-            </Select>
-            {createNewLeagueFailed.days && (
-              <FormHelperText>{createNewLeagueFailed.days}</FormHelperText>
-            )}
-          </FormControl>
+              <InputLabel
+                id="demo-simple-select-outlined-label"
+                ref={inputLabel}
+              >
+                Days Played
+              </InputLabel>
+              <Select
+                labelWidth={labelWidth}
+                value={leagueData.days}
+                name="days"
+                onChange={e => handleChange(e)}
+                renderValue={selected => selected.join(", ")}
+                multiple
+              >
+                {days.map(d => (
+                  <MenuItem value={d} key={`statekey${d}`}>
+                    {d}
+                  </MenuItem>
+                ))}
+              </Select>
+              {createNewLeagueFailed.days && (
+                <FormHelperText>{createNewLeagueFailed.days}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              error={createNewLeagueFailed["length"] ? true : false}
+              helperText={
+                createNewLeagueFailed["length"] &&
+                createNewLeagueFailed["length"]
+              }
+              label="Season Length"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              required
+              value={leagueData["length"]}
+              name="length"
+              onChange={e => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              error={createNewLeagueFailed.contact ? true : false}
+              helperText={
+                createNewLeagueFailed.contact && createNewLeagueFailed.contact
+              }
+              label="Contact Information"
+              multiline
+              rows="3"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              required
+              value={leagueData.contact}
+              name="contact"
+              onChange={e => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              error={createNewLeagueFailed.description ? true : false}
+              helperText={
+                createNewLeagueFailed.description &&
+                createNewLeagueFailed.description
+              }
+              label="League Description"
+              multiline
+              rows="3"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              required
+              value={leagueData.description}
+              name="description"
+              onChange={e => handleChange(e)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Additional Info"
+              multiline
+              rows="3"
+              margin="dense"
+              variant="outlined"
+              fullWidth
+              value={leagueData.additional}
+              name="additional"
+              onChange={e => handleChange(e)}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <TextField
-            error={createNewLeagueFailed["length"] ? true : false}
-            helperText={
-              createNewLeagueFailed["length"] && createNewLeagueFailed["length"]
-            }
-            label="Season Length"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-            value={leagueData["length"]}
-            name="length"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            error={createNewLeagueFailed.contact ? true : false}
-            helperText={
-              createNewLeagueFailed.contact && createNewLeagueFailed.contact
-            }
-            label="Contact Information"
-            multiline
-            rows="3"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-            value={leagueData.contact}
-            name="contact"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            error={createNewLeagueFailed.description ? true : false}
-            helperText={
-              createNewLeagueFailed.description &&
-              createNewLeagueFailed.description
-            }
-            label="League Description"
-            multiline
-            rows="3"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-            value={leagueData.description}
-            name="description"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Additional Info"
-            multiline
-            rows="3"
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            value={leagueData.additional}
-            name="additional"
-            onChange={e => handleChange(e)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={submit}
-          >
-            {createNewLeagueLoading ? "Loading...." : "Submit League"}
-          </Button>
-        </Grid>
-      </Grid>
+      </div>
+      <Button
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        fullWidth
+        variant="outlined"
+        size="small"
+        onClick={submit}
+        style={{
+          backgroundColor: hover ? green[600] : green[400],
+          borderColor: green[600],
+          margin: "15px auto"
+        }}
+      >
+        {createNewLeagueLoading ? "Loading...." : "Submit League"}
+      </Button>
+      <Button
+        fullWidth
+        variant="outlined"
+        size="small"
+        onClick={() => history.push("/profile")}
+      >
+        Cancel
+      </Button>
     </div>
   );
 };

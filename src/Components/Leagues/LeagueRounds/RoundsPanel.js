@@ -20,6 +20,7 @@ const RoundsPanel = ({
   rounds,
   roundsFailed,
   roundsLoading,
+  history,
   admin
 }) => {
   const classes = useStyles();
@@ -31,20 +32,17 @@ const RoundsPanel = ({
       ) : (
         <div>
           {admin && (
-            <Link
-              to={`/league/${league_id}/createRound`}
-              style={{ textDecoration: "none" }}
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              style={{
+                margin: "0px auto 0px 0px"
+              }}
+              onClick={() => history.push(`/league/${league_id}/createRound`)}
             >
-              <Button
-                variant="contained"
-                size="small"
-                style={{
-                  margin: "0px auto 0px 0px"
-                }}
-              >
-                Add Round
-              </Button>
-            </Link>
+              Add Round
+            </Button>
           )}
 
           {rounds && rounds.length > 0 ? (

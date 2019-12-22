@@ -19,7 +19,6 @@ const ProfileLeagues = ({
   leagues,
   admin
 }) => {
-  const [hover, setHover] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -29,8 +28,6 @@ const ProfileLeagues = ({
       getUserLeagues();
     }
   }, []);
-
-  console.log(leagues);
 
   return (
     <div className={classes.profileLeaguesContainer}>

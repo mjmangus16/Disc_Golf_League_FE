@@ -9,9 +9,11 @@ import {
   DialogTitle,
   Button,
   Typography,
-  Toolbar
+  Toolbar,
+  Box
 } from "@material-ui/core";
 import useStyles from "./ProfileStyles";
+import { green, red } from "@material-ui/core/colors";
 
 const UpdateDialog = ({
   open,
@@ -23,6 +25,7 @@ const UpdateDialog = ({
   admin
 }) => {
   const classes = useStyles();
+  const [hover, setHover] = useState(false);
   const [userData, setUserData] = useState({
     org_name: "",
     f_name: "",
@@ -82,7 +85,16 @@ const UpdateDialog = ({
             >
               Update Profile
             </DialogTitle>
-            <Button onClick={() => setActivateDelete(true)}>
+
+            <Button
+              onClick={() => setActivateDelete(true)}
+              variant="outlined"
+              size="small"
+              style={{
+                borderColor: red[500],
+                color: red[500]
+              }}
+            >
               DELETE ACCOUNT
             </Button>
           </Toolbar>
@@ -136,10 +148,20 @@ const UpdateDialog = ({
           )}
 
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} size="small" variant="outlined">
               Cancel
             </Button>
-            <Button onClick={() => handleUpdate(userData)} color="primary">
+            <Button
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              onClick={() => handleUpdate(userData)}
+              variant="outlined"
+              size="small"
+              style={{
+                backgroundColor: hover ? green[600] : green[400],
+                borderColor: green[600]
+              }}
+            >
               Save Changes
             </Button>
           </DialogActions>
