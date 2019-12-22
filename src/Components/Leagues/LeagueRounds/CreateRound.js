@@ -96,7 +96,12 @@ const CreateRound = ({
       date: moment(date).format("MM/DD/YYYY"),
       type
     };
-    const participants = right;
+    
+    const participants = right.map(x => {
+      return {...x, league_id:league_id}
+    })
+    console.log(participants)
+    
     let completed = true;
     const redirect = () => history.push(`/league/${league_id}`);
     participants.forEach(p => {

@@ -24,8 +24,9 @@ import {
 export const getAllLeagues = () => dispatch => {
   dispatch({ type: GET_ALL_LEAGUES_LOADING });
   axiosWithAuth()
-    .get("api/leagues/")
+    .get("api/leagues/getLeagues")
     .then(res => {
+      console.log(res)
       dispatch({ type: GET_ALL_LEAGUES_SUCCESS, payload: res.data });
     })
     .catch(err => {
