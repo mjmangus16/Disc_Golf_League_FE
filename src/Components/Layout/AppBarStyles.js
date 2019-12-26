@@ -11,5 +11,10 @@ export const useStyles = makeStyles(theme => ({
   link: {
     textDecoration: "none",
     color: "black"
+  },
+  navLinkDesktop: {
+    color: "white",
+    margin: "auto 10px",
+    fontWeight: 500
   }
 }));

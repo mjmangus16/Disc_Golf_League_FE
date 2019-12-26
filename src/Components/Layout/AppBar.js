@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { logoutUser } from "../../Redux/actions/authActions";
-import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button
+} from "@material-ui/core";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import MenuIcon from "@material-ui/icons/Menu";
 import NoAuthNav from "./Nav/NoAuthNav";
 import AuthNav from "./Nav/AuthNav";
 
@@ -16,7 +23,8 @@ const AppBar_ = ({
   addBreadcrumb,
   isAuthenticated,
   admin,
-  logoutUser
+  logoutUser,
+  width
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,6 +38,99 @@ const AppBar_ = ({
     setAnchorEl(null);
   };
 
+  const displayMenu = width => {
+    if (isWidthDown("sm", width)) {
+      return (
+        <div>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <MenuIcon />
+          </IconButton>
+
+          {!isAuthenticated ? (
+            <NoAuthNav
+              breadcrumbs={breadcrumbs}
+              addBreadcrumb={addBreadcrumb}
+              handleClose={handleClose}
+              classes={classes}
+              open={open}
+              anchorEl={anchorEl}
+            />
+          ) : (
+            <AuthNav
+              breadcrumbs={breadcrumbs}
+              addBreadcrumb={addBreadcrumb}
+              handleClose={handleClose}
+              classes={classes}
+              open={open}
+              anchorEl={anchorEl}
+              logout={logoutUser}
+              admin={admin}
+            />
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          {isAuthenticated ? (
+            <div>
+              <Button size="large" className={classes.navLinkDesktop} href="/">
+                Home
+              </Button>
+              <Button
+                size="large"
+                className={classes.navLinkDesktop}
+                href="/profile"
+              >
+                Profile
+              </Button>
+              <Button
+                size="large"
+                className={classes.navLinkDesktop}
+                href="/createLeague"
+              >
+                Create League
+              </Button>
+              <Button
+                size="large"
+                className={classes.navLinkDesktop}
+                onClick={logoutUser}
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <Button size="large" className={classes.navLinkDesktop} href="/">
+                Home
+              </Button>
+              <Button
+                size="large"
+                className={classes.navLinkDesktop}
+                href="/signup"
+              >
+                Sign Up
+              </Button>
+              <Button
+                size="large"
+                className={classes.navLinkDesktop}
+                href="/signin"
+              >
+                Sign In
+              </Button>
+            </div>
+          )}
+        </div>
+      );
+    }
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -37,40 +138,7 @@ const AppBar_ = ({
           <Typography className={classes.title} variant="h6">
             Disc Golf Leagues
           </Typography>
-
-          <div>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-
-            {!isAuthenticated ? (
-              <NoAuthNav
-                breadcrumbs={breadcrumbs}
-                addBreadcrumb={addBreadcrumb}
-                handleClose={handleClose}
-                classes={classes}
-                open={open}
-                anchorEl={anchorEl}
-              />
-            ) : (
-              <AuthNav
-                breadcrumbs={breadcrumbs}
-                addBreadcrumb={addBreadcrumb}
-                handleClose={handleClose}
-                classes={classes}
-                open={open}
-                anchorEl={anchorEl}
-                logout={logoutUser}
-                admin={admin}
-              />
-            )}
-          </div>
+          {displayMenu(width)}
         </Toolbar>
       </AppBar>
     </div>
@@ -87,4 +155,6 @@ const mapStateToProps = state => ({
   admin: state.auth.admin
 });
 
-export default connect(mapStateToProps, { addBreadcrumb, logoutUser })(AppBar_);
+export default connect(mapStateToProps, { addBreadcrumb, logoutUser })(
+  withWidth()(AppBar_)
+);
