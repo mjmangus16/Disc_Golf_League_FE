@@ -6,21 +6,42 @@ import { Grid, Typography, CircularProgress } from "@material-ui/core";
 
 import LeagueCard from "./LeagueCard";
 
-const Home = ({ getAllLeagues, allLeagues }) => {
+import useStyles from "../Leagues/LeagueStyles";
+
+const Home = ({ getAllLeagues, allLeagues, loading, failed }) => {
+  const classes = useStyles();
   useEffect(() => {
     getAllLeagues();
   }, []);
+
+  const displayData = (loading, failed, allLeagues) => {
+    if (loading) {
+      return (
+        <Grid item xs={12}>
+          <CircularProgress size={50} className={classes.loadingCircle} />
+        </Grid>
+      );
+    } else if (failed.error) {
+      return (
+        <Grid item xs={12}>
+          <Typography>{failed.error}</Typography>
+        </Grid>
+      );
+    } else {
+      return allLeagues.map((league, index) => (
+        <LeagueCard
+          key={league.name + index + league.league_id}
+          league={league}
+        />
+      ));
+    }
+  };
+
   return (
     <div>
       <Typography variant="h5">All Available Leagues</Typography>
       <Grid container spacing={4} style={{ width: "75%", margin: "auto" }}>
-        {allLeagues.length > 0 &&
-          allLeagues.map((league, index) => (
-            <LeagueCard
-              key={league.name + index + league.league_id}
-              league={league}
-            />
-          ))}
+        {displayData(loading, failed, allLeagues)}
       </Grid>
     </div>
   );

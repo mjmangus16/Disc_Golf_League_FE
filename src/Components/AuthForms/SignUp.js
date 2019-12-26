@@ -209,7 +209,7 @@ const Signup = ({
           </Grid>
           {!signUpErrors.signup_message ? (
             <Typography variant="body2" className={classes.errorText}>
-              Sorry, we are not currently accepting new users.
+              {/* Sorry, we are not currently accepting new users. */}
             </Typography>
           ) : (
             <Typography variant="body2" className={classes.errorText}>
