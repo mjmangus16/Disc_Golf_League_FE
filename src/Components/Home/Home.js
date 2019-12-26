@@ -5,8 +5,20 @@ import { getAllLeagues } from "../../Redux/actions/leaguesActions";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
 
 import LeagueCard from "./LeagueCard";
+import { makeStyles } from "@material-ui/core/styles";
 
-import useStyles from "../Leagues/LeagueStyles";
+const useStyles = makeStyles(theme => ({
+  loadingCircle: {
+    color: theme.palette.secondary.main
+  },
+  gridContainer: {
+    width: "75%",
+    margin: "auto",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
+    }
+  }
+}));
 
 const Home = ({ getAllLeagues, allLeagues, loading, failed }) => {
   const classes = useStyles();
@@ -40,7 +52,7 @@ const Home = ({ getAllLeagues, allLeagues, loading, failed }) => {
   return (
     <div>
       <Typography variant="h5">All Available Leagues</Typography>
-      <Grid container spacing={4} style={{ width: "75%", margin: "auto" }}>
+      <Grid container spacing={4} className={classes.gridContainer}>
         {displayData(loading, failed, allLeagues)}
       </Grid>
     </div>

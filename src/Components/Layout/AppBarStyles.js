@@ -15,6 +15,7 @@ export const useStyles = makeStyles(theme => ({
   navLinkDesktop: {
     color: "white",
     margin: "auto 10px",
-    fontWeight: 500
+    fontWeight: 500,
+    fontSize: "0.85rem"
   }
 }));
