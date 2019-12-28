@@ -11,23 +11,7 @@ const useStyles = makeStyles(theme => ({
   loadingCircle: {
     color: theme.palette.secondary.main
   },
-  headerContainer: {
-    borderTop: "1px solid lightgrey",
-    borderBottom: "1px solid lightgrey",
-    padding: "10px 0px",
-    marginTop: 15
-  },
-  headerSection: {
-    margin: "auto"
-  },
-  typo: {
-    padding: "5px 10px"
-  },
-  spanStyle: {
-    textDecoration: "underline",
-    fontWeight: 500,
-    paddingRight: 7
-  },
+
   createLeagueContainer: {
     maxWidth: 750,
     margin: "auto auto 75px auto"
@@ -46,6 +30,75 @@ const useStyles = makeStyles(theme => ({
     width: "auto",
     maxWidth: 700,
     margin: "auto"
+  },
+  formTextInput: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  formTextInputScore: {
+    textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  formTextLabel: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  tableTypoH: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  tableTypo: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.65rem"
+    }
+  },
+  tableRow: {
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "WhiteSmoke",
+      boxShadow: "2px 2px 8px gray"
+    }
+  },
+  memberNameHeading: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.25rem"
+    }
+  },
+  missingData: {
+    marginTop: 25,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  leagueNameHeading: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.15rem"
+    }
+  },
+  roundInfo: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  roundMemberName: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  memberSelectItems: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  memberInputLabel: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
   }
 }));
 

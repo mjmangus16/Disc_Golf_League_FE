@@ -97,7 +97,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         updateRoundLoading: false,
-        round: action.payload
+        round: { ...state.round, ...action.payload }
       };
     case UPDATE_ROUND_FAILED:
       return {

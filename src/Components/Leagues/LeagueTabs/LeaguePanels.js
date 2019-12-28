@@ -29,7 +29,7 @@ const LeaguePanels = ({ tabValue, history }) => {
         <SchedulePanel history={history} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <MembersPanel />
+        <MembersPanel history={history} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <RoundsPanel history={history} />

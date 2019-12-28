@@ -3,24 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllLeagues } from "../../Redux/actions/leaguesActions";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
 import LeagueCard from "./LeagueCard";
-import { makeStyles } from "@material-ui/core/styles";
+import useStyles from "./HomeStyles";
 
-const useStyles = makeStyles(theme => ({
-  loadingCircle: {
-    color: theme.palette.secondary.main
-  },
-  gridContainer: {
-    width: "75%",
-    margin: "auto",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%"
-    }
-  }
-}));
-
-const Home = ({ getAllLeagues, allLeagues, loading, failed }) => {
+const Home = ({ getAllLeagues, allLeagues, loading, failed, width }) => {
   const classes = useStyles();
   useEffect(() => {
     getAllLeagues();
@@ -50,9 +38,15 @@ const Home = ({ getAllLeagues, allLeagues, loading, failed }) => {
   };
 
   return (
-    <div>
-      <Typography variant="h5">All Available Leagues</Typography>
-      <Grid container spacing={4} className={classes.gridContainer}>
+    <div style={{ marginBottom: 15 }}>
+      <Typography variant="h5" className={classes.pageHeading}>
+        All Available Leagues
+      </Typography>
+      <Grid
+        container
+        spacing={isWidthDown("sm", width) ? 1 : 4}
+        className={classes.gridContainer}
+      >
         {displayData(loading, failed, allLeagues)}
       </Grid>
     </div>
@@ -69,4 +63,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getAllLeagues
-})(Home);
+})(withWidth()(Home));

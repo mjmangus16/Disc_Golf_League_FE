@@ -21,9 +21,13 @@ import {
   FormControl,
   IconButton
 } from "@material-ui/core";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import { green } from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
-
+import EditIcon from "@material-ui/icons/Edit";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import useStyles from "../LeagueStyles";
 import TypesComp from "./TypesComp";
 
 const ViewRound = ({
@@ -41,8 +45,10 @@ const ViewRound = ({
   deleteParticipant,
   updateMultipleParticipants,
   updateRound,
-  admin
+  admin,
+  width
 }) => {
+  const classes = useStyles();
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
   const [trigger, setTrigger] = useState(false);
@@ -67,7 +73,7 @@ const ViewRound = ({
 
   useEffect(() => {
     setType(round.type);
-  }, [round.type]);
+  }, [round]);
 
   useEffect(() => {
     if (round && round.participants) {
@@ -99,7 +105,8 @@ const ViewRound = ({
         f_name: member.f_name,
         l_name: member.l_name,
         score,
-        round_id
+        round_id,
+        league_id
       };
       addParticipant(league_id, round_id, data, setTrigger);
       setMember("");
@@ -140,49 +147,42 @@ const ViewRound = ({
     updateRound(league_id, round_id, { type });
     setChanges(false);
   };
+  console.log(round);
 
-  return (
-    <div style={{ width: "90%", margin: "auto" }}>
-      <Grid container>
-        <Grid item xs={3}>
-          {admin && !changes ? (
-            <Button
-              variant="contained"
+  const displayAddButton = () => {
+    if (admin) {
+      if (isWidthDown("sm", width)) {
+        if (!trigger) {
+          return (
+            <IconButton
               color="secondary"
-              size="small"
+              size="medium"
               onClick={() => {
-                setChanges(true);
-                setTrigger(false);
+                setChanges(false);
+                setTrigger(true);
               }}
             >
-              Make Changes
-            </Button>
-          ) : (
-            admin && (
-              <Button
-                onMouseEnter={() => setHover1(true)}
-                onMouseLeave={() => setHover1(false)}
-                variant="contained"
-                size="small"
-                onClick={handleUpdate}
-                style={{
-                  backgroundColor: hover1 ? green[600] : green[400],
-                  borderColor: green[600]
-                }}
-              >
-                Submit Changes
-              </Button>
-            )
-          )}
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="h5" gutterBottom>
-            {round.league}
-          </Typography>
-        </Grid>
-
-        <Grid item xs={3}>
-          {admin && !trigger ? (
+              <AddCircleIcon />
+            </IconButton>
+          );
+        } else {
+          return (
+            <IconButton
+              onClick={handleUpdate}
+              size="medium"
+              onClick={submitParticipant}
+              style={{
+                backgroundColor: green[600],
+                color: "white"
+              }}
+            >
+              <ArrowUpwardIcon />
+            </IconButton>
+          );
+        }
+      } else {
+        if (!trigger) {
+          return (
             <Button
               variant="contained"
               color="secondary"
@@ -194,23 +194,112 @@ const ViewRound = ({
             >
               Add Score
             </Button>
-          ) : (
-            admin && (
-              <Button
-                onMouseEnter={() => setHover2(true)}
-                onMouseLeave={() => setHover2(false)}
-                variant="contained"
-                size="small"
-                onClick={submitParticipant}
-                style={{
-                  backgroundColor: hover2 ? green[600] : green[400],
-                  borderColor: green[600]
-                }}
-              >
-                {addParticipantLoading ? "...Loading" : "Submit Score"}
-              </Button>
-            )
-          )}
+          );
+        } else {
+          return (
+            <Button
+              onMouseEnter={() => setHover2(true)}
+              onMouseLeave={() => setHover2(false)}
+              variant="contained"
+              size="small"
+              onClick={submitParticipant}
+              style={{
+                backgroundColor: hover2 ? green[600] : green[400],
+                borderColor: green[600]
+              }}
+            >
+              {addParticipantLoading ? "...Loading" : "Submit Score"}
+            </Button>
+          );
+        }
+      }
+    }
+  };
+
+  const displayChangesButton = () => {
+    if (admin) {
+      if (isWidthDown("sm", width)) {
+        if (!changes) {
+          return (
+            <IconButton
+              color="secondary"
+              size="medium"
+              onClick={() => {
+                setChanges(true);
+                setTrigger(false);
+              }}
+            >
+              <EditIcon />
+            </IconButton>
+          );
+        } else {
+          return (
+            <IconButton
+              onClick={handleUpdate}
+              size="medium"
+              style={{
+                backgroundColor: green[600],
+                color: "white"
+              }}
+            >
+              <ArrowUpwardIcon />
+            </IconButton>
+          );
+        }
+      } else {
+        if (!changes) {
+          return (
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => {
+                setChanges(true);
+                setTrigger(false);
+              }}
+            >
+              Make Changes
+            </Button>
+          );
+        } else {
+          return (
+            <Button
+              onMouseEnter={() => setHover1(true)}
+              onMouseLeave={() => setHover1(false)}
+              variant="contained"
+              size="small"
+              onClick={handleUpdate}
+              style={{
+                backgroundColor: hover1 ? green[600] : green[400],
+                borderColor: green[600]
+              }}
+            >
+              Submit Changes
+            </Button>
+          );
+        }
+      }
+    }
+  };
+
+  return (
+    <div style={{ width: "90%", margin: "auto" }}>
+      <Grid container alignItems="center">
+        <Grid item xs={2}>
+          {displayChangesButton()}
+        </Grid>
+        <Grid item xs={8}>
+          <Typography
+            variant="h5"
+            gutterBottom
+            className={classes.leagueNameHeading}
+          >
+            {round.league}
+          </Typography>
+        </Grid>
+
+        <Grid item xs={2}>
+          {displayAddButton()}
         </Grid>
       </Grid>
       <Grid container spacing={1} style={{ width: "50%", margin: "auto" }}>
@@ -219,6 +308,7 @@ const ViewRound = ({
             <Typography
               variant="subtitle1"
               style={{ textTransform: "capitalize" }}
+              className={classes.roundInfo}
             >
               {round.type} Round # {round.round_num}
             </Typography>
@@ -227,7 +317,9 @@ const ViewRound = ({
           )}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="subtitle1">{round.date}</Typography>
+          <Typography variant="subtitle1" className={classes.roundInfo}>
+            {round.date}
+          </Typography>
         </Grid>
 
         <Grid item xs={4}>
@@ -262,7 +354,10 @@ const ViewRound = ({
               )} */}
               <Grid item xs={6}>
                 <FormControl fullWidth required>
-                  <InputLabel id="demo-simple-select-outlined-label">
+                  <InputLabel
+                    id="demo-simple-select-outlined-label"
+                    className={classes.memberInputLabel}
+                  >
                     Member
                   </InputLabel>
                   <Select
@@ -270,14 +365,16 @@ const ViewRound = ({
                     id="demo-simple-select-outlined"
                     value={member}
                     onChange={e => setMember(e.target.value)}
+                    className={classes.memberSelectItems}
                   >
-                    <MenuItem value="">
+                    <MenuItem value="" className={classes.memberSelectItems}>
                       <em>None</em>
                     </MenuItem>
                     {availMem.map(am => (
                       <MenuItem
                         value={am}
                         key={am.l_name + am.f_name + am.member_id}
+                        className={classes.memberSelectItems}
                       >{`${am.l_name}, ${am.f_name}`}</MenuItem>
                     ))}
                   </Select>
@@ -293,8 +390,15 @@ const ViewRound = ({
                   name="score"
                   style={{ width: 55, paddingRight: 5 }}
                   onChange={e => setScore(e.target.value)}
-                  inputProps={{
-                    style: { textAlign: "center" }
+                  InputProps={{
+                    classes: {
+                      input: classes.formTextInputScore
+                    }
+                  }}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.formTextLabel
+                    }
                   }}
                 />
               </Grid>
@@ -317,13 +421,21 @@ const ViewRound = ({
                 }}
               >
                 <Grid item xs={6}>
-                  <Typography variant="body1" align="left">
+                  <Typography
+                    variant="body1"
+                    align="left"
+                    className={classes.roundMemberName}
+                  >
                     {part.l_name}, {part.f_name}
                   </Typography>
                 </Grid>
                 {!changes ? (
                   <Grid item xs={6}>
-                    <Typography variant="body1" align="center">
+                    <Typography
+                      variant="body1"
+                      align="center"
+                      className={classes.roundMemberName}
+                    >
                       {part.score}
                     </Typography>
                   </Grid>
@@ -337,8 +449,15 @@ const ViewRound = ({
                       name="score"
                       onChange={e => handleScore(e, index)}
                       style={{ width: 55, paddingRight: 5, marginTop: -10 }}
-                      inputProps={{
-                        style: { textAlign: "center" }
+                      InputProps={{
+                        classes: {
+                          input: classes.formTextInputScore
+                        }
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.formTextLabel
+                        }
                       }}
                     />
                   </Grid>
@@ -387,4 +506,4 @@ export default connect(mapStateToProps, {
   deleteParticipant,
   updateMultipleParticipants,
   updateRound
-})(ViewRound);
+})(withWidth()(ViewRound));

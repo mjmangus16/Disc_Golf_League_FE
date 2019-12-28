@@ -8,13 +8,20 @@ import {
   CircularProgress,
   Button,
   TextField,
-  Paper
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
 } from "@material-ui/core";
+import TableContainer from "@material-ui/core/TableContainer";
 import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
 import MemberCard from "./MemberCard";
 
 const RosterPanel = ({
+  history,
   league_id,
   members,
   membersLoading,
@@ -77,83 +84,139 @@ const RosterPanel = ({
               </Button>
             )
           )}
-          {members.length > 0 || trigger ? (
-            <Grid
-              container
-              spacing={1}
-              alignContent="flex-start"
-              style={{
-                height: 500,
-                overflow: "auto",
-                marginTop: 25
-              }}
-            >
-              {trigger && (
-                <Grid item xs={12}>
-                  <Paper
-                    className={classes.paper}
-                    elevation={4}
-                    style={{ width: 550, margin: "auto" }}
-                  >
-                    <Grid container spacing={1}>
-                      {submitFailed.error && (
-                        <Grid item xs={12}>
-                          <Typography
-                            color="error"
-                            align="center"
-                            variant="body2"
-                          >
-                            {submitFailed.error}
-                          </Typography>
-                        </Grid>
-                      )}
-                      <Grid item xs={4}>
-                        <TextField
-                          label="First Name"
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          value={newMember.f_name}
-                          name="f_name"
-                          onChange={e => handler(e)}
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <TextField
-                          label="Last Name"
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          value={newMember.l_name}
-                          name="l_name"
-                          onChange={e => handler(e)}
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <TextField
-                          label="Email"
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth
-                          value={newMember.email}
-                          name="email"
-                          onChange={e => handler(e)}
-                        />
-                      </Grid>
+          {trigger && (
+            <div style={{ margin: "25px auto" }}>
+              <Paper
+                className={classes.paper}
+                style={{ maxWidth: 550, margin: "auto" }}
+              >
+                <Grid container spacing={1} justify="center">
+                  {submitFailed.error && (
+                    <Grid item xs={12}>
+                      <Typography color="error" align="center" variant="body2">
+                        {submitFailed.error}
+                      </Typography>
                     </Grid>
-                  </Paper>
+                  )}
+                  <Grid item xs={6} md={4} style={{ width: "auto" }}>
+                    <TextField
+                      label="First Name"
+                      margin="dense"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      value={newMember.f_name}
+                      name="f_name"
+                      onChange={e => handler(e)}
+                      InputProps={{
+                        classes: {
+                          input: classes.formTextInput
+                        }
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.formTextLabel
+                        }
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6} md={4}>
+                    <TextField
+                      label="Last Name"
+                      margin="dense"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      value={newMember.l_name}
+                      name="l_name"
+                      onChange={e => handler(e)}
+                      InputProps={{
+                        classes: {
+                          input: classes.formTextInput
+                        }
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.formTextLabel
+                        }
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={8} md={4}>
+                    <TextField
+                      label="Email"
+                      margin="dense"
+                      variant="outlined"
+                      fullWidth
+                      value={newMember.email}
+                      name="email"
+                      onChange={e => handler(e)}
+                      InputProps={{
+                        classes: {
+                          input: classes.formTextInput
+                        }
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.formTextLabel
+                        }
+                      }}
+                    />
+                  </Grid>
                 </Grid>
-              )}
-              {members.map((member, i) => (
-                <MemberCard
-                  key={(member.f_name, member.l_name, i)}
-                  member={member}
-                  league_id={league_id}
-                />
-              ))}
-            </Grid>
+              </Paper>
+            </div>
+          )}
+          {members.length > 0 ? (
+            <TableContainer style={{ maxWidth: 400, margin: "15px auto" }}>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Name
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Rounds
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {members.map(member => (
+                    <TableRow
+                      key={"memberKey" + member.member_id}
+                      onClick={() =>
+                        history.push(
+                          `/league/${league_id}/member/${member.member_id}`
+                        )
+                      }
+                      className={classes.tableRow}
+                    >
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {`${member.l_name}, ${member.f_name}`}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {member.rounds}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : membersFailed ? (
+            <Typography className={classes.missingData}>
+              {membersFailed.error}
+            </Typography>
+          ) : (
+            <Typography className={classes.missingData}>
+              {admin
+                ? "You have not added any members to the league yet."
+                : "The league manager has not added any members to this league yet."}
+            </Typography>
+          )}
+          {/* {members.length > 0 || trigger ? (
+            
+              
+            
           ) : membersFailed ? (
             <Typography style={{ marginTop: 15 }}>
               {membersFailed.error}
@@ -164,7 +227,7 @@ const RosterPanel = ({
                 ? "You have not added any members to the league yet."
                 : "The league manager has not added any members to this league yet."}
             </Typography>
-          )}
+          )} */}
         </div>
       )}
     </div>

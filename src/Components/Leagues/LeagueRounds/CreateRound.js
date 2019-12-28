@@ -85,7 +85,6 @@ const CreateRound = ({
   const handleScore = (e, index) => {
     let container = [...right];
     container[index] = { ...container[index], score: e.target.value };
-    console.log(container);
     setRight(container);
   };
 
@@ -96,12 +95,11 @@ const CreateRound = ({
       date: moment(date).format("MM/DD/YYYY"),
       type
     };
-    
+
     const participants = right.map(x => {
-      return {...x, league_id:league_id}
-    })
-    console.log(participants)
-    
+      return { ...x, league_id: league_id };
+    });
+
     let completed = true;
     const redirect = () => history.push(`/league/${league_id}`);
     participants.forEach(p => {

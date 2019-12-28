@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import TableContainer from "@material-ui/core/TableContainer";
 import {
   Typography,
   Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Paper,
   CircularProgress,
   Button
@@ -44,30 +49,64 @@ const RoundsPanel = ({
               Add Round
             </Button>
           )}
-
           {rounds && rounds.length > 0 ? (
-            <Grid
-              container
-              alignContent="flex-start"
-              spacing={2}
-              style={{ height: 500, overflow: "auto", marginTop: 25 }}
+            <TableContainer
+              style={{
+                maxWidth: 550,
+                margin: "25px auto"
+              }}
             >
-              {rounds.map((round, i) => (
-                <Grid
-                  item
-                  xs={12}
-                  key={round.date + round.type + round.round_id}
-                >
-                  <RoundCard round={round} league_id={league_id} />
-                </Grid>
-              ))}
-            </Grid>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Round #
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Date
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Type
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Participants
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rounds.map(round => (
+                    <TableRow
+                      key={"roundKey" + round.round_id}
+                      onClick={() =>
+                        history.push(
+                          `/league/${league_id}/round/${round.round_id}/viewRound`
+                        )
+                      }
+                      className={classes.tableRow}
+                    >
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.round_num}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.date}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.type}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.participants}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           ) : roundsFailed.error ? (
-            <Typography style={{ marginTop: 15 }}>
+            <Typography className={classes.missingData}>
               {roundsFailed.error}
             </Typography>
           ) : (
-            <Typography style={{ marginTop: 15 }}>
+            <Typography className={classes.missingData}>
               {admin
                 ? "You have not added any rounds to the league yet."
                 : "The league manager has not added any rounds to this league yet."}
