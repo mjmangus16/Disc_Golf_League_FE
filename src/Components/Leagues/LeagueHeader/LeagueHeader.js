@@ -4,11 +4,11 @@ import useStyles from "./HeaderStyles";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import EditIcon from "@material-ui/icons/Edit";
 
-const LeagueHeader = ({ league, handler, admin, width }) => {
+const LeagueHeader = ({ league, handler, admin, width, user_id }) => {
   const classes = useStyles();
 
   const displayEdit = width => {
-    if (admin) {
+    if (admin && league.owner_id === user_id) {
       if (isWidthDown("sm", width)) {
         return (
           <IconButton color="secondary">

@@ -33,11 +33,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SchedulePanel = ({ league_id, schedule, history, admin }) => {
+const SchedulePanel = ({
+  league_id,
+  schedule,
+  history,
+  admin,
+  user_id,
+  owner_id
+}) => {
   const classes = useStyles();
   return (
     <div>
-      {admin && (
+      {admin && user_id === owner_id && (
         <Button
           variant="contained"
           color="secondary"
@@ -119,14 +126,19 @@ const SchedulePanel = ({ league_id, schedule, history, admin }) => {
 SchedulePanel.propTypes = {
   schedule: PropTypes.arrayOf(PropTypes.object).isRequired,
   league_id: PropTypes.number,
-  admin: PropTypes.bool.isRequired
+  admin: PropTypes.bool.isRequired,
+  owner_id: PropTypes.number.isRequired,
+  user_id: PropTypes.number.isRequired,
+  owner_id: PropTypes.number
 };
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,
   schedule: state.schedule.schedule,
   league_id: state.leagues.selectedLeague.league_id,
-  admin: state.auth.admin
+  admin: state.auth.admin,
+  user_id: state.auth.user_id,
+  owner_id: state.leagues.selectedLeague.owner_id
 });
 
 export default connect(mapStateToProps, {})(SchedulePanel);

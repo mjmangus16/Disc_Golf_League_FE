@@ -47,7 +47,9 @@ const ViewRound = ({
   updateMultipleParticipants,
   updateRound,
   admin,
-  width
+  width,
+  user_id,
+  owner_id
 }) => {
   const classes = useStyles();
   const [hover1, setHover1] = useState(false);
@@ -150,7 +152,7 @@ const ViewRound = ({
   };
 
   const displayAddButton = () => {
-    if (admin) {
+    if (admin && user_id === owner_id) {
       if (isWidthDown("sm", width)) {
         if (!trigger) {
           return (
@@ -217,7 +219,7 @@ const ViewRound = ({
   };
 
   const displayChangesButton = () => {
-    if (admin) {
+    if (admin && user_id === owner_id) {
       if (isWidthDown("sm", width)) {
         if (!changes) {
           return (
@@ -500,7 +502,9 @@ ViewRound.propTypes = {
   addParticipant: PropTypes.func.isRequired,
   deleteParticipant: PropTypes.func.isRequired,
   updateMultipleParticipants: PropTypes.func.isRequired,
-  updateRound: PropTypes.func.isRequired
+  updateRound: PropTypes.func.isRequired,
+  user_id: PropTypes.number.isRequired,
+  owner_id: PropTypes.number
 };
 
 const mapStateToProps = state => ({
@@ -510,7 +514,9 @@ const mapStateToProps = state => ({
   members: state.members.members,
   addParticipantLoading: state.rounds.addParticipantLoading,
   addParticipantFailed: state.rounds.addParticipantFailed,
-  admin: state.auth.admin
+  admin: state.auth.admin,
+  user_id: state.auth.user_id,
+  owner_id: state.leagues.selectedLeague.owner_id
 });
 
 export default connect(mapStateToProps, {

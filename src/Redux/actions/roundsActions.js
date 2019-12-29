@@ -130,13 +130,16 @@ export const updateMultipleParticipants = (
       score: pa.score
     };
   });
-  console.log(participants);
 
   participants.forEach(async p => {
-    await axiosWithAuth().put(
-      `api/participants/league/${league_id}/round/${round_id}/member/${p.member_id}/participant/${p.participant_id}`,
-      p
-    );
+    await axiosWithAuth()
+      .put(
+        `api/participants/league/${league_id}/round/${round_id}/member/${p.member_id}/participant/${p.participant_id}`,
+        p
+      )
+      .catch(err => {
+        console.log(err);
+      });
   });
 };
 

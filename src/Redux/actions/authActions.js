@@ -82,4 +82,5 @@ export const logoutUser = () => dispatch => {
   dispatch({
     type: CLEAR_PROFILE
   });
+  window.location.replace("/");
 };

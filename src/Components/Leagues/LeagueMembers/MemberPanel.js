@@ -29,7 +29,9 @@ const RosterPanel = ({
   submitLoading,
   submitFailed,
   submitMemberToLeague,
-  admin
+  admin,
+  user_id,
+  owner_id
 }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
@@ -70,7 +72,8 @@ const RosterPanel = ({
               {submitLoading ? "Loading..." : "Submit Member"}
             </Button>
           ) : (
-            admin && (
+            admin &&
+            owner_id === user_id && (
               <Button
                 variant="contained"
                 color="secondary"
@@ -227,7 +230,9 @@ RosterPanel.propTypes = {
   submitLoading: PropTypes.bool.isRequired,
   submitFailed: PropTypes.object.isRequired,
   admin: PropTypes.bool.isRequired,
-  submitMemberToLeague: PropTypes.func.isRequired
+  submitMemberToLeague: PropTypes.func.isRequired,
+  user_id: PropTypes.number.isRequired,
+  owner_id: PropTypes.number
 };
 
 const mapStateToProps = state => ({
@@ -238,7 +243,9 @@ const mapStateToProps = state => ({
   getMembersFailed: state.members.getMembersFailed,
   submitLoading: state.members.submitMemberLoading,
   submitFailed: state.members.submitMemberFailed,
-  admin: state.auth.admin
+  admin: state.auth.admin,
+  user_id: state.auth.user_id,
+  owner_id: state.leagues.selectedLeague.owner_id
 });
 
 export default connect(mapStateToProps, {

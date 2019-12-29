@@ -27,7 +27,9 @@ const RoundsPanel = ({
   roundsFailed,
   roundsLoading,
   history,
-  admin
+  admin,
+  user_id,
+  owner_id
 }) => {
   const classes = useStyles();
 
@@ -37,7 +39,7 @@ const RoundsPanel = ({
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          {admin && (
+          {admin && user_id === owner_id && (
             <Button
               variant="contained"
               color="secondary"
@@ -124,7 +126,9 @@ RoundsPanel.propTypes = {
   rounds: PropTypes.arrayOf(PropTypes.object).isRequired,
   roundsLoading: PropTypes.bool.isRequired,
   roundsFailed: PropTypes.object.isRequired,
-  admin: PropTypes.bool.isRequired
+  admin: PropTypes.bool.isRequired,
+  user_id: PropTypes.number.isRequired,
+  owner_id: PropTypes.number
 };
 
 const mapStateToProps = state => ({
@@ -133,7 +137,9 @@ const mapStateToProps = state => ({
   rounds: state.rounds.rounds,
   roundsLoading: state.rounds.roundsLoading,
   roundsFailed: state.rounds.roundsFailed,
-  admin: state.auth.admin
+  admin: state.auth.admin,
+  user_id: state.auth.user_id,
+  owner_id: state.leagues.selectedLeague.owner_id
 });
 
 export default connect(mapStateToProps, {})(RoundsPanel);

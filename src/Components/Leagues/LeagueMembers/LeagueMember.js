@@ -42,7 +42,9 @@ const LeagueMember = ({
   match,
   history,
   admin,
-  width
+  width,
+  user_id,
+  owner_id
 }) => {
   const classes = useStyles();
   const [trigger, setTrigger] = useState(false);
@@ -80,24 +82,26 @@ const LeagueMember = ({
   };
 
   const displayOptionsButton = () => {
-    if (isWidthDown("sm", width)) {
-      return (
-        <IconButton color="secondary">
-          <EditIcon />
-        </IconButton>
-      );
-    } else {
-      return (
-        <Button
-          variant="outlined"
-          color="secondary"
-          size="small"
-          style={{ margin: "10px auto" }}
-          onClick={() => setTrigger(true)}
-        >
-          Member Options
-        </Button>
-      );
+    if (admin && owner_id === user_id) {
+      if (isWidthDown("sm", width)) {
+        return (
+          <IconButton color="secondary">
+            <EditIcon />
+          </IconButton>
+        );
+      } else {
+        return (
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            style={{ margin: "10px auto" }}
+            onClick={() => setTrigger(true)}
+          >
+            Member Options
+          </Button>
+        );
+      }
     }
   };
 
@@ -163,10 +167,7 @@ const LeagueMember = ({
                 </TableHead>
                 <TableBody>
                   {member.rounds.map(round => (
-                    <TableRow
-                      key={"memberRoundKey" + round.participant_id}
-                      className={classes.tableRow}
-                    >
+                    <TableRow key={"memberRoundKey" + round.participant_id}>
                       <TableCell align="center" className={classes.tableTypo}>
                         {moment(new Date(round.date)).format("MM/DD/YY")}
                       </TableCell>
@@ -206,7 +207,9 @@ LeagueMember.propTypes = {
   getMemberByMemberId: PropTypes.func.isRequired,
   clearSelectedMemberData: PropTypes.func.isRequired,
   removeMemberFromLeague: PropTypes.func.isRequired,
-  updateMember: PropTypes.func.isRequired
+  updateMember: PropTypes.func.isRequired,
+  user_id: PropTypes.number.isRequired,
+  owner_id: PropTypes.number
 };
 
 const mapStateToProps = state => ({
@@ -216,7 +219,9 @@ const mapStateToProps = state => ({
   updateMemberLoading: state.members.updateMemberLoading,
   updateMemberFailed: state.members.updateMemberFailed,
   update_success: state.members.update_success,
-  admin: state.auth.admin
+  admin: state.auth.admin,
+  user_id: state.auth.user_id,
+  owner_id: state.leagues.selectedLeague.owner_id
 });
 
 export default connect(mapStateToProps, {
