@@ -14,6 +14,7 @@ import {
   CircularProgress,
   Button
 } from "@material-ui/core";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
@@ -88,7 +89,7 @@ const RoundsPanel = ({
                         {round.round_num}
                       </TableCell>
                       <TableCell align="center" className={classes.tableTypo}>
-                        {round.date}
+                        {moment(round.date).format("MM/DD/YY")}
                       </TableCell>
                       <TableCell align="center" className={classes.tableTypo}>
                         {round.type}

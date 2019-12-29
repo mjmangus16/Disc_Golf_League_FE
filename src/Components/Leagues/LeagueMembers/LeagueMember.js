@@ -24,6 +24,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import useStyles from "../LeagueStyles";
 import EditIcon from "@material-ui/icons/Edit";
+import moment from "moment";
 
 import ConnectUser from "./ConnectUser";
 
@@ -167,7 +168,7 @@ const LeagueMember = ({
                       className={classes.tableRow}
                     >
                       <TableCell align="center" className={classes.tableTypo}>
-                        {round.date}
+                        {moment(round.date).format("MM/DD/YY")}
                       </TableCell>
                       <TableCell align="center" className={classes.tableTypo}>
                         {round.type}

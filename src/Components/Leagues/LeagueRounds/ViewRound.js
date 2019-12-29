@@ -23,6 +23,7 @@ import {
 } from "@material-ui/core";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import { green } from "@material-ui/core/colors";
+import moment from "moment";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -169,7 +170,7 @@ const ViewRound = ({
           return (
             <IconButton
               onClick={handleUpdate}
-              size="medium"
+              size="small"
               onClick={submitParticipant}
               style={{
                 backgroundColor: green[600],
@@ -236,7 +237,7 @@ const ViewRound = ({
           return (
             <IconButton
               onClick={handleUpdate}
-              size="medium"
+              size="small"
               style={{
                 backgroundColor: green[600],
                 color: "white"
@@ -318,7 +319,7 @@ const ViewRound = ({
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1" className={classes.roundInfo}>
-            {round.date}
+            {moment(round.date).format("MM/DD/YY")}
           </Typography>
         </Grid>
 
