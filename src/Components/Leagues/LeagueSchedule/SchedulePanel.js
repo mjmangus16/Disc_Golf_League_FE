@@ -116,7 +116,11 @@ const SchedulePanel = ({ league_id, schedule, history, admin }) => {
   );
 };
 
-SchedulePanel.propTypes = {};
+SchedulePanel.propTypes = {
+  schedule: PropTypes.arrayOf(PropTypes.object).isRequired,
+  league_id: PropTypes.number,
+  admin: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,

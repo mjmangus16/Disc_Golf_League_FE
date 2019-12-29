@@ -148,7 +148,6 @@ const ViewRound = ({
     updateRound(league_id, round_id, { type });
     setChanges(false);
   };
-  console.log(round);
 
   const displayAddButton = () => {
     if (admin) {
@@ -319,7 +318,7 @@ const ViewRound = ({
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1" className={classes.roundInfo}>
-            {moment(round.date).format("MM/DD/YY")}
+            {moment(new Date(round.date)).format("MM/DD/YY")}
           </Typography>
         </Grid>
 
@@ -487,7 +486,22 @@ const ViewRound = ({
   );
 };
 
-ViewRound.propTypes = {};
+ViewRound.propTypes = {
+  round: PropTypes.object.isRequired,
+  roundLoading: PropTypes.bool.isRequired,
+  roundFailed: PropTypes.object.isRequired,
+  members: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addParticipantLoading: PropTypes.bool.isRequired,
+  addParticipantFailed: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired,
+  getRoundByRoundId: PropTypes.func.isRequired,
+  clearSelectedRoundData: PropTypes.func.isRequired,
+  getMembersByLeagueId: PropTypes.func.isRequired,
+  addParticipant: PropTypes.func.isRequired,
+  deleteParticipant: PropTypes.func.isRequired,
+  updateMultipleParticipants: PropTypes.func.isRequired,
+  updateRound: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   round: state.rounds.round,

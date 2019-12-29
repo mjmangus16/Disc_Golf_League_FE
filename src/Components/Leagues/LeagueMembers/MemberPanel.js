@@ -213,28 +213,22 @@ const RosterPanel = ({
                 : "The league manager has not added any members to this league yet."}
             </Typography>
           )}
-          {/* {members.length > 0 || trigger ? (
-            
-              
-            
-          ) : membersFailed ? (
-            <Typography style={{ marginTop: 15 }}>
-              {membersFailed.error}
-            </Typography>
-          ) : (
-            <Typography style={{ marginTop: 15 }}>
-              {admin
-                ? "You have not added any members to the league yet."
-                : "The league manager has not added any members to this league yet."}
-            </Typography>
-          )} */}
         </div>
       )}
     </div>
   );
 };
 
-RosterPanel.propTypes = {};
+RosterPanel.propTypes = {
+  league_id: PropTypes.number,
+  members: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getMembersLoading: PropTypes.bool.isRequired,
+  getMembersFailed: PropTypes.object.isRequired,
+  submitLoading: PropTypes.bool.isRequired,
+  submitFailed: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired,
+  submitMemberToLeague: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,

@@ -107,7 +107,15 @@ const UpdateSchedule = ({
   );
 };
 
-UpdateSchedule.propTypes = {};
+UpdateSchedule.propTypes = {
+  schedule: PropTypes.arrayOf(PropTypes.object).isRequired,
+  editLeagueFailed: PropTypes.object.isRequired,
+  league_id: PropTypes.number,
+  submitSchedule: PropTypes.func.isRequired,
+  removeWeekFromSchedule: PropTypes.func.isRequired,
+  updateWeekInSchedule: PropTypes.func.isRequired,
+  getScheduleByLeagueId: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,

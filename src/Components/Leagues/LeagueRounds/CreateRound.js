@@ -27,6 +27,7 @@ import TransferList from "./TransferList";
 import Score from "./Score";
 
 const types = [
+  "None",
   "Singles",
   "Doubles",
   "Singles Travel",
@@ -54,7 +55,7 @@ const CreateRound = ({
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [type, setType] = useState("");
+  const [type, setType] = useState("None");
 
   useEffect(() => {
     const { league_id } = match.params;
@@ -63,7 +64,9 @@ const CreateRound = ({
   }, []);
 
   useEffect(() => {
-    setType(leagueType);
+    if (leagueType) {
+      setType(leagueType);
+    }
   }, [leagueType]);
 
   useEffect(() => {
@@ -229,7 +232,13 @@ const CreateRound = ({
   );
 };
 
-CreateRound.propTypes = {};
+CreateRound.propTypes = {
+  members: PropTypes.arrayOf(PropTypes.object).isRequired,
+  leagueType: PropTypes.string,
+  getMembersByLeagueId: PropTypes.func.isRequired,
+  addRoundAndParticipants: PropTypes.func.isRequired,
+  getLeagueById: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   members: state.members.members,

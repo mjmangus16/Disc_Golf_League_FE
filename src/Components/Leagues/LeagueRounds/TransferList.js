@@ -20,12 +20,8 @@ const TransferList = ({ left, setLeft, right, setRight }) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
 
-  console.log(checked);
-
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
-
-  console.log("left: ", leftChecked);
 
   function not(a, b) {
     return a.filter(value => b.indexOf(value) === -1);

@@ -74,7 +74,14 @@ const ProfileLeagues = ({
   );
 };
 
-ProfileLeagues.propTypes = {};
+ProfileLeagues.propTypes = {
+  getManagerLeaguesLoading: PropTypes.bool.isRequired,
+  getManagerLeaguesFailed: PropTypes.object.isRequired,
+  getUserLeaguesLoading: PropTypes.bool.isRequired,
+  getUserLeaguesFailed: PropTypes.object.isRequired,
+  leagues: PropTypes.arrayOf(PropTypes.object).isRequired,
+  admin: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = state => ({
   getManagerLeaguesLoading: state.leagues.getManagerLeaguesLoading,

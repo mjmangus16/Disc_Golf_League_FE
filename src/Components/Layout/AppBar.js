@@ -146,7 +146,9 @@ const AppBar_ = ({
 };
 
 AppBar_.propTypes = {
-  breadcrumbs: PropTypes.array.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

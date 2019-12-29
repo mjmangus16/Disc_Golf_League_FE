@@ -122,7 +122,6 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
               variant="inline"
               format="MM/DD/YYYY"
               margin="dense"
-              id="date-picker-inline"
               label="Date"
               value={week.date}
               onChange={handleDate}

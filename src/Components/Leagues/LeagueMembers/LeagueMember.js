@@ -168,7 +168,7 @@ const LeagueMember = ({
                       className={classes.tableRow}
                     >
                       <TableCell align="center" className={classes.tableTypo}>
-                        {moment(round.date).format("MM/DD/YY")}
+                        {moment(new Date(round.date)).format("MM/DD/YY")}
                       </TableCell>
                       <TableCell align="center" className={classes.tableTypo}>
                         {round.type}
@@ -195,7 +195,19 @@ const LeagueMember = ({
   );
 };
 
-LeagueMember.propTypes = {};
+LeagueMember.propTypes = {
+  member: PropTypes.object.isRequired,
+  memberLoading: PropTypes.bool.isRequired,
+  memberFailed: PropTypes.object.isRequired,
+  updateMemberLoading: PropTypes.bool.isRequired,
+  updateMemberFailed: PropTypes.object.isRequired,
+  update_success: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
+  getMemberByMemberId: PropTypes.func.isRequired,
+  clearSelectedMemberData: PropTypes.func.isRequired,
+  removeMemberFromLeague: PropTypes.func.isRequired,
+  updateMember: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   member: state.members.member,

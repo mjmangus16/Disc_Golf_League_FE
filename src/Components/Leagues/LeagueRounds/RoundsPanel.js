@@ -89,7 +89,7 @@ const RoundsPanel = ({
                         {round.round_num}
                       </TableCell>
                       <TableCell align="center" className={classes.tableTypo}>
-                        {moment(round.date).format("MM/DD/YY")}
+                        {moment(new Date(round.date)).format("MM/DD/YY")}
                       </TableCell>
                       <TableCell align="center" className={classes.tableTypo}>
                         {round.type}
@@ -119,7 +119,13 @@ const RoundsPanel = ({
   );
 };
 
-RoundsPanel.propTypes = {};
+RoundsPanel.propTypes = {
+  league_id: PropTypes.number,
+  rounds: PropTypes.arrayOf(PropTypes.object).isRequired,
+  roundsLoading: PropTypes.bool.isRequired,
+  roundsFailed: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,

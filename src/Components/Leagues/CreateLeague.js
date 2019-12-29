@@ -405,7 +405,11 @@ const CreateLeague = ({
   );
 };
 
-CreateLeague.propTypes = {};
+CreateLeague.propTypes = {
+  createNewLeagueLoading: PropTypes.bool.isRequired,
+  createNewLeagueFailed: PropTypes.object.isRequired,
+  createNewLeague: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,

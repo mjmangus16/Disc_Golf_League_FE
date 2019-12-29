@@ -53,7 +53,12 @@ const Home = ({ getAllLeagues, allLeagues, loading, failed, width }) => {
   );
 };
 
-Home.propTypes = {};
+Home.propTypes = {
+  allLeagues: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.bool.isRequired,
+  failed: PropTypes.object.isRequired,
+  getAllLeagues: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   allLeagues: state.leagues.allLeagues,

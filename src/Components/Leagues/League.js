@@ -96,16 +96,29 @@ const League = ({
   );
 };
 
-League.propTypes = {};
+League.propTypes = {
+  getLeagueByIdLoading: PropTypes.bool.isRequired,
+  getLeagueByIdFailed: PropTypes.object.isRequired,
+  selectedLeague: PropTypes.object.isRequired,
+  editLeagueFailed: PropTypes.object.isRequired,
+  editLeagueLoading: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
+  getLeagueById: PropTypes.func.isRequired,
+  clearLeagueData: PropTypes.func.isRequired,
+  getRoundsByLeagueId: PropTypes.func.isRequired,
+  clearRoundsData: PropTypes.func.isRequired,
+  getScheduleByLeagueId: PropTypes.func.isRequired,
+  clearScheduleData: PropTypes.func.isRequired,
+  getMembersByLeagueId: PropTypes.func.isRequired,
+  clearMembersData: PropTypes.func.isRequired,
+  editLeague: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,
   getLeagueByIdLoading: state.leagues.getLeagueByIdLoading,
   getLeagueByIdFailed: state.leagues.getLeagueByIdFailed,
   selectedLeague: state.leagues.selectedLeague,
-  selectedLeagueRounds: state.leagues.selectedLeagueRounds,
-  selectedLeagueRoundsLoading: state.leagues.selectedLeagueRoundsLoading,
-  selectedLeagueRoundsFailed: state.leagues.selectedLeagueRoundsFailed,
   editLeagueFailed: state.leagues.editLeagueFailed,
   editLeagueLoading: state.leagues.editLeagueLoading,
   admin: state.auth.admin
