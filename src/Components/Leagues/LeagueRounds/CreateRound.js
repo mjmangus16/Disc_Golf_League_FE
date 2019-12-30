@@ -22,6 +22,7 @@ import {
 } from "@material-ui/pickers";
 import moment from "moment";
 import useStyles from "../LeagueStyles";
+import { green } from "@material-ui/core/colors";
 
 import TransferList from "./TransferList";
 import Score from "./Score";
@@ -52,6 +53,8 @@ const CreateRound = ({
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
+  const [hover1, setHover1] = useState(false);
+  const [hover2, setHover2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
@@ -131,7 +134,11 @@ const CreateRound = ({
 
   return (
     <div className={classes.createRoundContainer}>
-      <Typography variant="h5" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        className={classes.leagueNameHeading}
+      >
         Create Round
       </Typography>
       <Grid
@@ -144,10 +151,10 @@ const CreateRound = ({
             <KeyboardDatePicker
               error={dateError ? true : false}
               helperText={dateError && dateError}
-              style={{ width: 150 }}
+              style={{ width: 125, padding: 0 }}
               disableToolbar
               variant="inline"
-              format="MM/DD/YYYY"
+              format="MM/DD/YY"
               margin="dense"
               id="date-picker-inline"
               label="Date"
@@ -160,7 +167,7 @@ const CreateRound = ({
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={6}>
-          <FormControl margin="dense" fullWidth required style={{ width: 150 }}>
+          <FormControl margin="dense" fullWidth required style={{ width: 125 }}>
             <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
               Round Type
             </InputLabel>
@@ -197,13 +204,19 @@ const CreateRound = ({
               input scores.
             </Typography>
             <Button
+              onMouseEnter={() => setHover2(true)}
+              onMouseLeave={() => setHover2(false)}
               fullWidth
               size="small"
               variant="contained"
-              style={{ marginTop: 10 }}
+              style={{
+                backgroundColor: hover2 ? green[600] : green[400],
+                borderColor: green[600],
+                marginTop: 10
+              }}
               onClick={() => setToggle(right.length > 0 ? true : false)}
             >
-              Enter Scores
+              Next
             </Button>
           </div>
         </div>
@@ -223,13 +236,13 @@ const CreateRound = ({
               handleScore={handleScore}
             />
           ))}
-          <Grid container>
+          <Grid container style={{ margin: "25px auto" }}>
             <Grid item xs={5} style={{ margin: "auto" }}>
               <Button
                 fullWidth
                 size="small"
                 variant="contained"
-                style={{ marginTop: 25 }}
+                style={{}}
                 onClick={() => setToggle(false)}
               >
                 Back
@@ -237,10 +250,15 @@ const CreateRound = ({
             </Grid>
             <Grid item xs={5} style={{ margin: "auto" }}>
               <Button
+                onMouseEnter={() => setHover1(true)}
+                onMouseLeave={() => setHover1(false)}
                 fullWidth
                 size="small"
                 variant="contained"
-                style={{ marginTop: 25 }}
+                style={{
+                  backgroundColor: hover1 ? green[600] : green[400],
+                  borderColor: green[600]
+                }}
                 onClick={submitRound}
               >
                 Submit Round

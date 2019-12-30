@@ -80,7 +80,11 @@ const UpdateSchedule = ({
 
   return (
     <div className={classes.updateScheduleContainer}>
-      <Typography variant="h5" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        className={classes.leagueNameHeading}
+      >
         Update Schedule
       </Typography>
 

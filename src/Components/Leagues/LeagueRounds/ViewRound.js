@@ -333,7 +333,7 @@ const ViewRound = ({
               style={{ textTransform: "capitalize" }}
               className={classes.roundInfo}
             >
-              {round.type} Round # {round.round_num}
+              {round.type} Round
             </Typography>
           ) : (
             <TypesComp type={type} setType={setType} />

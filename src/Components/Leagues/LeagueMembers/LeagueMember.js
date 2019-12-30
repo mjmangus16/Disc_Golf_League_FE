@@ -85,20 +85,20 @@ const LeagueMember = ({
     if (admin && owner_id === user_id) {
       if (isWidthDown("sm", width)) {
         return (
-          <IconButton color="secondary">
+          <IconButton color="secondary" onClick={() => setTrigger(true)}>
             <EditIcon />
           </IconButton>
         );
       } else {
         return (
           <Button
-            variant="outlined"
+            variant="contained"
             color="secondary"
             size="small"
             style={{ margin: "10px auto" }}
             onClick={() => setTrigger(true)}
           >
-            Member Options
+            Options
           </Button>
         );
       }

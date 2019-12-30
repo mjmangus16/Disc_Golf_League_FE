@@ -47,6 +47,22 @@ const useStyles = makeStyles(theme => ({
       fontSize: "0.8rem"
     }
   },
+  formTextInputScore2: {
+    textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem"
+    }
+  },
+  createRoundName: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem"
+    }
+  },
+  formTextLabel2: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem"
+    }
+  },
   tableTypoH: {
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.8rem"

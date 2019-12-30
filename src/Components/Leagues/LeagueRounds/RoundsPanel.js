@@ -62,9 +62,9 @@ const RoundsPanel = ({
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" className={classes.tableTypoH}>
-                      Round #
-                    </TableCell>
+                    {/* <TableCell align="center" className={classes.tableTypoH}>
+                      Week #
+                    </TableCell> */}
                     <TableCell align="center" className={classes.tableTypoH}>
                       Date
                     </TableCell>
@@ -87,9 +87,9 @@ const RoundsPanel = ({
                       }
                       className={classes.tableRow}
                     >
-                      <TableCell align="center" className={classes.tableTypo}>
+                      {/* <TableCell align="center" className={classes.tableTypo}>
                         {round.round_num}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="center" className={classes.tableTypo}>
                         {moment(new Date(round.date)).format("MM/DD/YY")}
                       </TableCell>

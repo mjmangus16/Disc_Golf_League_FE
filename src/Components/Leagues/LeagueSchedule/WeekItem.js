@@ -16,20 +16,10 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import moment from "moment";
-
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-  schedItem1: {
-    margin: "10px auto",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem",
-      margin: "5px auto"
-    }
-  }
-}));
+import useStyles from "../LeagueStyles";
 
 const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
+  const classes = useStyles();
   const [hover, setHover] = useState(false);
   const [trigger, setTrigger] = useState(false);
   const [missing, setMissing] = useState();
@@ -130,10 +120,10 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
               disabled={!trigger && !blank}
-              style={{ width: 195, margin: "auto" }}
+              style={{ width: 125, margin: "auto" }}
               disableToolbar
               variant="inline"
-              format="MM/DD/YYYY"
+              format="MM/DD/YY"
               margin="dense"
               label="Date"
               value={week.date}
