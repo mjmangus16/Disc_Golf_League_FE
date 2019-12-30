@@ -306,7 +306,7 @@ const ViewRound = ({
   };
 
   return (
-    <div style={{ width: "90%", margin: "auto" }}>
+    <div style={{ maxWidth: 800, width: "90%", margin: "auto" }}>
       <Grid container alignItems="center">
         <Grid item xs={2}>
           {displayChangesButton()}

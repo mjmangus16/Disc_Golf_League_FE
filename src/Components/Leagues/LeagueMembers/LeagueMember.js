@@ -128,7 +128,7 @@ const LeagueMember = ({
           <Grid
             container
             alignItems="center"
-            style={{ maxWidth: 600, margin: "auto" }}
+            style={{ maxWidth: 800, margin: "auto" }}
           >
             <Grid item xs={3} />
             <Grid item xs={6}>

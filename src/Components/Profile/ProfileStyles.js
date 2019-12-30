@@ -56,11 +56,13 @@ const useStyles = makeStyles(theme => ({
     paddingTop: 25
   },
   tableTypoH: {
+    fontSize: "1rem",
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.8rem"
     }
   },
   tableTypo: {
+    fontSize: "0.9rem",
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.65rem"
     }

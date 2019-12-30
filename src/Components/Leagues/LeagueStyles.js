@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   createLeagueContainer: {
-    maxWidth: 750,
+    maxWidth: 800,
     width: "90%",
     margin: "auto auto 25px auto"
   },
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   updateScheduleContainer: {
-    maxWidth: 750,
+    maxWidth: 800,
     margin: "auto auto 75px auto"
   },
   memberOptions: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
   createRoundContainer: {
     width: "auto",
-    maxWidth: 700,
+    maxWidth: 800,
     margin: "auto"
   },
   formTextInput: {
