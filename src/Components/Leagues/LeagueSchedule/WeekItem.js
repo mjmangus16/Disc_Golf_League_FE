@@ -16,8 +16,10 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import moment from "moment";
+import useStyles from "../LeagueStyles";
 
 const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
+  const classes = useStyles();
   const [hover, setHover] = useState(false);
   const [trigger, setTrigger] = useState(false);
   const [missing, setMissing] = useState();
@@ -86,15 +88,16 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
       <Grid
         container
         alignItems="center"
+        justify="center"
         spacing={1}
-        style={{ borderBottom: "1px solid lightGrey", padding: "10px 0px" }}
+        style={{ borderBottom: "1px solid lightGrey", padding: "20px 0px" }}
       >
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <Typography variant="h6" align="left" style={{ padding: 10 }}>
             Week {i + 1}
           </Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           {missing && (
             <Typography color="error" variant="body2">
               At least one field + the date must be filled out to submit a week
@@ -102,8 +105,8 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             </Typography>
           )}
         </Grid>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={1}>
+        <Grid item xs={1} sm={2}></Grid>
+        <Grid item xs={2} sm={1}>
           {!blank && (
             <IconButton
               onClick={() => remove(data.schedule_id)}
@@ -113,16 +116,15 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             </IconButton>
           )}
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
               disabled={!trigger && !blank}
-              style={{ width: 195, margin: "auto" }}
+              style={{ width: 125, margin: "auto" }}
               disableToolbar
               variant="inline"
-              format="MM/DD/YYYY"
+              format="MM/DD/YY"
               margin="dense"
-              id="date-picker-inline"
               label="Date"
               value={week.date}
               onChange={handleDate}
@@ -132,7 +134,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <TextField
             disabled={!trigger && !blank}
             label="all"
@@ -143,7 +145,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             onChange={e => handleChange(e)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <TextField
             disabled={!trigger && !blank}
             label="recreational"
@@ -154,7 +156,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             onChange={e => handleChange(e)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <TextField
             disabled={!trigger && !blank}
             label="intermediate"
@@ -165,7 +167,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             onChange={e => handleChange(e)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <TextField
             disabled={!trigger && !blank}
             label="advanced"
@@ -176,7 +178,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             onChange={e => handleChange(e)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <TextField
             disabled={!trigger && !blank}
             label="open"
@@ -187,7 +189,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             onChange={e => handleChange(e)}
           />
         </Grid>
-        <Grid item xs={8} style={{ margin: "auto" }}>
+        <Grid item xs={12} sm={8} style={{ margin: "auto" }}>
           {blank || trigger ? (
             <Button
               fullWidth

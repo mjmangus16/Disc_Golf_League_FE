@@ -1,36 +1,64 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Grid } from "@material-ui/core";
-import useStyles from "../LeagueStyles";
+import { Typography, Button, Grid, IconButton, Icon } from "@material-ui/core";
+import useStyles from "./HeaderStyles";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import EditIcon from "@material-ui/icons/Edit";
 
-const LeagueHeader = ({ league, handler, admin }) => {
+const LeagueHeader = ({ league, handler, admin, width, user_id }) => {
   const classes = useStyles();
+
+  const displayEdit = width => {
+    if (admin && league.owner_id === user_id) {
+      if (isWidthDown("sm", width)) {
+        return (
+          <IconButton
+            color="secondary"
+            size="medium"
+            onClick={() => handler(true)}
+          >
+            <EditIcon />
+          </IconButton>
+        );
+      } else {
+        return (
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            onClick={() => handler(true)}
+          >
+            Edit
+          </Button>
+        );
+      }
+    }
+  };
+
+  const handleSize = () => {
+    if (isWidthDown("sm", width)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <div style={{ borderBottom: "1px solid lightgrey" }}>
-      <Grid container>
-        <Grid item xs={1}></Grid>
-        <Grid item xs={10}>
-          <Typography variant="h5" gutterBottom>
+      <Grid container justify="center" alignItems="center">
+        <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
+          <Typography variant="h5" className={classes.leagueName}>
             {league.name}
           </Typography>
         </Grid>
-        <Grid item xs={1}>
-          {admin && (
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              onClick={() => handler(true)}
-            >
-              Edit
-            </Button>
-          )}
+        <Grid item xs={2}>
+          {displayEdit(width)}
         </Grid>
       </Grid>
 
       <div className={classes.headerContainer}>
         <Grid container>
-          <Grid item xs={6} className={classes.headerSection}>
+          <Grid item xs={12} sm={6} className={classes.headerSection}>
             <Typography
               variant="subtitle1"
               align="left"
@@ -65,7 +93,7 @@ const LeagueHeader = ({ league, handler, admin }) => {
               {league["length"]}
             </Typography>
           </Grid>
-          <Grid item xs={6} className={classes.headerSection}>
+          <Grid item xs={12} sm={6} className={classes.headerSection}>
             <Typography
               variant="subtitle1"
               align="left"
@@ -100,4 +128,4 @@ const LeagueHeader = ({ league, handler, admin }) => {
   );
 };
 
-export default LeagueHeader;
+export default withWidth()(LeagueHeader);

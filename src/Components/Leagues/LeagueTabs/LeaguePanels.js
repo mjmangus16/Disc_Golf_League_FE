@@ -22,14 +22,14 @@ function TabPanel(props) {
   );
 }
 
-const LeaguePanels = ({ tabValue, history }) => {
+const LeaguePanels = ({ tabValue, history, user_id, owner_id }) => {
   return (
     <div style={{ marginBottom: 25 }}>
       <TabPanel value={tabValue} index={0}>
         <SchedulePanel history={history} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <MembersPanel />
+        <MembersPanel history={history} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <RoundsPanel history={history} />

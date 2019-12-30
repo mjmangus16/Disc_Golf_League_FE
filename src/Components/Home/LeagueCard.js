@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Typography, Grid, Paper } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import useStyles from "../Leagues/LeagueStyles";
+import useStyles from "./HomeStyles";
+import Hidden from "@material-ui/core/Hidden";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
-const LeagueCard = ({ league }) => {
+const LeagueCard = ({ league, width }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
+
   return (
     <Grid item xs={12}>
       <Link
@@ -20,63 +23,57 @@ const LeagueCard = ({ league }) => {
         >
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs={12}>
-              <Typography variant="h6">{league.name}</Typography>
+              <Typography variant="h6" className={classes.heading}>
+                {league.name}
+              </Typography>
             </Grid>
-            <Grid item xs={2}>
-              <Typography
-                variant="body2"
-                style={{ fontWeight: 600, textDecoration: "underline" }}
-              >
+            <Grid item xs={3}>
+              <Typography variant="body2" className={classes.headers}>
                 League Type
               </Typography>
             </Grid>
-            <Grid item xs={2}>
-              <Typography
-                variant="body2"
-                style={{ fontWeight: 600, textDecoration: "underline" }}
-              >
+            <Grid item xs={3}>
+              <Typography variant="body2" className={classes.headers}>
                 Days Played
               </Typography>
             </Grid>
-            <Grid item xs={2}>
-              <Typography
-                variant="body2"
-                style={{ fontWeight: 600, textDecoration: "underline" }}
-              >
+            <Grid item xs={3}>
+              <Typography variant="body2" className={classes.headers}>
                 Members
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography
-                variant="body2"
-                style={{ fontWeight: 600, textDecoration: "underline" }}
-              >
+              <Typography variant="body2" className={classes.headers}>
                 State
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography
-                variant="body2"
-                style={{ fontWeight: 600, textDecoration: "underline" }}
-              >
-                Zip Code
+              <Typography variant="body2" className={classes.columnData}>
+                {league.type}
               </Typography>
             </Grid>
-            <Grid item xs={2}>
-              <Typography variant="body2">{league.type}</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography>{league.days}</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography>{league.members}</Typography>
+            <Grid item xs={3}>
+              <Typography variant="body2" className={classes.columnData}>
+                {league.days}
+              </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>{league.state}</Typography>
+              <Typography variant="body2" className={classes.columnData}>
+                {league.members}
+              </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>{league.zip}</Typography>
+              <Typography variant="body2" className={classes.columnData}>
+                {league.state}
+              </Typography>
             </Grid>
+            {/* {!handleSize && (
+              <Grid item xs={3}>
+                <Typography variant="body2" className={classes.columnData}>
+                  {league.zip}
+                </Typography>
+              </Grid>
+            )} */}
           </Grid>
         </Paper>
       </Link>
@@ -84,4 +81,4 @@ const LeagueCard = ({ league }) => {
   );
 };
 
-export default LeagueCard;
+export default withWidth()(LeagueCard);

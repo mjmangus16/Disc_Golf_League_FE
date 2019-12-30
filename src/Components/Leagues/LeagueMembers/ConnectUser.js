@@ -8,9 +8,12 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
-  Toolbar
+  Toolbar,
+  IconButton
 } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import DeleteIcon from "@material-ui/icons/DeleteOutlined";
+import { green, red } from "@material-ui/core/colors";
 
 const ConnectUser = ({
   status,
@@ -21,21 +24,41 @@ const ConnectUser = ({
   loading,
   failed,
   success,
-  update
+  update,
+  width
 }) => {
   const [hover, setHover] = useState(false);
+
+  const displayDelete = () => {
+    if (isWidthDown("sm", width)) {
+      return (
+        <IconButton
+          color="secondary"
+          onClick={deleteMember}
+          style={{ color: red[500] }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      );
+    } else {
+      return (
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={deleteMember}
+          style={{ color: red[500] }}
+        >
+          DELETE MEMBER
+        </Button>
+      );
+    }
+  };
+
   return (
     <Dialog open={status} onClose={() => close(false)}>
       <Toolbar>
         <DialogTitle style={{ flexGrow: 4 }}>Member Options</DialogTitle>
-        <Button
-          variant="outlined"
-          color="secondary"
-          size="small"
-          onClick={deleteMember}
-        >
-          DELETE MEMBER
-        </Button>
+        {displayDelete()}
       </Toolbar>
 
       <DialogContent>
@@ -45,6 +68,10 @@ const ConnectUser = ({
           the users email to connect the member.
         </DialogContentText>
         <TextField
+          error={failed.email || failed.error ? true : false}
+          helperText={
+            failed.email ? failed.email : failed.error && failed.error
+          }
           autoFocus
           margin="dense"
           name="email"
@@ -53,14 +80,12 @@ const ConnectUser = ({
           defaultValue={email}
           onChange={e => change(e.target.value)}
         />
-        {failed.error && (
-          <Typography variant="body2" color="error">
-            {failed.error}
-          </Typography>
-        )}
       </DialogContent>
 
       <DialogActions>
+        <Button variant="outlined" size="small" onClick={() => close(false)}>
+          Cancel
+        </Button>
         <Button
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -69,8 +94,7 @@ const ConnectUser = ({
           onClick={update}
           style={{
             backgroundColor: hover ? green[600] : green[400],
-            borderColor: green[600],
-            minWidth: 200
+            borderColor: green[600]
           }}
         >
           {loading
@@ -79,11 +103,9 @@ const ConnectUser = ({
             ? "Connect To User"
             : "Successfully Connected"}
         </Button>
-
-        <Button onClick={() => close(false)}>Cancel</Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default ConnectUser;
+export default withWidth()(ConnectUser);

@@ -40,10 +40,6 @@ const Profile = ({
   const [updateOpen, setUpdateOpen] = useState(false);
 
   useEffect(() => {
-    clearLeagueData();
-  }, []);
-
-  useEffect(() => {
     if (email) {
       getProfile(email);
     }
@@ -92,7 +88,7 @@ const Profile = ({
             admin={admin}
             history={history}
           />
-          <ProfileLeagues />
+          <ProfileLeagues history={history} />
         </div>
       )}
     </div>
@@ -100,8 +96,20 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  breadcrumbs: PropTypes.array.isRequired,
-  update_success: PropTypes.bool.isRequired
+  errors: PropTypes.object.isRequired,
+  email: PropTypes.string,
+  f_name: PropTypes.string,
+  l_name: PropTypes.string,
+  user_id: PropTypes.number,
+  org_name: PropTypes.string,
+  get_loading: PropTypes.bool.isRequired,
+  update_success: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
+  getProfile: PropTypes.func.isRequired,
+  updateProfile: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  clearLeagueData: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

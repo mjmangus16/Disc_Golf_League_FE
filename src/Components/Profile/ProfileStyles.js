@@ -3,18 +3,24 @@ import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   title: {
-    gridColumn: 2
+    gridColumn: 2,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.15rem"
+    }
   },
   updateButton: {
     justifySelf: "end",
     marginRight: 20
   },
   profileLeaguesContainer: {
-    marginTop: "7%",
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     width: "75%",
-    margin: "auto"
+    margin: "7% auto auto",
+    [theme.breakpoints.down("sm")]: {
+      width: "90%",
+      margin: "25px auto auto"
+    }
   },
   updateHeading: {
     flexGrow: 4
@@ -48,6 +54,23 @@ const useStyles = makeStyles(theme => ({
   },
   noLeagues: {
     paddingTop: 25
+  },
+  tableTypoH: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
+  },
+  tableTypo: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.65rem"
+    }
+  },
+  tableRow: {
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "WhiteSmoke",
+      boxShadow: "2px 2px 8px gray"
+    }
   }
 }));
 

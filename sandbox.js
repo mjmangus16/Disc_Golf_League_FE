@@ -1,5 +1,4 @@
-const day = new Date();
+var a = new Date("12/15/19");
+var b = new Date("12/16/19");
 
-const value = day.valueOf();
-
-console.log(value);
+console.log(a < b);

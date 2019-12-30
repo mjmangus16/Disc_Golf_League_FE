@@ -21,7 +21,7 @@ import {
 
 const initialState = {
   getMembersLoading: false,
-  getMembersFailed: null,
+  getMembersFailed: {},
   members: [],
   getMemberLoading: false,
   getMemberFailed: {},
@@ -132,7 +132,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         getMembersLoading: false,
-        getMembersFailed: null,
+        getMembersFailed: {},
         members: [],
         getMemberLoading: false,
         getMemberFailed: {},

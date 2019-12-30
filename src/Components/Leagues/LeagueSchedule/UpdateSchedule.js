@@ -80,7 +80,11 @@ const UpdateSchedule = ({
 
   return (
     <div className={classes.updateScheduleContainer}>
-      <Typography variant="h5" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        className={classes.leagueNameHeading}
+      >
         Update Schedule
       </Typography>
 
@@ -99,15 +103,23 @@ const UpdateSchedule = ({
             You must submit the blank week before you can add another one.
           </Typography>
         )}
-        <Grid container spacing={4}>
-          {sched ? sched : <WeekItem index={1} />}
+        <Grid container style={{ width: "90%", margin: "auto" }}>
+          {sched ? sched : <WeekItem />}
         </Grid>
       </div>
     </div>
   );
 };
 
-UpdateSchedule.propTypes = {};
+UpdateSchedule.propTypes = {
+  schedule: PropTypes.arrayOf(PropTypes.object).isRequired,
+  editLeagueFailed: PropTypes.object.isRequired,
+  league_id: PropTypes.number,
+  submitSchedule: PropTypes.func.isRequired,
+  removeWeekFromSchedule: PropTypes.func.isRequired,
+  updateWeekInSchedule: PropTypes.func.isRequired,
+  getScheduleByLeagueId: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,

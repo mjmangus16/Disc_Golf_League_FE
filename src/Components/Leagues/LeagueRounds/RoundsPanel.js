@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import TableContainer from "@material-ui/core/TableContainer";
 import {
   Typography,
   Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Paper,
   CircularProgress,
   Button
 } from "@material-ui/core";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
@@ -21,7 +27,9 @@ const RoundsPanel = ({
   roundsFailed,
   roundsLoading,
   history,
-  admin
+  admin,
+  user_id,
+  owner_id
 }) => {
   const classes = useStyles();
 
@@ -31,7 +39,7 @@ const RoundsPanel = ({
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          {admin && (
+          {admin && user_id === owner_id && (
             <Button
               variant="contained"
               color="secondary"
@@ -44,30 +52,64 @@ const RoundsPanel = ({
               Add Round
             </Button>
           )}
-
           {rounds && rounds.length > 0 ? (
-            <Grid
-              container
-              alignContent="flex-start"
-              spacing={2}
-              style={{ height: 500, overflow: "auto", marginTop: 25 }}
+            <TableContainer
+              style={{
+                maxWidth: 550,
+                margin: "25px auto"
+              }}
             >
-              {rounds.map((round, i) => (
-                <Grid
-                  item
-                  xs={12}
-                  key={round.date + round.type + round.round_id}
-                >
-                  <RoundCard round={round} league_id={league_id} />
-                </Grid>
-              ))}
-            </Grid>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    {/* <TableCell align="center" className={classes.tableTypoH}>
+                      Week #
+                    </TableCell> */}
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Date
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Type
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Participants
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rounds.map(round => (
+                    <TableRow
+                      key={"roundKey" + round.round_id}
+                      onClick={() =>
+                        history.push(
+                          `/league/${league_id}/round/${round.round_id}/viewRound`
+                        )
+                      }
+                      className={classes.tableRow}
+                    >
+                      {/* <TableCell align="center" className={classes.tableTypo}>
+                        {round.round_num}
+                      </TableCell> */}
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {moment(new Date(round.date)).format("MM/DD/YY")}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.type}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.participants}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           ) : roundsFailed.error ? (
-            <Typography style={{ marginTop: 15 }}>
+            <Typography className={classes.missingData}>
               {roundsFailed.error}
             </Typography>
           ) : (
-            <Typography style={{ marginTop: 15 }}>
+            <Typography className={classes.missingData}>
               {admin
                 ? "You have not added any rounds to the league yet."
                 : "The league manager has not added any rounds to this league yet."}
@@ -79,7 +121,15 @@ const RoundsPanel = ({
   );
 };
 
-RoundsPanel.propTypes = {};
+RoundsPanel.propTypes = {
+  league_id: PropTypes.number,
+  rounds: PropTypes.arrayOf(PropTypes.object).isRequired,
+  roundsLoading: PropTypes.bool.isRequired,
+  roundsFailed: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired,
+  user_id: PropTypes.number.isRequired,
+  owner_id: PropTypes.number
+};
 
 const mapStateToProps = state => ({
   breadcrumbs: state.breadcrumbs.breadcrumbs,
@@ -87,7 +137,9 @@ const mapStateToProps = state => ({
   rounds: state.rounds.rounds,
   roundsLoading: state.rounds.roundsLoading,
   roundsFailed: state.rounds.roundsFailed,
-  admin: state.auth.admin
+  admin: state.auth.admin,
+  user_id: state.auth.user_id,
+  owner_id: state.leagues.selectedLeague.owner_id
 });
 
 export default connect(mapStateToProps, {})(RoundsPanel);

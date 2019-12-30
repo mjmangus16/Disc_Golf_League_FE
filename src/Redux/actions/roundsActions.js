@@ -9,6 +9,7 @@ import {
   ADD_PARTICIPANT_LOADING,
   ADD_PARTICIPANT_SUCCESS,
   ADD_PARTICIPANT_FAILED,
+  ADD_ROUND_FAILED,
   UPDATE_ROUND_LOADING,
   UPDATE_ROUND_SUCCESS,
   UPDATE_ROUND_FAILED,
@@ -62,21 +63,34 @@ export const addRoundAndParticipants = (
   participants,
   redirect
 ) => async dispatch => {
-  const newRound = await axiosWithAuth().post(
-    `api/rounds/add/league/${league_id}`,
-    {
+  axiosWithAuth()
+    .post(`api/rounds/add/league/${league_id}`, {
       date: round.date,
       type: round.type
-    }
-  );
-
-  axiosWithAuth()
-    .post(
-      `api/participants/league/${league_id}/round/${newRound.data.round_id}`,
-      participants
-    )
+    })
     .then(res => {
-      redirect();
+      axiosWithAuth()
+        .post(
+          `api/participants/league/${league_id}/round/${res.data.round_id}`,
+          participants
+        )
+        .then(() => {
+          redirect();
+        })
+        .catch(err => {
+          console.log(err);
+          dispatch({
+            type: ADD_PARTICIPANT_FAILED,
+            payload: err.response.data
+          });
+        });
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({
+        type: ADD_ROUND_FAILED,
+        payload: err.response.data
+      });
     });
 };
 
@@ -103,6 +117,7 @@ export const addParticipant = (
 
 export const updateRound = (league_id, round_id, changes) => dispatch => {
   dispatch({ type: UPDATE_ROUND_LOADING });
+  console.log(changes);
   axiosWithAuth()
     .put(`api/rounds/update/${round_id}/league/${league_id}`, changes)
     .then(res => {
@@ -130,13 +145,16 @@ export const updateMultipleParticipants = (
       score: pa.score
     };
   });
-  console.log(participants);
 
   participants.forEach(async p => {
-    await axiosWithAuth().put(
-      `api/participants/league/${league_id}/round/${round_id}/member/${p.member_id}/participant/${p.participant_id}`,
-      p
-    );
+    await axiosWithAuth()
+      .put(
+        `api/participants/league/${league_id}/round/${round_id}/member/${p.member_id}/participant/${p.participant_id}`,
+        p
+      )
+      .catch(err => {
+        console.log(err);
+      });
   });
 };
 

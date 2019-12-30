@@ -22,11 +22,13 @@ import {
 } from "@material-ui/pickers";
 import moment from "moment";
 import useStyles from "../LeagueStyles";
+import { green } from "@material-ui/core/colors";
 
 import TransferList from "./TransferList";
 import Score from "./Score";
 
 const types = [
+  "None",
   "Singles",
   "Doubles",
   "Singles Travel",
@@ -42,7 +44,8 @@ const CreateRound = ({
   leagueType,
   members,
   match,
-  history
+  history,
+  addRoundFailed
 }) => {
   const classes = useStyles();
   const inputLabel = useRef(null);
@@ -50,11 +53,15 @@ const CreateRound = ({
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
+  const [hover1, setHover1] = useState(false);
+  const [hover2, setHover2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [type, setType] = useState("");
+  const [type, setType] = useState("None");
+  const [scoresError, setScoresError] = useState(null);
+  const [dateError, setDateError] = useState(null);
 
   useEffect(() => {
     const { league_id } = match.params;
@@ -63,7 +70,9 @@ const CreateRound = ({
   }, []);
 
   useEffect(() => {
-    setType(leagueType);
+    if (leagueType) {
+      setType(leagueType);
+    }
   }, [leagueType]);
 
   useEffect(() => {
@@ -85,53 +94,67 @@ const CreateRound = ({
   const handleScore = (e, index) => {
     let container = [...right];
     container[index] = { ...container[index], score: e.target.value };
-    console.log(container);
     setRight(container);
   };
 
   const submitRound = () => {
-    const { league_id } = match.params;
-    const round = {
-      league_id,
-      date: moment(date).format("MM/DD/YYYY"),
-      type
-    };
-    
-    const participants = right.map(x => {
-      return {...x, league_id:league_id}
-    })
-    console.log(participants)
-    
-    let completed = true;
-    const redirect = () => history.push(`/league/${league_id}`);
-    participants.forEach(p => {
-      if (p.score == "") {
-        completed = false;
-      }
-    });
+    if (!date) {
+      setDateError("Date field is required");
+    } else {
+      setDateError(null);
+      const { league_id } = match.params;
+      const round = {
+        league_id,
+        date: moment(date).format("MM/DD/YYYY"),
+        type
+      };
 
-    if (completed) {
-      addRoundAndParticipants(league_id, round, participants, redirect);
+      const participants = right.map(x => {
+        return { ...x, league_id: league_id };
+      });
+
+      let completed = true;
+      const redirect = () => history.push(`/league/${league_id}`);
+      participants.forEach(p => {
+        if (p.score == "" || p.score.length > 3) {
+          completed = false;
+        }
+      });
+
+      if (completed) {
+        addRoundAndParticipants(league_id, round, participants, redirect);
+        setScoresError(null);
+      } else {
+        setScoresError(
+          "Every Score Field is required and must be less than 4 digits long"
+        );
+      }
     }
   };
 
   return (
     <div className={classes.createRoundContainer}>
-      <Typography variant="h5" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        className={classes.leagueNameHeading}
+      >
         Create Round
       </Typography>
       <Grid
         container
         alignItems="center"
-        style={{ width: 400, margin: "auto" }}
+        style={{ maxWidth: 400, margin: "auto" }}
       >
         <Grid item xs={6}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
-              style={{ width: 150 }}
+              error={dateError ? true : false}
+              helperText={dateError && dateError}
+              style={{ width: 125, padding: 0 }}
               disableToolbar
               variant="inline"
-              format="MM/DD/YYYY"
+              format="MM/DD/YY"
               margin="dense"
               id="date-picker-inline"
               label="Date"
@@ -144,7 +167,7 @@ const CreateRound = ({
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={6}>
-          <FormControl margin="dense" fullWidth required style={{ width: 150 }}>
+          <FormControl margin="dense" fullWidth required style={{ width: 125 }}>
             <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
               Round Type
             </InputLabel>
@@ -160,9 +183,9 @@ const CreateRound = ({
                 </MenuItem>
               ))}
             </Select>
-            {/* {createNewLeagueFailed.state && (
-              <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
-            )} */}
+            {addRoundFailed.type && (
+              <FormHelperText>{addRoundFailed.type}</FormHelperText>
+            )}
           </FormControl>
         </Grid>
       </Grid>
@@ -181,18 +204,30 @@ const CreateRound = ({
               input scores.
             </Typography>
             <Button
+              onMouseEnter={() => setHover2(true)}
+              onMouseLeave={() => setHover2(false)}
               fullWidth
               size="small"
               variant="contained"
-              style={{ marginTop: 10 }}
+              style={{
+                backgroundColor: hover2 ? green[600] : green[400],
+                borderColor: green[600],
+                marginTop: 10
+              }}
               onClick={() => setToggle(right.length > 0 ? true : false)}
             >
-              Enter Scores
+              Next
             </Button>
           </div>
         </div>
       ) : (
         <div>
+          {scoresError && (
+            <Typography variant="body2" color="error" style={{ padding: 10 }}>
+              {scoresError}
+            </Typography>
+          )}
+
           {right.map((p, i) => (
             <Score
               key={p.name + i}
@@ -201,24 +236,29 @@ const CreateRound = ({
               handleScore={handleScore}
             />
           ))}
-          <Grid container spacing={4}>
-            <Grid item xs={6}>
+          <Grid container style={{ margin: "25px auto" }}>
+            <Grid item xs={5} style={{ margin: "auto" }}>
               <Button
                 fullWidth
                 size="small"
                 variant="contained"
-                style={{ marginTop: 10 }}
+                style={{}}
                 onClick={() => setToggle(false)}
               >
                 Back
               </Button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={5} style={{ margin: "auto" }}>
               <Button
+                onMouseEnter={() => setHover1(true)}
+                onMouseLeave={() => setHover1(false)}
                 fullWidth
                 size="small"
                 variant="contained"
-                style={{ marginTop: 10 }}
+                style={{
+                  backgroundColor: hover1 ? green[600] : green[400],
+                  borderColor: green[600]
+                }}
                 onClick={submitRound}
               >
                 Submit Round
@@ -231,11 +271,21 @@ const CreateRound = ({
   );
 };
 
-CreateRound.propTypes = {};
+CreateRound.propTypes = {
+  members: PropTypes.arrayOf(PropTypes.object).isRequired,
+  leagueType: PropTypes.string,
+  getMembersByLeagueId: PropTypes.func.isRequired,
+  addRoundAndParticipants: PropTypes.func.isRequired,
+  getLeagueById: PropTypes.func.isRequired,
+  addRoundFailed: PropTypes.object.isRequired,
+  addParticipantFailed: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
   members: state.members.members,
-  leagueType: state.leagues.selectedLeague.type
+  leagueType: state.leagues.selectedLeague.type,
+  addRoundFailed: state.rounds.addRoundFailed,
+  addParticipantFailed: state.rounds.addParticipantFailed
 });
 
 export default connect(mapStateToProps, {

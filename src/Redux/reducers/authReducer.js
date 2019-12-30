@@ -50,6 +50,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
+        user_id: action.payload.user_id,
         loading: false,
         errors: {},
         email: action.payload.email,

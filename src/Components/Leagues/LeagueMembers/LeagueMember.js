@@ -12,10 +12,19 @@ import {
   Grid,
   Toolbar,
   Button,
-  CircularProgress
+  CircularProgress,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
 } from "@material-ui/core";
-
+import TableContainer from "@material-ui/core/TableContainer";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import useStyles from "../LeagueStyles";
+import EditIcon from "@material-ui/icons/Edit";
+import moment from "moment";
 
 import ConnectUser from "./ConnectUser";
 
@@ -32,7 +41,10 @@ const LeagueMember = ({
   update_success,
   match,
   history,
-  admin
+  admin,
+  width,
+  user_id,
+  owner_id
 }) => {
   const classes = useStyles();
   const [trigger, setTrigger] = useState(false);
@@ -62,6 +74,37 @@ const LeagueMember = ({
     updateMember(member_id, league_id, email);
   };
 
+  const handleSize = () => {
+    if (isWidthDown("sm", width)) {
+      return true;
+    } else {
+    }
+  };
+
+  const displayOptionsButton = () => {
+    if (admin && owner_id === user_id) {
+      if (isWidthDown("sm", width)) {
+        return (
+          <IconButton color="secondary" onClick={() => setTrigger(true)}>
+            <EditIcon />
+          </IconButton>
+        );
+      } else {
+        return (
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            style={{ margin: "10px auto" }}
+            onClick={() => setTrigger(true)}
+          >
+            Options
+          </Button>
+        );
+      }
+    }
+  };
+
   return (
     <div>
       {admin && (
@@ -82,102 +125,92 @@ const LeagueMember = ({
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <>
-          <Grid container>
-            <Grid item xs={3} />
-            <Grid item xs={6}>
-              <Typography variant="h4">{`${member.l_name}, ${member.f_name}`}</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              {admin && (
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  size="small"
-                  style={{ margin: "10px auto" }}
-                  onClick={() => setTrigger(true)}
-                >
-                  Member Options
-                </Button>
-              )}
-            </Grid>
-          </Grid>
           <Grid
             container
-            justify="center"
-            spacing={2}
-            style={{ marginTop: 25 }}
+            alignItems="center"
+            style={{ maxWidth: 600, margin: "auto" }}
           >
-            <Grid item xs={8}>
-              <Grid container>
-                <Grid item xs={3}>
-                  <Typography
-                    variant="body1"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    Date
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    variant="body1"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    Type
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    variant="body1"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    Location
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    variant="body1"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    Score
-                  </Typography>
-                </Grid>
-              </Grid>
+            <Grid item xs={3} />
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                className={classes.memberNameHeading}
+              >{`${member.l_name}, ${member.f_name}`}</Typography>
             </Grid>
-            {member.rounds &&
-              member.rounds.map(r => (
-                <Grid item xs={8} key={r.type + r.date + r.score}>
-                  <Grid
-                    container
-                    style={{
-                      borderBottom: "1px solid lightGrey",
-                      padding: "10px 0px"
-                    }}
-                  >
-                    <Grid item xs={3}>
-                      <Typography variant="body2">{r.date}</Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Typography variant="body2">{r.type}</Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Typography variant="body2">
-                        {r.location ? r.location : "N/A"}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Typography variant="body2">{r.score}</Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              ))}
+            <Grid item xs={3}>
+              {admin && displayOptionsButton()}
+            </Grid>
           </Grid>
+          {member.rounds && member.rounds.length > 0 ? (
+            <TableContainer
+              style={{
+                maxWidth: 550,
+                margin: "25px auto"
+              }}
+            >
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Date
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Type
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Location
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableTypoH}>
+                      Score
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {member.rounds.map(round => (
+                    <TableRow key={"memberRoundKey" + round.participant_id}>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {moment(new Date(round.date)).format("MM/DD/YY")}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.type}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.location ? round.location : "N/A"}
+                      </TableCell>
+                      <TableCell align="center" className={classes.tableTypo}>
+                        {round.score}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <Typography variant="body2" style={{ marginTop: 25 }}>
+              This member has not played any rounds yet
+            </Typography>
+          )}
         </>
       )}
     </div>
   );
 };
 
-LeagueMember.propTypes = {};
+LeagueMember.propTypes = {
+  member: PropTypes.object.isRequired,
+  memberLoading: PropTypes.bool.isRequired,
+  memberFailed: PropTypes.object.isRequired,
+  updateMemberLoading: PropTypes.bool.isRequired,
+  updateMemberFailed: PropTypes.object.isRequired,
+  update_success: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
+  getMemberByMemberId: PropTypes.func.isRequired,
+  clearSelectedMemberData: PropTypes.func.isRequired,
+  removeMemberFromLeague: PropTypes.func.isRequired,
+  updateMember: PropTypes.func.isRequired,
+  user_id: PropTypes.number.isRequired,
+  owner_id: PropTypes.number
+};
 
 const mapStateToProps = state => ({
   member: state.members.member,
@@ -186,7 +219,9 @@ const mapStateToProps = state => ({
   updateMemberLoading: state.members.updateMemberLoading,
   updateMemberFailed: state.members.updateMemberFailed,
   update_success: state.members.update_success,
-  admin: state.auth.admin
+  admin: state.auth.admin,
+  user_id: state.auth.user_id,
+  owner_id: state.leagues.selectedLeague.owner_id
 });
 
 export default connect(mapStateToProps, {
@@ -194,4 +229,4 @@ export default connect(mapStateToProps, {
   clearSelectedMemberData,
   removeMemberFromLeague,
   updateMember
-})(LeagueMember);
+})(withWidth()(LeagueMember));

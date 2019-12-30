@@ -75,35 +75,27 @@ export const submitMemberToLeague = (
   dispatch({
     type: SUBMIT_MEMBER_TO_LEAGUE_LOADING
   });
-
-  if (newMember.f_name === "" && newMember.f_name === "") {
-    dispatch({
-      type: SUBMIT_MEMBER_TO_LEAGUE_FAILED,
-      payload: { error: "The first name and last name fields are required" }
-    });
-  } else {
-    axiosWithAuth()
-      .post(`api/members/add/league/${league_id}`, newMember)
-      .then(res => {
-        dispatch({
-          type: SUBMIT_MEMBER_TO_LEAGUE_SUCCESS,
-          payload: { ...res.data, rounds: 0 }
-        });
-        setNewMember({
-          f_name: "",
-          l_name: "",
-          email: ""
-        });
-        trigger(false);
-      })
-      .catch(err => {
-        console.log(err.response.data);
-        dispatch({
-          type: SUBMIT_MEMBER_TO_LEAGUE_FAILED,
-          payload: err.response.data
-        });
+  axiosWithAuth()
+    .post(`api/members/add/league/${league_id}`, newMember)
+    .then(res => {
+      dispatch({
+        type: SUBMIT_MEMBER_TO_LEAGUE_SUCCESS,
+        payload: { ...res.data, rounds: 0 }
       });
-  }
+      setNewMember({
+        f_name: "",
+        l_name: "",
+        email: ""
+      });
+      trigger(false);
+    })
+    .catch(err => {
+      console.log(err.response.data);
+      dispatch({
+        type: SUBMIT_MEMBER_TO_LEAGUE_FAILED,
+        payload: err.response.data
+      });
+    });
 };
 
 export const removeMemberFromLeague = (
