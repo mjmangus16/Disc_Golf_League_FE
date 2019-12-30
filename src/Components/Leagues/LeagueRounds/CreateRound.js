@@ -144,7 +144,7 @@ const CreateRound = ({
       <Grid
         container
         alignItems="center"
-        style={{ maxWidth: 400, margin: "auto" }}
+        style={{ maxWidth: 350, margin: "auto" }}
       >
         <Grid item xs={6}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -236,7 +236,7 @@ const CreateRound = ({
               handleScore={handleScore}
             />
           ))}
-          <Grid container style={{ margin: "25px auto" }}>
+          <Grid container style={{ maxWidth: 500, margin: "25px auto" }}>
             <Grid item xs={5} style={{ margin: "auto" }}>
               <Button
                 fullWidth

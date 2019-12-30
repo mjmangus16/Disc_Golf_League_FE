@@ -9,7 +9,7 @@ const Score = ({ player, handleScore, index }) => {
       style={{
         padding: 10,
         borderBottom: "1px solid lightgrey",
-        width: 300,
+        maxWidth: 500,
         margin: "25px auto auto"
       }}
     >
