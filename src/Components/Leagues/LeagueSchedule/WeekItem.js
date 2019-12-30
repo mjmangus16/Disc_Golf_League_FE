@@ -92,19 +92,12 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
         spacing={1}
         style={{ borderBottom: "1px solid lightGrey", padding: "20px 0px" }}
       >
-        <Grid item xs={4}>
+        <Grid item xs={9}>
           <Typography variant="h6" align="left" style={{ padding: 10 }}>
             Week {i + 1}
           </Typography>
         </Grid>
-        <Grid item xs={5}>
-          {missing && (
-            <Typography color="error" variant="body2">
-              At least one field + the date must be filled out to submit a week
-              to the schedule
-            </Typography>
-          )}
-        </Grid>
+
         <Grid item xs={1} sm={2}></Grid>
         <Grid item xs={2} sm={1}>
           {!blank && (
@@ -114,6 +107,14 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             >
               <DeleteIcon />
             </IconButton>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          {missing && (
+            <Typography color="error" variant="body2">
+              At least one field + the date must be filled out to submit a week
+              to the schedule
+            </Typography>
           )}
         </Grid>
         <Grid item xs={12} sm={4}>

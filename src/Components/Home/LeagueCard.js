@@ -10,7 +10,7 @@ const LeagueCard = ({ league, width }) => {
   const [hover, setHover] = useState(false);
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} style={{ maxWidth: 800, margin: "auto" }}>
       <Link
         to={`/league/${league.league_id}`}
         style={{ textDecoration: "none" }}

@@ -134,7 +134,14 @@ const AppBar_ = ({
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar
+          style={{
+            maxWidth: 1000,
+            width: "95%",
+            margin: "auto",
+            padding: "0px 0px 0px 16px"
+          }}
+        >
           <Typography className={classes.title} variant="h6">
             Disc Golf Leagues
           </Typography>

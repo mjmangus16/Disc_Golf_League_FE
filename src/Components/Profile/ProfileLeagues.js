@@ -136,7 +136,7 @@ const ProfileLeagues = ({
         ) : leagues.length > 0 ? (
           <TableContainer
             style={{
-              maxWidth: 700,
+              maxWidth: 800,
               margin: "25px auto"
             }}
           >

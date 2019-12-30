@@ -59,7 +59,7 @@ const Profile = ({
   };
 
   return (
-    <div style={{ maxWidth: 1200, margin: "auto" }}>
+    <div style={{ maxWidth: 800, margin: "auto" }}>
       {get_loading ? (
         <CircularProgress size={80} className={classes.buttonProgress} />
       ) : (
