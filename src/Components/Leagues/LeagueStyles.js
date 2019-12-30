@@ -14,10 +14,14 @@ const useStyles = makeStyles(theme => ({
 
   createLeagueContainer: {
     maxWidth: 750,
-    margin: "auto auto 75px auto"
+    width: "90%",
+    margin: "auto auto 25px auto"
   },
   createLeagueInfo: {
-    margin: theme.spacing(3)
+    margin: theme.spacing(3),
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem"
+    }
   },
   updateScheduleContainer: {
     maxWidth: 750,

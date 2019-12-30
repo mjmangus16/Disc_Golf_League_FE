@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { createNewLeague } from "../../Redux/actions/leaguesActions";
-import { green } from "@material-ui/core/colors";
-
 import {
   Typography,
   Grid,
@@ -16,8 +14,9 @@ import {
   InputLabel,
   FormHelperText
 } from "@material-ui/core";
-
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import useStyles from "./LeagueStyles";
+import { green } from "@material-ui/core/colors";
 
 const states = [
   "Alabama",
@@ -95,7 +94,8 @@ const CreateLeague = ({
   createNewLeague,
   createNewLeagueLoading,
   createNewLeagueFailed,
-  history
+  history,
+  width
 }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
@@ -131,7 +131,11 @@ const CreateLeague = ({
 
   return (
     <div className={classes.createLeagueContainer}>
-      <Typography variant="h5" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        className={classes.leagueNameHeading}
+      >
         Create A New League
       </Typography>
       <Typography
@@ -147,7 +151,7 @@ const CreateLeague = ({
       </Typography>
       <div className={classes.headerContainer}>
         <Grid container spacing={1}>
-          <Grid item xs={8}>
+          <Grid item xs={12} sm={8}>
             <TextField
               error={createNewLeagueFailed.name ? true : false}
               helperText={
@@ -163,7 +167,7 @@ const CreateLeague = ({
               onChange={e => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <FormControl
               error={createNewLeagueFailed.type ? true : false}
               variant="outlined"
@@ -195,7 +199,7 @@ const CreateLeague = ({
               )}
             </FormControl>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={3}>
             <FormControl
               error={createNewLeagueFailed.state ? true : false}
               variant="outlined"
@@ -227,7 +231,7 @@ const CreateLeague = ({
               )}
             </FormControl>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={3}>
             <TextField
               error={createNewLeagueFailed.zip ? true : false}
               helperText={
@@ -243,7 +247,7 @@ const CreateLeague = ({
               onChange={e => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               error={createNewLeagueFailed.location ? true : false}
               helperText={
@@ -259,7 +263,7 @@ const CreateLeague = ({
               onChange={e => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               error={createNewLeagueFailed.year ? true : false}
               helperText={
@@ -275,7 +279,7 @@ const CreateLeague = ({
               onChange={e => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <FormControl
               error={createNewLeagueFailed.days ? true : false}
               variant="outlined"
@@ -309,7 +313,7 @@ const CreateLeague = ({
               )}
             </FormControl>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               error={createNewLeagueFailed["length"] ? true : false}
               helperText={
@@ -326,7 +330,7 @@ const CreateLeague = ({
               onChange={e => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               error={createNewLeagueFailed.contact ? true : false}
               helperText={
@@ -344,7 +348,7 @@ const CreateLeague = ({
               onChange={e => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               error={createNewLeagueFailed.description ? true : false}
               helperText={
@@ -417,4 +421,6 @@ const mapStateToProps = state => ({
   createNewLeagueFailed: state.leagues.createNewLeagueFailed
 });
 
-export default connect(mapStateToProps, { createNewLeague })(CreateLeague);
+export default connect(mapStateToProps, { createNewLeague })(
+  withWidth()(CreateLeague)
+);
