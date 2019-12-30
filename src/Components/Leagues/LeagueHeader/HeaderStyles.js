@@ -25,6 +25,35 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "underline",
     fontWeight: 500,
     paddingRight: 7
+  },
+  editLeagueHeaderCont: {
+    [theme.breakpoints.down("sm")]: {
+      width: "90%",
+      margin: "auto",
+      paddingBottom: 25
+    }
+  },
+  editLeageName: {
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: 400,
+      margin: "auto"
+    }
+  },
+  editLeagueFields: {
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: 250,
+      margin: "auto"
+    }
+  },
+  editLeagueField: {
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 20
+    }
+  },
+  editLeagueFormControl: {
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 20
+    }
   }
 }));
 

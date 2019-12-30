@@ -28,6 +28,7 @@ const TypesComp = ({ type, setType }) => {
         value={type}
         name="type"
         onChange={e => setType(e.target.value)}
+        defaultValue={type}
       >
         {types.map(ty => (
           <MenuItem value={ty} key={`typeKey${ty}`}>

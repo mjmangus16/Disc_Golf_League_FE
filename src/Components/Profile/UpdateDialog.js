@@ -10,10 +10,13 @@ import {
   Button,
   Typography,
   Toolbar,
-  Box
+  Box,
+  IconButton
 } from "@material-ui/core";
 import useStyles from "./ProfileStyles";
 import { green, red } from "@material-ui/core/colors";
+import DeleteIcon from "@material-ui/icons/DeleteOutlined";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
 const UpdateDialog = ({
   open,
@@ -22,7 +25,8 @@ const UpdateDialog = ({
   user,
   errors,
   logout,
-  admin
+  admin,
+  width
 }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
@@ -70,6 +74,33 @@ const UpdateDialog = ({
     }
   };
 
+  const displayDelete = () => {
+    if (isWidthDown("sm", width)) {
+      return (
+        <IconButton
+          onClick={() => setActivateDelete(true)}
+          style={{ color: red[500] }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      );
+    } else {
+      return (
+        <Button
+          onClick={() => setActivateDelete(true)}
+          variant="outlined"
+          size="small"
+          style={{
+            borderColor: red[500],
+            color: red[500]
+          }}
+        >
+          DELETE ACCOUNT
+        </Button>
+      );
+    }
+  };
+
   return (
     <Dialog
       open={open}
@@ -85,18 +116,7 @@ const UpdateDialog = ({
             >
               Update Profile
             </DialogTitle>
-
-            <Button
-              onClick={() => setActivateDelete(true)}
-              variant="outlined"
-              size="small"
-              style={{
-                borderColor: red[500],
-                color: red[500]
-              }}
-            >
-              DELETE ACCOUNT
-            </Button>
+            {displayDelete()}
           </Toolbar>
           <DialogContent>
             <DialogContentText>
@@ -203,4 +223,4 @@ const UpdateDialog = ({
   );
 };
 
-export default UpdateDialog;
+export default withWidth()(UpdateDialog);

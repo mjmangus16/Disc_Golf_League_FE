@@ -9,14 +9,6 @@ const LeagueCard = ({ league, width }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
 
-  // const handleSize = () => {
-  //   if (isWidthDown("sm", width)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
   return (
     <Grid item xs={12}>
       <Link
@@ -55,14 +47,6 @@ const LeagueCard = ({ league, width }) => {
                 State
               </Typography>
             </Grid>
-            {/* {!handleSize && (
-              <Grid item xs={3}>
-                <Typography variant="body2" className={classes.headers}>
-                  Zip Code
-                </Typography>
-              </Grid>
-            )} */}
-
             <Grid item xs={3}>
               <Typography variant="body2" className={classes.columnData}>
                 {league.type}

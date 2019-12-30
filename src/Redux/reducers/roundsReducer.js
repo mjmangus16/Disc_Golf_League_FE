@@ -5,6 +5,7 @@ import {
   GET_ROUND_BY_ROUND_ID_LOADING,
   GET_ROUND_BY_ROUND_ID_SUCCESS,
   GET_ROUND_BY_ROUND_ID_FAILED,
+  ADD_ROUND_FAILED,
   ADD_PARTICIPANT_LOADING,
   ADD_PARTICIPANT_SUCCESS,
   ADD_PARTICIPANT_FAILED,
@@ -22,6 +23,7 @@ const initialState = {
   round: {},
   roundLoading: false,
   roundFailed: {},
+  addRoundFailed: {},
   addParticipantLoading: false,
   addParticipantFailed: {},
   updateRoundLoading: false,
@@ -59,6 +61,11 @@ export default (state = initialState, action) => {
         ...state,
         round: action.payload,
         roundLoading: false
+      };
+    case ADD_ROUND_FAILED:
+      return {
+        ...state,
+        addRoundFailed: action.payload
       };
     case GET_ROUND_BY_ROUND_ID_FAILED:
       return {

@@ -43,7 +43,8 @@ const CreateRound = ({
   leagueType,
   members,
   match,
-  history
+  history,
+  addRoundFailed
 }) => {
   const classes = useStyles();
   const inputLabel = useRef(null);
@@ -56,6 +57,8 @@ const CreateRound = ({
   const [right, setRight] = useState([]);
   const [date, setDate] = useState(new Date());
   const [type, setType] = useState("None");
+  const [scoresError, setScoresError] = useState(null);
+  const [dateError, setDateError] = useState(null);
 
   useEffect(() => {
     const { league_id } = match.params;
@@ -92,27 +95,37 @@ const CreateRound = ({
   };
 
   const submitRound = () => {
-    const { league_id } = match.params;
-    const round = {
-      league_id,
-      date: moment(date).format("MM/DD/YYYY"),
-      type
-    };
+    if (!date) {
+      setDateError("Date field is required");
+    } else {
+      setDateError(null);
+      const { league_id } = match.params;
+      const round = {
+        league_id,
+        date: moment(date).format("MM/DD/YYYY"),
+        type
+      };
 
-    const participants = right.map(x => {
-      return { ...x, league_id: league_id };
-    });
+      const participants = right.map(x => {
+        return { ...x, league_id: league_id };
+      });
 
-    let completed = true;
-    const redirect = () => history.push(`/league/${league_id}`);
-    participants.forEach(p => {
-      if (p.score == "") {
-        completed = false;
+      let completed = true;
+      const redirect = () => history.push(`/league/${league_id}`);
+      participants.forEach(p => {
+        if (p.score == "" || p.score.length > 3) {
+          completed = false;
+        }
+      });
+
+      if (completed) {
+        addRoundAndParticipants(league_id, round, participants, redirect);
+        setScoresError(null);
+      } else {
+        setScoresError(
+          "Every Score Field is required and must be less than 4 digits long"
+        );
       }
-    });
-
-    if (completed) {
-      addRoundAndParticipants(league_id, round, participants, redirect);
     }
   };
 
@@ -124,11 +137,13 @@ const CreateRound = ({
       <Grid
         container
         alignItems="center"
-        style={{ width: 400, margin: "auto" }}
+        style={{ maxWidth: 400, margin: "auto" }}
       >
         <Grid item xs={6}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
+              error={dateError ? true : false}
+              helperText={dateError && dateError}
               style={{ width: 150 }}
               disableToolbar
               variant="inline"
@@ -161,9 +176,9 @@ const CreateRound = ({
                 </MenuItem>
               ))}
             </Select>
-            {/* {createNewLeagueFailed.state && (
-              <FormHelperText>{createNewLeagueFailed.state}</FormHelperText>
-            )} */}
+            {addRoundFailed.type && (
+              <FormHelperText>{addRoundFailed.type}</FormHelperText>
+            )}
           </FormControl>
         </Grid>
       </Grid>
@@ -194,6 +209,12 @@ const CreateRound = ({
         </div>
       ) : (
         <div>
+          {scoresError && (
+            <Typography variant="body2" color="error" style={{ padding: 10 }}>
+              {scoresError}
+            </Typography>
+          )}
+
           {right.map((p, i) => (
             <Score
               key={p.name + i}
@@ -202,24 +223,24 @@ const CreateRound = ({
               handleScore={handleScore}
             />
           ))}
-          <Grid container spacing={4}>
-            <Grid item xs={6}>
+          <Grid container>
+            <Grid item xs={5} style={{ margin: "auto" }}>
               <Button
                 fullWidth
                 size="small"
                 variant="contained"
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 25 }}
                 onClick={() => setToggle(false)}
               >
                 Back
               </Button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={5} style={{ margin: "auto" }}>
               <Button
                 fullWidth
                 size="small"
                 variant="contained"
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 25 }}
                 onClick={submitRound}
               >
                 Submit Round
@@ -237,12 +258,16 @@ CreateRound.propTypes = {
   leagueType: PropTypes.string,
   getMembersByLeagueId: PropTypes.func.isRequired,
   addRoundAndParticipants: PropTypes.func.isRequired,
-  getLeagueById: PropTypes.func.isRequired
+  getLeagueById: PropTypes.func.isRequired,
+  addRoundFailed: PropTypes.object.isRequired,
+  addParticipantFailed: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   members: state.members.members,
-  leagueType: state.leagues.selectedLeague.type
+  leagueType: state.leagues.selectedLeague.type,
+  addRoundFailed: state.rounds.addRoundFailed,
+  addParticipantFailed: state.rounds.addParticipantFailed
 });
 
 export default connect(mapStateToProps, {

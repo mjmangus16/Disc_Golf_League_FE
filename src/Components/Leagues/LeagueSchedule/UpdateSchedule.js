@@ -99,8 +99,8 @@ const UpdateSchedule = ({
             You must submit the blank week before you can add another one.
           </Typography>
         )}
-        <Grid container spacing={4}>
-          {sched ? sched : <WeekItem index={1} />}
+        <Grid container style={{ width: "90%", margin: "auto" }}>
+          {sched ? sched : <WeekItem />}
         </Grid>
       </div>
     </div>

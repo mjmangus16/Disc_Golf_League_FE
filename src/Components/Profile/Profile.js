@@ -88,7 +88,7 @@ const Profile = ({
             admin={admin}
             history={history}
           />
-          <ProfileLeagues />
+          <ProfileLeagues history={history} />
         </div>
       )}
     </div>

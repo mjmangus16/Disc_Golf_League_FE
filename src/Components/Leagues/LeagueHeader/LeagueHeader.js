@@ -11,7 +11,11 @@ const LeagueHeader = ({ league, handler, admin, width, user_id }) => {
     if (admin && league.owner_id === user_id) {
       if (isWidthDown("sm", width)) {
         return (
-          <IconButton color="secondary">
+          <IconButton
+            color="secondary"
+            size="medium"
+            onClick={() => handler(true)}
+          >
             <EditIcon />
           </IconButton>
         );
@@ -40,7 +44,7 @@ const LeagueHeader = ({ league, handler, admin, width, user_id }) => {
 
   return (
     <div style={{ borderBottom: "1px solid lightgrey" }}>
-      <Grid container alignItems="center">
+      <Grid container justify="center" alignItems="center">
         <Grid item xs={2}></Grid>
         <Grid item xs={8}>
           <Typography variant="h5" className={classes.leagueName}>

@@ -45,6 +45,10 @@ const ConnectUser = ({
           the users email to connect the member.
         </DialogContentText>
         <TextField
+          error={failed.email || failed.error ? true : false}
+          helperText={
+            failed.email ? failed.email : failed.error && failed.error
+          }
           autoFocus
           margin="dense"
           name="email"
@@ -53,11 +57,6 @@ const ConnectUser = ({
           defaultValue={email}
           onChange={e => change(e.target.value)}
         />
-        {failed.error && (
-          <Typography variant="body2" color="error">
-            {failed.error}
-          </Typography>
-        )}
       </DialogContent>
 
       <DialogActions>

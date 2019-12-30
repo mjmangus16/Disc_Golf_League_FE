@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Grid, Paper, CircularProgress } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  Paper,
+  CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "@material-ui/core";
+import TableContainer from "@material-ui/core/TableContainer";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -17,7 +29,9 @@ const ProfileLeagues = ({
   getManagerLeaguesLoading,
   getUserLeaguesLoading,
   leagues,
-  admin
+  admin,
+  width,
+  history
 }) => {
   const classes = useStyles();
 
@@ -29,39 +43,108 @@ const ProfileLeagues = ({
     }
   }, []);
 
+  const displayTableHeadings = () => {
+    if (isWidthDown("xs", width)) {
+      return (
+        <TableHead>
+          <TableRow>
+            <TableCell align="left" className={classes.tableTypoH}>
+              Name
+            </TableCell>
+
+            <TableCell align="center" className={classes.tableTypoH}>
+              Days
+            </TableCell>
+          </TableRow>
+        </TableHead>
+      );
+    } else {
+      return (
+        <TableHead>
+          <TableRow>
+            <TableCell align="left" className={classes.tableTypoH}>
+              Name
+            </TableCell>
+            <TableCell align="center" className={classes.tableTypoH}>
+              Type
+            </TableCell>
+            <TableCell align="center" className={classes.tableTypoH}>
+              Location
+            </TableCell>
+            <TableCell align="center" className={classes.tableTypoH}>
+              Days
+            </TableCell>
+          </TableRow>
+        </TableHead>
+      );
+    }
+  };
+
+  const displayLeagues = () => {
+    if (isWidthDown("xs", width)) {
+      return (
+        <TableBody>
+          {leagues.map(league => (
+            <TableRow
+              key={"leagueKey" + league.league_id}
+              onClick={() => history.push(`/league/${league.league_id}`)}
+              className={classes.tableRow}
+            >
+              <TableCell align="left" className={classes.tableTypo}>
+                {league.name}
+              </TableCell>
+              <TableCell align="center" className={classes.tableTypo}>
+                {league.days}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      );
+    } else {
+      return (
+        <TableBody>
+          {leagues.map(league => (
+            <TableRow
+              key={"leagueKey" + league.league_id}
+              onClick={() => history.push(`/league/${league.league_id}`)}
+              className={classes.tableRow}
+            >
+              <TableCell align="left" className={classes.tableTypo}>
+                {league.name}
+              </TableCell>
+              <TableCell align="center" className={classes.tableTypo}>
+                {league.type}
+              </TableCell>
+              <TableCell align="center" className={classes.tableTypo}>
+                {league.location}
+              </TableCell>
+              <TableCell align="center" className={classes.tableTypo}>
+                {league.days}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      );
+    }
+  };
+
   return (
     <div className={classes.profileLeaguesContainer}>
-      <Paper elevation={0} style={{ borderBottom: "1px solid lightgrey" }}>
-        <div className={classes.headingContainer}>
-          <Typography variant="h6">My Leagues</Typography>
-        </div>
-        <Grid container className={classes.headerContainer}>
-          <Grid item xs={4}>
-            <Typography>Name</Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <Typography>Type</Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <Typography>Location</Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography>Days</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
       <div className={classes.gridContainer}>
         {getManagerLeaguesLoading || getUserLeaguesLoading ? (
           <CircularProgress size={32} className={classes.buttonProgress} />
         ) : leagues.length > 0 ? (
-          <Grid container spacing={2}>
-            {leagues.map(league => (
-              <LeagueCard
-                league={league}
-                key={`league9231${league.league_id}`}
-              />
-            ))}
-          </Grid>
+          <TableContainer
+            style={{
+              maxWidth: 700,
+              margin: "25px auto"
+            }}
+          >
+            <Table className={classes.table} aria-label="simple table">
+              {displayTableHeadings()}
+              {displayLeagues()}
+            </Table>
+          </TableContainer>
         ) : (
           <div className={classes.noLeagues}>
             <Typography variant="body1">
@@ -95,4 +178,4 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getManagerLeagues,
   getUserLeagues
-})(ProfileLeagues);
+})(withWidth()(ProfileLeagues));

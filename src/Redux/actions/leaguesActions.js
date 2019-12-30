@@ -26,7 +26,6 @@ export const getAllLeagues = () => dispatch => {
   axiosWithAuth()
     .get("api/leagues/getLeagues")
     .then(res => {
-      console.log(res)
       dispatch({ type: GET_ALL_LEAGUES_SUCCESS, payload: res.data });
     })
     .catch(err => {

@@ -12,7 +12,7 @@ import {
   FormHelperText
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
-import useStyles from "../LeagueStyles";
+import useStyles from "./HeaderStyles";
 
 const states = [
   "AL",
@@ -108,10 +108,10 @@ const EditLeagueHeader = ({
     editLeague(data, handler);
   };
   return (
-    <>
+    <div className={classes.editLeagueHeaderCont}>
       <TextField
-        // error={createNewLeagueFailed.name ? true : false}
-        // helperText={createNewLeagueFailed.name && createNewLeagueFailed.name}
+        error={failed.name ? true : false}
+        helperText={failed.name && failed.name}
         label="League Name"
         margin="dense"
         variant="outlined"
@@ -120,16 +120,14 @@ const EditLeagueHeader = ({
         value={leagueData.name}
         name="name"
         onChange={e => handleChange(e)}
-        style={{ maxWidth: 400, margin: 10 }}
+        className={classes.editLeageName}
       />
       <div className={classes.headerContainer}>
         <Grid container>
-          <Grid item xs={6} style={{ maxWidth: 250, margin: "auto" }}>
+          <Grid item sm={6} xs={12} className={classes.editLeagueFields}>
             <TextField
-              // error={createNewLeagueFailed.type ? true : false}
-              // helperText={
-              //   createNewLeagueFailed.type && createNewLeagueFailed.type
-              // }
+              error={failed.type ? true : false}
+              helperText={failed.type && failed.type}
               label="League Type"
               margin="dense"
               variant="outlined"
@@ -138,13 +136,12 @@ const EditLeagueHeader = ({
               value={leagueData.type}
               name="type"
               onChange={e => handleChange(e)}
+              className={classes.editLeagueField}
             />
 
             <TextField
-              // error={createNewLeagueFailed.location ? true : false}
-              // helperText={
-              //   createNewLeagueFailed.location && createNewLeagueFailed.location
-              // }
+              error={failed.location ? true : false}
+              helperText={failed.location && failed.location}
               label="Location ( Course )"
               margin="dense"
               variant="outlined"
@@ -153,12 +150,13 @@ const EditLeagueHeader = ({
               value={leagueData.location}
               name="location"
               onChange={e => handleChange(e)}
+              className={classes.editLeagueField}
             />
 
             <FormControl
-              // error={createNewLeagueFailed.days ? true : false}
+              error={failed.days ? true : false}
               variant="outlined"
-              className={classes.formControl}
+              className={classes.editLeagueFormControl}
               margin="dense"
               fullWidth
               required
@@ -183,13 +181,12 @@ const EditLeagueHeader = ({
                   </MenuItem>
                 ))}
               </Select>
+              {failed.days && <FormHelperText>{failed.days}</FormHelperText>}
             </FormControl>
 
             <TextField
-              // error={createNewLeagueFailed["length"] ? true : false}
-              // helperText={
-              //   createNewLeagueFailed["length"] && createNewLeagueFailed["length"]
-              // }
+              error={failed["length"] ? true : false}
+              helperText={failed["length"] && failed["length"]}
               label="Season Length"
               margin="dense"
               variant="outlined"
@@ -198,15 +195,13 @@ const EditLeagueHeader = ({
               value={leagueData["length"]}
               name="length"
               onChange={e => handleChange(e)}
+              className={classes.editLeagueField}
             />
           </Grid>
-          <Grid item xs={6} style={{ maxWidth: 400, margin: "auto" }}>
+          <Grid item sm={6} xs={12} style={{ maxWidth: 400, margin: "auto" }}>
             <TextField
-              // error={createNewLeagueFailed.description ? true : false}
-              // helperText={
-              //   createNewLeagueFailed.description &&
-              //   createNewLeagueFailed.description
-              // }
+              error={failed.description ? true : false}
+              helperText={failed.description && failed.description}
               label="League Description"
               multiline
               rows="5"
@@ -217,16 +212,15 @@ const EditLeagueHeader = ({
               value={leagueData.description}
               name="description"
               onChange={e => handleChange(e)}
+              className={classes.editLeagueField}
             />
           </Grid>
         </Grid>
       </div>
       <div style={{ borderBottom: "1px solid lightGrey" }}>
         <TextField
-          // error={createNewLeagueFailed.contact ? true : false}
-          // helperText={
-          //   createNewLeagueFailed.contact && createNewLeagueFailed.contact
-          // }
+          error={failed.contact ? true : false}
+          helperText={failed.contact && failed.contact}
           label="Contact Information"
           multiline
           rows="3"
@@ -238,6 +232,7 @@ const EditLeagueHeader = ({
           name="contact"
           onChange={e => handleChange(e)}
           style={{ margin: "25px auto", width: "98%" }}
+          className={classes.editLeagueField}
         />
 
         <TextField
@@ -251,6 +246,7 @@ const EditLeagueHeader = ({
           name="additional"
           onChange={e => handleChange(e)}
           style={{ margin: "0px auto 25px", width: "98%" }}
+          className={classes.editLeagueField}
         />
       </div>
       <Button
@@ -276,7 +272,7 @@ const EditLeagueHeader = ({
       >
         Cancel
       </Button>
-    </>
+    </div>
   );
 };
 

@@ -101,8 +101,10 @@ const RosterPanel = ({
                       </Typography>
                     </Grid>
                   )}
-                  <Grid item xs={6} md={4} style={{ width: "auto" }}>
+                  <Grid item xs={12} md={4} style={{ width: "auto" }}>
                     <TextField
+                      error={submitFailed.f_name ? true : false}
+                      helperText={submitFailed.f_name && submitFailed.f_name}
                       label="First Name"
                       margin="dense"
                       variant="outlined"
@@ -123,8 +125,10 @@ const RosterPanel = ({
                       }}
                     />
                   </Grid>
-                  <Grid item xs={6} md={4}>
+                  <Grid item xs={12} md={4}>
                     <TextField
+                      error={submitFailed.l_name ? true : false}
+                      helperText={submitFailed.l_name && submitFailed.l_name}
                       label="Last Name"
                       margin="dense"
                       variant="outlined"
@@ -145,7 +149,7 @@ const RosterPanel = ({
                       }}
                     />
                   </Grid>
-                  <Grid item xs={8} md={4}>
+                  <Grid item xs={12} md={4}>
                     <TextField
                       label="Email"
                       margin="dense"

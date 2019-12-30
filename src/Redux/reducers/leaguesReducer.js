@@ -153,8 +153,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         getLeagueByIdLoading: false,
-        getLeagueByIdFailed: null,
-        selectedLeague: {},
+        getLeagueByIdFailed: {},
         createNewLeagueLoading: false,
         createNewLeagueFailed: {}
       };
@@ -163,7 +162,7 @@ export default (state = initialState, action) => {
         ...state,
         leagues: [],
         getManagerLeaguesLoading: false,
-        getManagerLeaguesFailed: null
+        getManagerLeaguesFailed: {}
       };
     default:
       return state;

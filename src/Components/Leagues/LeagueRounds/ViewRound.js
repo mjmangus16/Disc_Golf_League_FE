@@ -19,12 +19,13 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  IconButton
+  IconButton,
+  FormHelperText
 } from "@material-ui/core";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
-import { green } from "@material-ui/core/colors";
+import { green, red } from "@material-ui/core/colors";
 import moment from "moment";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from "@material-ui/icons/DeleteOutlined";
 import EditIcon from "@material-ui/icons/Edit";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
@@ -60,8 +61,9 @@ const ViewRound = ({
   const [score, setScore] = useState("");
   const [availMem, setAvailMem] = useState([]);
   const [participants, setParticipants] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState({ member: "", score: "" });
   const [type, setType] = useState("");
+  const [scoresError, setScoresError] = useState(null);
 
   useEffect(() => {
     const { round_id, league_id } = match.params;
@@ -95,27 +97,32 @@ const ViewRound = ({
     }
   }, [members, round.participants]);
 
-  useEffect(() => {
-    setError(addParticipantFailed.error);
-  }, [addParticipantFailed]);
-
   const submitParticipant = () => {
-    const { round_id, league_id } = match.params;
-
-    if (member != "" && score != "") {
-      const data = {
-        member_id: member.member_id,
-        f_name: member.f_name,
-        l_name: member.l_name,
-        score,
-        round_id,
-        league_id
-      };
-      addParticipant(league_id, round_id, data, setTrigger);
-      setMember("");
-      setScore("");
+    if (member === "") {
+      setError({ member: "Member selection field is required", score: null });
     } else {
-      setError("The member & score fields are required");
+      if (score == "") {
+        setError({ score: "Score field is required", member: null });
+      } else {
+        setError({});
+        const { round_id, league_id } = match.params;
+
+        if (member != "" && score != "") {
+          const data = {
+            member_id: member.member_id,
+            f_name: member.f_name,
+            l_name: member.l_name,
+            score,
+            round_id,
+            league_id
+          };
+          addParticipant(league_id, round_id, data, setTrigger);
+          setMember("");
+          setScore("");
+        } else {
+          setError("The member & score fields are required");
+        }
+      }
     }
   };
 
@@ -146,9 +153,23 @@ const ViewRound = ({
   const handleUpdate = () => {
     const { round_id, league_id } = match.params;
 
-    updateMultipleParticipants(league_id, round_id, participants);
-    updateRound(league_id, round_id, { type });
-    setChanges(false);
+    let completed = true;
+    participants.forEach(p => {
+      if (p.score == "" || p.score.length > 3) {
+        completed = false;
+      }
+    });
+
+    if (completed) {
+      updateMultipleParticipants(league_id, round_id, participants);
+      updateRound(league_id, round_id, { type, date: round.date });
+      setChanges(false);
+      setScoresError(null);
+    } else {
+      setScoresError(
+        "Score fields are required and must be less than 4 digits long"
+      );
+    }
   };
 
   const displayAddButton = () => {
@@ -329,10 +350,17 @@ const ViewRound = ({
         </Grid>
       </Grid>
       <Grid container style={{ maxWidth: 350, margin: "25px auto auto" }}>
-        {error && (
+        {error.member && (
           <Grid item xs={12} style={{ margin: "auto" }}>
             <Typography variant="body2" color="error">
-              {error}
+              {error.member}
+            </Typography>
+          </Grid>
+        )}
+        {error.score && (
+          <Grid item xs={12} style={{ margin: "auto" }}>
+            <Typography variant="body2" color="error">
+              {error.score}
             </Typography>
           </Grid>
         )}
@@ -347,15 +375,19 @@ const ViewRound = ({
                 padding: "15px 0px"
               }}
             >
-              {/* {submitFailed.error && (
+              {/* {scoresError && (
                 <Grid item xs={12}>
                   <Typography color="error" align="center" variant="body2">
-                    {submitFailed.error}
+                    {scoresError}
                   </Typography>
                 </Grid>
               )} */}
               <Grid item xs={6}>
-                <FormControl fullWidth required>
+                <FormControl
+                  fullWidth
+                  required
+                  error={error.member ? true : false}
+                >
                   <InputLabel
                     id="demo-simple-select-outlined-label"
                     className={classes.memberInputLabel}
@@ -385,6 +417,7 @@ const ViewRound = ({
 
               <Grid item xs={6}>
                 <TextField
+                  error={error.score ? true : false}
                   required
                   label="Score"
                   margin="dense"
@@ -405,6 +438,13 @@ const ViewRound = ({
                 />
               </Grid>
             </Grid>
+          </Grid>
+        )}
+        {scoresError && (
+          <Grid item xs={12}>
+            <Typography color="error" align="center" variant="body2">
+              {scoresError}
+            </Typography>
           </Grid>
         )}
         {participants.length > 0 ? (
@@ -468,10 +508,10 @@ const ViewRound = ({
                 {changes && (
                   <Grid item xs={3}>
                     <IconButton
-                      size="small"
                       onClick={() =>
                         handleDelete(part.member_id, part.participant_id)
                       }
+                      style={{ color: red[500] }}
                     >
                       <DeleteIcon />
                     </IconButton>
