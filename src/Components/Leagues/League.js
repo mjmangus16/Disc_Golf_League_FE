@@ -117,7 +117,7 @@ League.propTypes = {
   getMembersByLeagueId: PropTypes.func.isRequired,
   clearMembersData: PropTypes.func.isRequired,
   editLeague: PropTypes.func.isRequired,
-  user_id: PropTypes.number.isRequired,
+  user_id: PropTypes.number,
   owner_id: PropTypes.number
 };
 

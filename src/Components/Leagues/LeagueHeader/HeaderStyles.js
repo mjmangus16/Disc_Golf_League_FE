@@ -15,6 +15,10 @@ const useStyles = makeStyles(theme => ({
   headerSection: {
     margin: "auto"
   },
+  link: {
+    textDecoration: "none",
+    color: "black"
+  },
   typo: {
     padding: "5px 10px",
     [theme.breakpoints.down("sm")]: {

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
-
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   Typography,
   Grid,
@@ -78,14 +79,7 @@ const states = [
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const EditLeagueHeader = ({
-  league,
-  handler,
-  loading,
-  failed,
-  editLeague,
-  history
-}) => {
+const EditLeagueHeader = ({ loading, failed, editLeague }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
   const [leagueData, setLeagueData] = useState({
@@ -276,4 +270,8 @@ const EditLeagueHeader = ({
   );
 };
 
-export default EditLeagueHeader;
+EditLeagueHeader.propTypes = {};
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, {})(EditLeagueHeader);

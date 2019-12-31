@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Typography, Button, Grid, IconButton, Icon } from "@material-ui/core";
 import useStyles from "./HeaderStyles";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
@@ -11,34 +12,27 @@ const LeagueHeader = ({ league, handler, admin, width, user_id }) => {
     if (admin && league.owner_id === user_id) {
       if (isWidthDown("sm", width)) {
         return (
-          <IconButton
-            color="secondary"
-            size="medium"
-            onClick={() => handler(true)}
+          <Link
+            to={`/league/${league.league_id}/editLeague`}
+            className={classes.link}
           >
-            <EditIcon />
-          </IconButton>
+            <IconButton color="secondary" size="medium">
+              <EditIcon />
+            </IconButton>
+          </Link>
         );
       } else {
         return (
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            onClick={() => handler(true)}
+          <Link
+            to={`/league/${league.league_id}/editLeague`}
+            className={classes.link}
           >
-            Edit
-          </Button>
+            <Button variant="contained" color="secondary" size="small">
+              Edit
+            </Button>
+          </Link>
         );
       }
-    }
-  };
-
-  const handleSize = () => {
-    if (isWidthDown("sm", width)) {
-      return true;
-    } else {
-      return false;
     }
   };
 

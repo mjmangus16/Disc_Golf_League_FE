@@ -2,13 +2,22 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllLeagues } from "../../Redux/actions/leaguesActions";
+import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
 import LeagueCard from "./LeagueCard";
 import useStyles from "./HomeStyles";
 
-const Home = ({ getAllLeagues, allLeagues, loading, failed, width }) => {
+const Home = ({
+  breadcrumbs,
+  addBreadcrumb,
+  getAllLeagues,
+  allLeagues,
+  loading,
+  failed,
+  width
+}) => {
   const classes = useStyles();
   useEffect(() => {
     getAllLeagues();
@@ -61,11 +70,13 @@ Home.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  breadcrumbs: state.breadcrumbs.breadcrumbs,
   allLeagues: state.leagues.allLeagues,
   loading: state.leagues.getAllLeaguesLoading,
   failed: state.leagues.getAllLeaguesFailed
 });
 
 export default connect(mapStateToProps, {
-  getAllLeagues
+  getAllLeagues,
+  addBreadcrumb
 })(withWidth()(Home));

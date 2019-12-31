@@ -1,7 +1,7 @@
 import { ADD_BREADCRUMB, SELECT_BREADCRUMB } from "../types";
 
 const initialState = {
-  breadcrumbs: [{ name: "Home", url: "/", index: 0 }]
+  breadcrumbs: [{ name: "Home", url: "/" }]
 };
 
 export default (state = initialState, action) => {

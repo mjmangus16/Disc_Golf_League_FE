@@ -128,7 +128,7 @@ SchedulePanel.propTypes = {
   league_id: PropTypes.number,
   admin: PropTypes.bool.isRequired,
   owner_id: PropTypes.number.isRequired,
-  user_id: PropTypes.number.isRequired,
+  user_id: PropTypes.number,
   owner_id: PropTypes.number
 };
 
