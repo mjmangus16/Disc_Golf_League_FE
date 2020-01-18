@@ -3,6 +3,7 @@ import {
   GET_ALL_LEAGUES_LOADING,
   GET_ALL_LEAGUES_SUCCESS,
   GET_ALL_LEAGUES_FAILED,
+  GET_LEAGUES_BY_STATE_SUCCESS,
   GET_MANAGER_LEAGUES_LOADING,
   GET_MANAGER_LEAGUES_SUCCESS,
   GET_MANAGER_LEAGUES_FAILED,
@@ -27,6 +28,22 @@ export const getAllLeagues = () => dispatch => {
     .get("api/leagues/getLeagues")
     .then(res => {
       dispatch({ type: GET_ALL_LEAGUES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ALL_LEAGUES_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const getLeaguesByState = state => dispatch => {
+  dispatch({ type: GET_ALL_LEAGUES_LOADING });
+  axiosWithAuth()
+    .get(`api/leagues/getLeagues/state/${state}`)
+    .then(res => {
+      dispatch({ type: GET_LEAGUES_BY_STATE_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err);
@@ -138,7 +155,7 @@ export const editLeague = (league_data, redirect) => dispatch => {
         type: EDIT_LEAGUE_SUCCESS,
         payload: res.data
       });
-      redirect(false);
+      redirect();
     })
     .catch(err => {
       console.log(err.response.data);

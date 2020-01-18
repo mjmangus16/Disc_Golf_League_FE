@@ -1,12 +1,27 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, fade } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   loadingCircle: {
     color: theme.palette.secondary.main
   },
+  homeContainer: {
+    display: "grid",
+    gridTemplateColumns: "1fr 3fr",
+    gridTemplateRows: "60px auto",
+    margin: "auto auto 15px",
+    maxWidth: 1200
+  },
+  stateSelectContainer: {
+    gridRow: "2/3",
+    gridColumn: 1
+  },
   gridContainer: {
-    width: "75%",
+    width: "100%",
     margin: "auto",
+    gridColumn: 2,
+    gridRow: 2,
+    maxHeight: "650px",
+    overflow: "scroll",
     [theme.breakpoints.down("sm")]: {
       width: "100%"
     }

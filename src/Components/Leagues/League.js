@@ -21,7 +21,7 @@ import {
 } from "../../Redux/actions/membersActions";
 import { CircularProgress } from "@material-ui/core";
 
-import LeagueHeaderContainer from "./LeagueHeader/LeagueHeaderContainer";
+import LeagueHeader from "./LeagueHeader/LeagueHeader";
 import LeagueTabs from "./LeagueTabs/LeagueTabs";
 import LeaguePanels from "./LeagueTabs/LeaguePanels";
 
@@ -40,16 +40,11 @@ const League = ({
   clearScheduleData,
   getMembersByLeagueId,
   clearMembersData,
-  editLeague,
-  editLeagueLoading,
-  editLeagueFailed,
   admin,
-  user_id,
-  owner_id
+  user_id
 }) => {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
-  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const league_id = match.params.league_id;
@@ -71,29 +66,19 @@ const League = ({
   };
 
   return (
-    <div style={{ maxWidth: 750, margin: "auto" }}>
+    <div style={{ maxWidth: 800, margin: "auto" }}>
       {getLeagueByIdLoading ? (
         <CircularProgress size={50} className={classes.loadingCircle} />
       ) : (
         <div>
-          <LeagueHeaderContainer
+          <LeagueHeader
             league={selectedLeague}
-            edit={edit}
-            setEdit={setEdit}
-            editLeague={editLeague}
-            editLeagueFailed={editLeagueFailed}
-            editLeagueLoading={editLeagueLoading}
             admin={admin}
             user_id={user_id}
-            owner_id={owner_id}
           />
 
-          {!edit && (
-            <>
-              <LeagueTabs handleChange={handleTabChange} value={tabValue} />
-              <LeaguePanels tabValue={tabValue} history={history} />
-            </>
-          )}
+          <LeagueTabs handleChange={handleTabChange} value={tabValue} />
+          <LeaguePanels tabValue={tabValue} history={history} />
         </div>
       )}
     </div>

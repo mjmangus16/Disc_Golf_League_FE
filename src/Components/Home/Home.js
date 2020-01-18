@@ -1,18 +1,91 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getAllLeagues } from "../../Redux/actions/leaguesActions";
+import {
+  getAllLeagues,
+  getLeaguesByState
+} from "../../Redux/actions/leaguesActions";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
-import { Grid, Typography, CircularProgress } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  CircularProgress,
+  InputBase
+} from "@material-ui/core";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
+import Search from "./Search";
+import StateSelect from "./StateSelect";
 import LeagueCard from "./LeagueCard";
 import useStyles from "./HomeStyles";
+
+const states = [
+  "Alabama",
+  "Alaska",
+  "American Samoa",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "District of Columbia",
+  "Federated States of Micronesia",
+  "Florida",
+  "Georgia",
+  "Guam",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Marshall Islands",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Northern Mariana Islands",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Palau",
+  "Pennsylvania",
+  "Puerto Rico",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virgin Island",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming"
+];
 
 const Home = ({
   breadcrumbs,
   addBreadcrumb,
   getAllLeagues,
+  getLeaguesByState,
   allLeagues,
   loading,
   failed,
@@ -47,10 +120,18 @@ const Home = ({
   };
 
   return (
-    <div style={{ marginBottom: 15 }}>
-      <Typography variant="h5" className={classes.pageHeading}>
+    <div className={classes.homeContainer}>
+      {/* <Typography variant="h5" className={classes.pageHeading}>
         All Available Leagues
-      </Typography>
+      </Typography> */}
+      <div className={classes.stateSelectContainer}>
+        <StateSelect
+          states={states}
+          allLeaguesHandler={getAllLeagues}
+          byStateHandler={getLeaguesByState}
+        />
+      </div>
+      <Search />
       <Grid
         container
         spacing={isWidthDown("sm", width) ? 1 : 4}
@@ -78,5 +159,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getAllLeagues,
+  getLeaguesByState,
   addBreadcrumb
 })(withWidth()(Home));

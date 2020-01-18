@@ -5,6 +5,18 @@ import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import EditIcon from "@material-ui/icons/Edit";
 import { green } from "@material-ui/core/colors";
 
+// const newComponent = (props) => {
+//   const [hook, setHooke] = useState();
+
+//   useEffect(() => {
+
+//   })
+
+//   return <div></div>
+// }
+
+// export default newComponent
+
 const ProfileHeader = ({
   org_name,
   f_name,
@@ -18,6 +30,18 @@ const ProfileHeader = ({
   const classes = useStyles();
   const [name, setName] = useState("");
   const [hover, setHover] = useState(false);
+  const [age, setAge] = useState(30);
+  const [test, setTest] = useState(null);
+
+  useEffect(() => {
+    setAge(33);
+
+    return () => {
+      console.log("unmounted");
+    };
+  }, [test]);
+
+  console.log(age);
 
   useEffect(() => {
     org_name ? setName(org_name) : setName(f_name);
