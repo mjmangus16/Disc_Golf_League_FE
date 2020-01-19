@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Box } from "@material-ui/core";
 
 import SchedulePanel from "../LeagueSchedule/SchedulePanel";
-import MembersPanel from "../LeagueMembers/MemberPanel";
+import MembersPanel from "../LeagueMembers/MembersPanel";
 import RoundsPanel from "../LeagueRounds/RoundsPanel";
 
 function TabPanel(props) {

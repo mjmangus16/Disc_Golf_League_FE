@@ -127,7 +127,7 @@ RoundsPanel.propTypes = {
   roundsLoading: PropTypes.bool.isRequired,
   roundsFailed: PropTypes.object.isRequired,
   admin: PropTypes.bool.isRequired,
-  user_id: PropTypes.number.isRequired,
+  user_id: PropTypes.number,
   owner_id: PropTypes.number
 };
 

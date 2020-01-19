@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MenuItem, Menu } from "@material-ui/core";
+import { MenuItem, Menu, IconButton, Button } from "@material-ui/core";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const AuthNav = ({
   breadcrumbs,
@@ -10,82 +12,152 @@ const AuthNav = ({
   open,
   anchorEl,
   logout,
-  admin
+  admin,
+  width,
+  handleMenu
 }) => {
-  return (
-    <Menu
-      id="menu-appbar"
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right"
-      }}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right"
-      }}
-      open={open}
-      onClose={handleClose}
-    >
-      <Link to="/" className={classes.link}>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            addBreadcrumb(breadcrumbs, {
-              name: "Home",
-              url: "/"
-            });
-          }}
+  if (isWidthDown("sm", width)) {
+    return (
+      <>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
         >
-          Home
-        </MenuItem>
-      </Link>
-      <Link to="/profile" className={classes.link}>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            addBreadcrumb(breadcrumbs, {
-              name: "Profile",
-              url: "/"
-            });
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
           }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          open={open}
+          onClose={handleClose}
         >
-          Profile
-        </MenuItem>
-      </Link>
-      {admin && (
-        <Link to="/createleague" className={classes.link}>
-          <MenuItem
+          <Link to="/" className={classes.link}>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                addBreadcrumb({
+                  name: "Home",
+                  url: "/"
+                });
+              }}
+            >
+              Home
+            </MenuItem>
+          </Link>
+          <Link to="/profile" className={classes.link}>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                addBreadcrumb({
+                  name: "Profile",
+                  url: "/"
+                });
+              }}
+            >
+              Profile
+            </MenuItem>
+          </Link>
+          {admin && (
+            <Link to="/createleague" className={classes.link}>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  addBreadcrumb({
+                    name: "Create League",
+                    url: "/createleague"
+                  });
+                }}
+              >
+                Create League
+              </MenuItem>
+            </Link>
+          )}
+
+          <Link to="/" className={classes.link}>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                logout();
+                addBreadcrumb({
+                  name: "Home",
+                  url: "/"
+                });
+              }}
+            >
+              Logout
+            </MenuItem>
+          </Link>
+        </Menu>
+      </>
+    );
+  } else {
+    return (
+      <div>
+        <Link to="/" className={classes.link}>
+          <Button
+            size="large"
+            className={classes.navLinkDesktop}
             onClick={() => {
-              handleClose();
-              addBreadcrumb(breadcrumbs, {
+              addBreadcrumb({
+                name: "Home",
+                url: "/"
+              });
+            }}
+          >
+            Home
+          </Button>
+        </Link>
+        <Link to="/profile" className={classes.link}>
+          <Button
+            size="large"
+            className={classes.navLinkDesktop}
+            onClick={() => {
+              addBreadcrumb({
+                name: "Profile",
+                url: "/profile"
+              });
+            }}
+          >
+            Profile
+          </Button>
+        </Link>
+        <Link to="/createLeague" className={classes.link}>
+          <Button
+            size="large"
+            className={classes.navLinkDesktop}
+            onClick={() => {
+              addBreadcrumb({
                 name: "Create League",
                 url: "/createleague"
               });
             }}
           >
             Create League
-          </MenuItem>
+          </Button>
         </Link>
-      )}
 
-      <Link to="/" className={classes.link}>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            logout();
-            addBreadcrumb(breadcrumbs, {
-              name: "Home",
-              url: "/"
-            });
-          }}
+        <Button
+          size="large"
+          className={classes.navLinkDesktop}
+          onClick={logout}
         >
           Logout
-        </MenuItem>
-      </Link>
-    </Menu>
-  );
+        </Button>
+      </div>
+    );
+  }
 };
 
-export default AuthNav;
+export default withWidth()(AuthNav);

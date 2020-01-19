@@ -15,6 +15,10 @@ const useStyles = makeStyles(theme => ({
   headerSection: {
     margin: "auto"
   },
+  link: {
+    textDecoration: "none",
+    color: "black"
+  },
   typo: {
     padding: "5px 10px",
     [theme.breakpoints.down("sm")]: {
@@ -27,6 +31,8 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 7
   },
   editLeagueHeaderCont: {
+    maxWidth: 800,
+    margin: "auto",
     [theme.breakpoints.down("sm")]: {
       width: "90%",
       margin: "auto",

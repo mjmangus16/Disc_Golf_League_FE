@@ -20,7 +20,7 @@ import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
 import MemberCard from "./MemberCard";
 
-const RosterPanel = ({
+const MembersPanel = ({
   history,
   league_id,
   members,
@@ -226,7 +226,7 @@ const RosterPanel = ({
   );
 };
 
-RosterPanel.propTypes = {
+MembersPanel.propTypes = {
   league_id: PropTypes.number,
   members: PropTypes.arrayOf(PropTypes.object).isRequired,
   getMembersLoading: PropTypes.bool.isRequired,
@@ -235,7 +235,7 @@ RosterPanel.propTypes = {
   submitFailed: PropTypes.object.isRequired,
   admin: PropTypes.bool.isRequired,
   submitMemberToLeague: PropTypes.func.isRequired,
-  user_id: PropTypes.number.isRequired,
+  user_id: PropTypes.number,
   owner_id: PropTypes.number
 };
 
@@ -254,4 +254,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   submitMemberToLeague
-})(RosterPanel);
+})(MembersPanel);

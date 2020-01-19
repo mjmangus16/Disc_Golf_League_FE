@@ -11,7 +11,14 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexWrap: "wrap",
     minHeight: 40,
-    margin: 15
+    margin: "auto",
+    padding: 15,
+    maxWidth: 900
+  },
+  crumbText: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem"
+    }
   },
   paper: {
     padding: theme.spacing(1, 2)
@@ -28,20 +35,27 @@ const Breadcrumbs_ = ({ breadcrumbs, selectBreadcrumb }) => {
           breadcrumbs.map((crumb, i) => {
             if (i !== breadcrumbs.length - 1) {
               return (
-                <Link
-                  color="inherit"
-                  to={crumb.url}
-                  onClick={() => selectBreadcrumb(breadcrumbs, crumb)}
+                <Typography
+                  color="textPrimary"
                   key={`${crumb.name}${crumb.url}${i}`}
+                  className={classes.crumbText}
                 >
-                  {crumb.name}
-                </Link>
+                  <Link
+                    color="inherit"
+                    to={crumb.url}
+                    onClick={() => selectBreadcrumb(breadcrumbs, crumb)}
+                    key={`${crumb.name}${crumb.url}${i}`}
+                  >
+                    {crumb.name}
+                  </Link>
+                </Typography>
               );
             } else {
               return (
                 <Typography
                   color="textPrimary"
                   key={`${crumb.name}${crumb.url}${i}`}
+                  className={classes.crumbText}
                 >
                   {crumb.name}
                 </Typography>

@@ -12,7 +12,7 @@ import {
   Button
 } from "@material-ui/core";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
-import MenuIcon from "@material-ui/icons/Menu";
+
 import NoAuthNav from "./Nav/NoAuthNav";
 import AuthNav from "./Nav/AuthNav";
 
@@ -31,6 +31,7 @@ const AppBar_ = ({
   const open = Boolean(anchorEl);
 
   const handleMenu = event => {
+    console.log("working");
     setAnchorEl(event.currentTarget);
   };
 
@@ -39,96 +40,33 @@ const AppBar_ = ({
   };
 
   const displayMenu = width => {
-    if (isWidthDown("sm", width)) {
-      return (
-        <div>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
-
-          {!isAuthenticated ? (
-            <NoAuthNav
-              breadcrumbs={breadcrumbs}
-              addBreadcrumb={addBreadcrumb}
-              handleClose={handleClose}
-              classes={classes}
-              open={open}
-              anchorEl={anchorEl}
-            />
-          ) : (
-            <AuthNav
-              breadcrumbs={breadcrumbs}
-              addBreadcrumb={addBreadcrumb}
-              handleClose={handleClose}
-              classes={classes}
-              open={open}
-              anchorEl={anchorEl}
-              logout={logoutUser}
-              admin={admin}
-            />
-          )}
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          {isAuthenticated ? (
-            <div>
-              <Button size="large" className={classes.navLinkDesktop} href="/">
-                Home
-              </Button>
-              <Button
-                size="large"
-                className={classes.navLinkDesktop}
-                href="/profile"
-              >
-                Profile
-              </Button>
-              <Button
-                size="large"
-                className={classes.navLinkDesktop}
-                href="/createLeague"
-              >
-                Create League
-              </Button>
-              <Button
-                size="large"
-                className={classes.navLinkDesktop}
-                onClick={logoutUser}
-              >
-                Logout
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Button size="large" className={classes.navLinkDesktop} href="/">
-                Home
-              </Button>
-              <Button
-                size="large"
-                className={classes.navLinkDesktop}
-                href="/signup"
-              >
-                Sign Up
-              </Button>
-              <Button
-                size="large"
-                className={classes.navLinkDesktop}
-                href="/signin"
-              >
-                Sign In
-              </Button>
-            </div>
-          )}
-        </div>
-      );
-    }
+    return (
+      <div>
+        {!isAuthenticated ? (
+          <NoAuthNav
+            breadcrumbs={breadcrumbs}
+            addBreadcrumb={addBreadcrumb}
+            handleClose={handleClose}
+            classes={classes}
+            open={open}
+            anchorEl={anchorEl}
+            handleMenu={handleMenu}
+          />
+        ) : (
+          <AuthNav
+            breadcrumbs={breadcrumbs}
+            addBreadcrumb={addBreadcrumb}
+            handleClose={handleClose}
+            classes={classes}
+            open={open}
+            anchorEl={anchorEl}
+            logout={logoutUser}
+            admin={admin}
+            handleMenu={handleMenu}
+          />
+        )}
+      </div>
+    );
   };
 
   return (

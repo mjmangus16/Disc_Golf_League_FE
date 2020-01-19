@@ -1,15 +1,15 @@
 import { ADD_BREADCRUMB, SELECT_BREADCRUMB } from "../types";
 
-export const addBreadcrumb = (crumbs, newCrumb) => dispatch => {
+export const addBreadcrumb = newCrumb => dispatch => {
   dispatch({
     type: ADD_BREADCRUMB,
-    payload: { ...newCrumb, index: crumbs.length }
+    payload: newCrumb
   });
 };
 
 export const selectBreadcrumb = (crumbs, selectedCrumb) => dispatch => {
   const updatedCrumbs = crumbs.filter(
-    crumb => crumb.index <= selectedCrumb.index
+    (crumb, index) => index <= crumbs.indexOf(selectedCrumb)
   );
   dispatch({
     type: SELECT_BREADCRUMB,

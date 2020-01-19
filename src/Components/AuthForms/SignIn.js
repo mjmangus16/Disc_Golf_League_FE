@@ -55,7 +55,7 @@ const Signin = ({
     e.preventDefault();
     const redirect = () => history.push("/profile");
     const addCrumb = () =>
-      addBreadcrumb(breadcrumbs, {
+      addBreadcrumb({
         name: "Profile",
         url: "/profile"
       });

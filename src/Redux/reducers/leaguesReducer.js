@@ -2,6 +2,8 @@ import {
   GET_ALL_LEAGUES_LOADING,
   GET_ALL_LEAGUES_SUCCESS,
   GET_ALL_LEAGUES_FAILED,
+  GET_LEAGUES_BY_STATE_SUCCESS,
+  GET_LEAGUES_BY_VAL_SUCCESS,
   GET_MANAGER_LEAGUES_LOADING,
   GET_MANAGER_LEAGUES_SUCCESS,
   GET_MANAGER_LEAGUES_FAILED,
@@ -58,6 +60,18 @@ export default (state = initialState, action) => {
         ...state,
         getAllLeaguesLoading: false,
         getAllLeaguesFailed: action.payload
+      };
+    case GET_LEAGUES_BY_STATE_SUCCESS:
+      return {
+        ...state,
+        getAllLeaguesLoading: false,
+        allLeagues: action.payload
+      };
+    case GET_LEAGUES_BY_VAL_SUCCESS:
+      return {
+        ...state,
+        getAllLeaguesLoading: false,
+        allLeagues: action.payload
       };
     case GET_MANAGER_LEAGUES_LOADING:
       return {

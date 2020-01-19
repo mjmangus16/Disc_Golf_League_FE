@@ -72,7 +72,7 @@ const Signup = ({
     e.preventDefault();
     const redirect = () => history.push("/signin");
     const addCrumb = () =>
-      addBreadcrumb(breadcrumbs, {
+      addBreadcrumb({
         name: "Sign In",
         url: "/signin"
       });

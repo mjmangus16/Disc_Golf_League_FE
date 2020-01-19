@@ -11,7 +11,6 @@ const useStyles = makeStyles(theme => ({
   loadingCircle: {
     color: theme.palette.secondary.main
   },
-
   createLeagueContainer: {
     maxWidth: 800,
     width: "90%",

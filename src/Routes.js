@@ -8,6 +8,7 @@ import Profile from "./Components/Profile/Profile";
 import Home from "./Components/Home/Home";
 import League from "./Components/Leagues/League";
 import CreateLeague from "./Components/Leagues/CreateLeague";
+import EditLeagueHeader from "./Components/Leagues/LeagueHeader/EditLeagueHeader";
 import UpdateSchedule from "./Components/Leagues/LeagueSchedule/UpdateSchedule";
 import CreateRound from "./Components/Leagues/LeagueRounds/CreateRound";
 import ViewRound from "./Components/Leagues/LeagueRounds/ViewRound";
@@ -47,6 +48,11 @@ export default () => {
         exact
         path="/league/:league_id/member/:member_id"
         component={LeagueMember}
+      />
+      <AdminProtectedRoute
+        exact
+        path="/league/:league_id/editLeague"
+        component={EditLeagueHeader}
       />
       <AdminProtectedRoute
         exact
