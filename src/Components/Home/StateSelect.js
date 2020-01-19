@@ -1,6 +1,9 @@
 import React from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
+import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+
+import MobileStateSelect from "./MobileStateSelect";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -20,35 +23,45 @@ const StateSelect = ({
   states,
   selected,
   allLeaguesHandler,
-  byStateHandler
+  byStateHandler,
+  width
 }) => {
   const classes = useStyles();
-  return (
-    <div className={classes.container}>
-      <ul className={classes.list}>
-        <li className={classes.item}>
-          <Button
-            fullWidth
-            variant={selected == "All" ? "outlined" : "text"}
-            onClick={() => allLeaguesHandler()}
-          >
-            All
-          </Button>
-        </li>
-        {states.map(st => (
-          <li className={classes.item}>
-            <Button
-              fullWidth
-              variant={selected == st ? "outlined" : "text"}
-              onClick={e => byStateHandler(st)}
-            >
-              {st}
-            </Button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+
+  const displayStates = () => {
+    if (isWidthDown("xs", width)) {
+      return <MobileStateSelect />;
+    } else {
+      return (
+        <div className={classes.container}>
+          <ul className={classes.list}>
+            <li className={classes.item}>
+              <Button
+                fullWidth
+                variant={selected == "All" ? "outlined" : "text"}
+                onClick={() => allLeaguesHandler()}
+              >
+                All
+              </Button>
+            </li>
+            {states.map(st => (
+              <li className={classes.item} key={"select" + st}>
+                <Button
+                  fullWidth
+                  variant={selected == st ? "outlined" : "text"}
+                  onClick={e => byStateHandler(st)}
+                >
+                  {st}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+  };
+
+  return displayStates();
 };
 
-export default StateSelect;
+export default withWidth()(StateSelect);

@@ -16,7 +16,15 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 800,
     margin: "auto",
     gridColumn: 2,
-    display: "flex"
+    display: "flex",
+    [theme.breakpoints.down("xs")]: {
+      gridRow: 2,
+      gridColumn: "1/3",
+      display: "grid",
+      gridTemplateRows: "1fr 1fr 1fr",
+      gridTemplateColumns: "1fr",
+      width: "100%"
+    }
   },
   search: {
     position: "relative",
@@ -29,6 +37,11 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 300,
     [theme.breakpoints.up("sm")]: {
       width: "auto"
+    },
+    [theme.breakpoints.down("xs")]: {
+      gridRow: 1,
+      margin: "auto",
+      width: 275
     }
   },
   searchIcon: {
@@ -53,11 +66,19 @@ const useStyles = makeStyles(theme => ({
   },
   find: {
     margin: "auto 10px",
-    padding: "auto 10px"
+    padding: "auto 10px",
+    [theme.breakpoints.down("xs")]: {
+      width: 275,
+      margin: "5px auto"
+    }
   },
   formControl: {
     margin: "0px 5px",
-    minWidth: 120
+    minWidth: 120,
+    [theme.breakpoints.down("xs")]: {
+      width: 275,
+      margin: "5px auto"
+    }
   }
 }));
 

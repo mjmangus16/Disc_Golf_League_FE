@@ -158,7 +158,7 @@ Home.propTypes = {
   loading: PropTypes.bool.isRequired,
   failed: PropTypes.object.isRequired,
   getAllLeagues: PropTypes.func.isRequired,
-  getLeaguesByName: PropTypes.func.isRequired,
+  getLeaguesByVal: PropTypes.func.isRequired,
   getLeaguesByState: PropTypes.func.isRequired
 };
 
