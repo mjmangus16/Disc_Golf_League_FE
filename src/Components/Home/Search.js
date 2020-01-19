@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import InputBase from "@material-ui/core/InputBase";
-
+import {
+  Select,
+  FormControl,
+  FormHelperText,
+  MenuItem,
+  InputLabel,
+  Button,
+  InputBase
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles(theme => ({
   container: {
     maxWidth: 800,
     margin: "auto",
-    gridColumn: 2
+    gridColumn: 2,
+    display: "flex"
   },
   search: {
     position: "relative",
@@ -42,11 +50,26 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("md")]: {
       width: 200
     }
+  },
+  find: {
+    margin: "auto 10px",
+    padding: "auto 10px"
+  },
+  formControl: {
+    margin: "0px 5px",
+    minWidth: 120
   }
 }));
 
-const HomeSearch = () => {
+const HomeSearch = ({ searchHandler, selected }) => {
   const classes = useStyles();
+  const [inputText, setInputText] = useState("");
+  const [searchType, setSearchType] = useState("Name");
+
+  const handleSelect = event => {
+    setSearchType(event.target.value);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.search}>
@@ -54,14 +77,40 @@ const HomeSearch = () => {
           <SearchIcon />
         </div>
         <InputBase
-          placeholder="Search…"
+          placeholder={`Search ${selected} Leagues By...`}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput
           }}
           inputProps={{ "aria-label": "search" }}
+          value={inputText}
+          onChange={e => setInputText(e.target.value)}
         />
       </div>
+      <FormControl
+        variant="outlined"
+        className={classes.formControl}
+        size="small"
+      >
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={searchType}
+          onChange={handleSelect}
+        >
+          <MenuItem value={"Name"}>Name</MenuItem>
+          <MenuItem value={"Type"}>Type</MenuItem>
+          <MenuItem value={"Zip"}>Zip Code</MenuItem>
+        </Select>
+      </FormControl>
+      <Button
+        className={classes.find}
+        variant="contained"
+        color="secondary"
+        onClick={() => searchHandler(inputText, searchType)}
+      >
+        Find
+      </Button>
     </div>
   );
 };

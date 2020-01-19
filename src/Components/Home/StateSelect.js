@@ -8,21 +8,40 @@ const useStyles = makeStyles(theme => ({
     overflow: "scroll"
   },
   list: {
-    listStyle: "none"
+    listStyle: "none",
+    padding: 0
+  },
+  item: {
+    margin: "0px 10px"
   }
 }));
 
-const StateSelect = ({ states, allLeaguesHandler, byStateHandler }) => {
+const StateSelect = ({
+  states,
+  selected,
+  allLeaguesHandler,
+  byStateHandler
+}) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
       <ul className={classes.list}>
-        <Button fullWidth onClick={() => allLeaguesHandler()}>
-          All
-        </Button>
+        <li className={classes.item}>
+          <Button
+            fullWidth
+            variant={selected == "All" ? "outlined" : "text"}
+            onClick={() => allLeaguesHandler()}
+          >
+            All
+          </Button>
+        </li>
         {states.map(st => (
           <li className={classes.item}>
-            <Button fullWidth onClick={e => byStateHandler(st)}>
+            <Button
+              fullWidth
+              variant={selected == st ? "outlined" : "text"}
+              onClick={e => byStateHandler(st)}
+            >
               {st}
             </Button>
           </li>

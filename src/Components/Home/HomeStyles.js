@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridContainer: {
     width: "100%",
-    margin: "auto",
+    margin: "0px auto auto",
     gridColumn: 2,
     gridRow: 2,
     maxHeight: "650px",

@@ -3,16 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   getAllLeagues,
-  getLeaguesByState
+  getLeaguesByState,
+  getLeaguesByVal
 } from "../../Redux/actions/leaguesActions";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
-import {
-  Grid,
-  Typography,
-  CircularProgress,
-  InputBase
-} from "@material-ui/core";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import { Grid, Typography, CircularProgress } from "@material-ui/core";
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 
 import Search from "./Search";
 import StateSelect from "./StateSelect";
@@ -86,15 +82,31 @@ const Home = ({
   addBreadcrumb,
   getAllLeagues,
   getLeaguesByState,
+  getLeaguesByVal,
   allLeagues,
   loading,
   failed,
   width
 }) => {
   const classes = useStyles();
+  const [selectedState, setSelectedState] = useState("All");
   useEffect(() => {
     getAllLeagues();
   }, []);
+
+  const selectState = state => {
+    setSelectedState(state);
+    getLeaguesByState(state);
+  };
+
+  const searchByVal = (input, searchType) => {
+    getLeaguesByVal(selectedState, searchType, input);
+  };
+
+  const selectAll = () => {
+    setSelectedState("All");
+    getAllLeagues();
+  };
 
   const displayData = (loading, failed, allLeagues) => {
     if (loading) {
@@ -121,17 +133,15 @@ const Home = ({
 
   return (
     <div className={classes.homeContainer}>
-      {/* <Typography variant="h5" className={classes.pageHeading}>
-        All Available Leagues
-      </Typography> */}
       <div className={classes.stateSelectContainer}>
         <StateSelect
           states={states}
-          allLeaguesHandler={getAllLeagues}
-          byStateHandler={getLeaguesByState}
+          selected={selectedState}
+          allLeaguesHandler={selectAll}
+          byStateHandler={selectState}
         />
       </div>
-      <Search />
+      <Search searchHandler={searchByVal} selected={selectedState} />
       <Grid
         container
         spacing={isWidthDown("sm", width) ? 1 : 4}
@@ -147,7 +157,9 @@ Home.propTypes = {
   allLeagues: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.bool.isRequired,
   failed: PropTypes.object.isRequired,
-  getAllLeagues: PropTypes.func.isRequired
+  getAllLeagues: PropTypes.func.isRequired,
+  getLeaguesByName: PropTypes.func.isRequired,
+  getLeaguesByState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -160,5 +172,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getAllLeagues,
   getLeaguesByState,
+  getLeaguesByVal,
   addBreadcrumb
 })(withWidth()(Home));
