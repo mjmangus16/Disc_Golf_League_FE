@@ -41,7 +41,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("xs")]: {
       gridRow: 1,
       margin: "auto",
-      width: 275
+      width: "95%",
+      maxWidth: 400
     }
   },
   searchIcon: {
@@ -62,13 +63,16 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: 200
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: 300
     }
   },
   find: {
     margin: "auto 10px",
     padding: "auto 10px",
     [theme.breakpoints.down("xs")]: {
-      width: 275,
+      width: "95%",
       margin: "5px auto"
     }
   },
@@ -76,7 +80,7 @@ const useStyles = makeStyles(theme => ({
     margin: "0px 5px",
     minWidth: 120,
     [theme.breakpoints.down("xs")]: {
-      width: 275,
+      width: "95%",
       margin: "5px auto"
     }
   }

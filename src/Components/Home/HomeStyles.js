@@ -33,7 +33,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("xs")]: {
       width: "100%",
       gridColumn: "1/3",
-      gridRow: 3
+      gridRow: 3,
+      marginTop: 25
     }
   },
   pageHeading: {
