@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
       gridRow: 2,
       gridColumn: "1/3",
       display: "grid",
-      gridTemplateRows: "1fr 1fr 1fr",
+      gridTemplateRows: "1fr 1fr 1fr 1fr",
       gridTemplateColumns: "1fr",
       width: "100%"
     }
@@ -86,13 +86,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const HomeSearch = ({ searchHandler, selected }) => {
+const HomeSearch = ({ searchHandler, selected, clear }) => {
   const classes = useStyles();
   const [inputText, setInputText] = useState("");
   const [searchType, setSearchType] = useState("Name");
 
   const handleSelect = event => {
     setSearchType(event.target.value);
+  };
+
+  const handleClear = () => {
+    setInputText("");
+    clear();
   };
 
   return (
@@ -102,7 +107,7 @@ const HomeSearch = ({ searchHandler, selected }) => {
           <SearchIcon />
         </div>
         <InputBase
-          placeholder={`Search ${selected} Leagues By...`}
+          placeholder={`Search By...`}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput
@@ -135,6 +140,14 @@ const HomeSearch = ({ searchHandler, selected }) => {
         onClick={() => searchHandler(inputText, searchType)}
       >
         Find
+      </Button>
+      <Button
+        className={classes.find}
+        variant="contained"
+        color="secondary"
+        onClick={handleClear}
+      >
+        Clear
       </Button>
     </div>
   );
