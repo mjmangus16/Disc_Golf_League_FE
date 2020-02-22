@@ -30,7 +30,14 @@ const StateSelect = ({
 
   const displayStates = () => {
     if (isWidthDown("xs", width)) {
-      return <MobileStateSelect />;
+      return (
+        <MobileStateSelect
+          states={states}
+          selected={selected}
+          allLeaguesHandler={allLeaguesHandler}
+          byStateHandler={byStateHandler}
+        />
+      );
     } else {
       return (
         <div className={classes.container}>

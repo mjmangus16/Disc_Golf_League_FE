@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 1200,
     [theme.breakpoints.down("xs")]: {
       gridTemplateColumns: "1fr",
-      gridTemplateRows: "50px 150px auto"
+      gridTemplateRows: "50px 175px auto"
     }
   },
   stateSelectContainer: {
@@ -33,7 +33,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("xs")]: {
       width: "100%",
       gridColumn: "1/3",
-      gridRow: 3
+      gridRow: 3,
+      marginTop: 25,
+      overflow: "none",
+      maxHeight: "none"
     }
   },
   pageHeading: {

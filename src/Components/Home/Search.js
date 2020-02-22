@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
       gridRow: 2,
       gridColumn: "1/3",
       display: "grid",
-      gridTemplateRows: "1fr 1fr 1fr",
+      gridTemplateRows: "1fr 1fr 1fr 1fr",
       gridTemplateColumns: "1fr",
       width: "100%"
     }
@@ -41,7 +41,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("xs")]: {
       gridRow: 1,
       margin: "auto",
-      width: 275
+      width: "95%",
+      maxWidth: 400
     }
   },
   searchIcon: {
@@ -62,13 +63,16 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: 200
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: 300
     }
   },
   find: {
     margin: "auto 10px",
     padding: "auto 10px",
     [theme.breakpoints.down("xs")]: {
-      width: 275,
+      width: "95%",
       margin: "5px auto"
     }
   },
@@ -76,19 +80,24 @@ const useStyles = makeStyles(theme => ({
     margin: "0px 5px",
     minWidth: 120,
     [theme.breakpoints.down("xs")]: {
-      width: 275,
+      width: "95%",
       margin: "5px auto"
     }
   }
 }));
 
-const HomeSearch = ({ searchHandler, selected }) => {
+const HomeSearch = ({ searchHandler, selected, clear }) => {
   const classes = useStyles();
   const [inputText, setInputText] = useState("");
   const [searchType, setSearchType] = useState("Name");
 
   const handleSelect = event => {
     setSearchType(event.target.value);
+  };
+
+  const handleClear = () => {
+    setInputText("");
+    clear();
   };
 
   return (
@@ -98,7 +107,7 @@ const HomeSearch = ({ searchHandler, selected }) => {
           <SearchIcon />
         </div>
         <InputBase
-          placeholder={`Search ${selected} Leagues By...`}
+          placeholder={`Search By...`}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput
@@ -131,6 +140,14 @@ const HomeSearch = ({ searchHandler, selected }) => {
         onClick={() => searchHandler(inputText, searchType)}
       >
         Find
+      </Button>
+      <Button
+        className={classes.find}
+        variant="contained"
+        color="secondary"
+        onClick={handleClear}
+      >
+        Clear
       </Button>
     </div>
   );

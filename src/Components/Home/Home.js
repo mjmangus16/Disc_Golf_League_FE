@@ -141,7 +141,11 @@ const Home = ({
           byStateHandler={selectState}
         />
       </div>
-      <Search searchHandler={searchByVal} selected={selectedState} />
+      <Search
+        searchHandler={searchByVal}
+        selected={selectedState}
+        clear={selectAll}
+      />
       <Grid
         container
         spacing={isWidthDown("sm", width) ? 1 : 4}

@@ -7,16 +7,19 @@ const useStyles = makeStyles(theme => ({
     margin: "auto",
     minWidth: 120,
     [theme.breakpoints.down("xs")]: {
-      width: 275,
+      width: "95%",
       margin: "5px auto"
     }
   }
 }));
 
-const MobileSelector = () => {
+const MobileSelector = ({
+  states,
+  selected,
+  allLeaguesHandler,
+  byStateHandler
+}) => {
   const classes = useStyles();
-  const [age, setAge] = useState("");
-
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
   useEffect(() => {
@@ -24,7 +27,11 @@ const MobileSelector = () => {
   }, []);
 
   const handleChange = event => {
-    setAge(event.target.value);
+    if (event.target.value === "All") {
+      allLeaguesHandler();
+    } else {
+      byStateHandler(event.target.value);
+    }
   };
 
   return (
@@ -39,16 +46,16 @@ const MobileSelector = () => {
       <Select
         labelId="demo-simple-select-filled-label"
         id="demo-simple-select-filled"
-        value={"none"}
+        value={selected}
         onChange={handleChange}
         labelWidth={labelWidth}
       >
-        <MenuItem value="">
-          <em>None</em>
+        <MenuItem value="All" onClick={() => allLeaguesHandler()}>
+          All States
         </MenuItem>
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {states.map(st => (
+          <MenuItem value={st}>{st}</MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
