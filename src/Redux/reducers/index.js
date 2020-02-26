@@ -6,6 +6,7 @@ import leaguesReducer from "./leaguesReducer";
 import scheduleReducer from "./scheduleReducer";
 import membersReducer from "./membersReducer";
 import roundsReducer from "./roundsReducer";
+import standingsReducer from "./standingsReducer";
 
 export default combineReducers({
   breadcrumbs: breadcrumbsReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   leagues: leaguesReducer,
   schedule: scheduleReducer,
   members: membersReducer,
-  rounds: roundsReducer
+  rounds: roundsReducer,
+  standings: standingsReducer
 });

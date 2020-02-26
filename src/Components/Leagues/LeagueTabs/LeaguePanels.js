@@ -4,6 +4,7 @@ import { Typography, Box } from "@material-ui/core";
 import SchedulePanel from "../LeagueSchedule/SchedulePanel";
 import MembersPanel from "../LeagueMembers/MembersPanel";
 import RoundsPanel from "../LeagueRounds/RoundsPanel";
+import StandingsPanel from "../LeagueStandings/StandingsPanel";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -33,6 +34,9 @@ const LeaguePanels = ({ tabValue, history, user_id, owner_id }) => {
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <RoundsPanel history={history} />
+      </TabPanel>
+      <TabPanel value={tabValue} index={3}>
+        <StandingsPanel history={history} />
       </TabPanel>
     </div>
   );
