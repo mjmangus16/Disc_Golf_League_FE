@@ -34,6 +34,7 @@ const LeagueTabs = ({ handleChange, value }) => {
         <Tab label="Schedule" {...a11yProps(0)} className={classes.tab} />
         <Tab label="Members" {...a11yProps(1)} className={classes.tab} />
         <Tab label="Rounds" {...a11yProps(1)} className={classes.tab} />
+        <Tab label="Standings" {...a11yProps(1)} className={classes.tab} />
       </Tabs>
     </div>
   );
