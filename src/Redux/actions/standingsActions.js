@@ -6,7 +6,12 @@ import {
   GET_STANDINGS_FORMATS_LOADING,
   GET_STANDINGS_FORMATS_SUCCESS,
   GET_STANDINGS_FORMATS_FAILED,
-  CLEAR_STANDINGS_RESULTS
+  GET_STANDINGS_FORMAT_BY_LEAGUE_ID_LOADING,
+  GET_STANDINGS_FORMAT_BY_LEAGUE_ID_SUCCESS,
+  GET_STANDINGS_FORMAT_BY_LEAGUE_ID_FAILED,
+  CLEAR_STANDINGS_RESULTS,
+  CLEAR_STANDINGS_FORMATS,
+  CLEAR_STANDINGS_LEAGUE_FORMAT
 } from "../types";
 
 export const getStandingsFormats = () => dispatch => {
@@ -25,6 +30,27 @@ export const getStandingsFormats = () => dispatch => {
       console.log(err);
       dispatch({
         type: GET_STANDINGS_FORMATS_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const getStandingsFormatByLeagueId = league_id => dispatch => {
+  dispatch({
+    type: GET_STANDINGS_FORMAT_BY_LEAGUE_ID_LOADING
+  });
+  axiosWithAuth()
+    .get(`api/standings/league/${league_id}`)
+    .then(res => {
+      dispatch({
+        type: GET_STANDINGS_FORMAT_BY_LEAGUE_ID_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_STANDINGS_FORMAT_BY_LEAGUE_ID_FAILED,
         payload: err.response.data
       });
     });
@@ -51,4 +77,10 @@ export const getStandingsResults = league_id => dispatch => {
 
 export const clearStandingsResults = () => dispatch => {
   dispatch({ type: CLEAR_STANDINGS_RESULTS });
+};
+export const clearStandingsFormats = () => dispatch => {
+  dispatch({ type: CLEAR_STANDINGS_FORMATS });
+};
+export const clearStandingsLeagueFormat = () => dispatch => {
+  dispatch({ type: CLEAR_STANDINGS_LEAGUE_FORMAT });
 };

@@ -22,7 +22,10 @@ import {
 import {
   getStandingsResults,
   getStandingsFormats,
-  clearStandingsResults
+  getStandingsFormatByLeagueId,
+  clearStandingsResults,
+  clearStandingsFormats,
+  clearStandingsLeagueFormat
 } from "../../Redux/actions/standingsActions";
 import { CircularProgress } from "@material-ui/core";
 
@@ -47,7 +50,10 @@ const League = ({
   clearMembersData,
   getStandingsResults,
   getStandingsFormats,
+  getStandingsFormatByLeagueId,
   clearStandingsResults,
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
   admin,
   user_id
 }) => {
@@ -62,6 +68,7 @@ const League = ({
     getMembersByLeagueId(league_id);
     getStandingsResults(league_id);
     getStandingsFormats();
+    getStandingsFormatByLeagueId(league_id);
 
     return () => {
       clearScheduleData();
@@ -69,6 +76,8 @@ const League = ({
       clearMembersData();
       clearRoundsData();
       clearStandingsResults();
+      clearStandingsFormats();
+      clearStandingsLeagueFormat();
     };
   }, []);
 
@@ -112,6 +121,12 @@ League.propTypes = {
   clearScheduleData: PropTypes.func.isRequired,
   getMembersByLeagueId: PropTypes.func.isRequired,
   clearMembersData: PropTypes.func.isRequired,
+  getStandingsResults: PropTypes.func.isRequired,
+  clearStandingsResults: PropTypes.func.isRequired,
+  getStandingsFormats: PropTypes.func.isRequired,
+  clearStandingsFormats: PropTypes.func.isRequired,
+  getStandingsFormatByLeagueId: PropTypes.func.isRequired,
+  clearStandingsLeagueFormat: PropTypes.func.isRequired,
   editLeague: PropTypes.func.isRequired,
   user_id: PropTypes.number,
   owner_id: PropTypes.number
@@ -140,6 +155,9 @@ export default connect(mapStateToProps, {
   clearMembersData,
   getStandingsResults,
   getStandingsFormats,
+  getStandingsFormatByLeagueId,
   clearStandingsResults,
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
   editLeague
 })(League);
