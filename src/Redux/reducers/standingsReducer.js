@@ -1,7 +1,8 @@
 import {
   GET_STANDINGS_BY_LEAGUE_ID_LOADING,
   GET_STANDINGS_BY_LEAGUE_ID_SUCCESS,
-  GET_STANDINGS_BY_LEAGUE_ID_FAILED
+  GET_STANDINGS_BY_LEAGUE_ID_FAILED,
+  CLEAR_STANDINGS_RESULTS
 } from "../types";
 
 const initialState = {
@@ -30,6 +31,13 @@ export default (state = initialState, action) => {
         ...state,
         getStandingsLoading: false,
         getStandingsFailed: action.payload,
+        standings: []
+      };
+    case CLEAR_STANDINGS_RESULTS:
+      return {
+        ...state,
+        getStandingsLoading: false,
+        getStandingsFailed: {},
         standings: []
       };
     default:
