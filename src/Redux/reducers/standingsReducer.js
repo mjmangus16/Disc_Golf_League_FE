@@ -11,6 +11,12 @@ import {
   CONNECT_FORMAT_TO_LEAGUE_LOADING,
   CONNECT_FORMAT_TO_LEAGUE_SUCCESS,
   CONNECT_FORMAT_TO_LEAGUE_FAILED,
+  UPDATE_LEAGUE_FORMAT_LOADING,
+  UPDATE_LEAGUE_FORMAT_SUCCESS,
+  UPDATE_LEAGUE_FORMAT_FAILED,
+  DELETE_LEAGUE_FORMAT_LOADING,
+  DELETE_LEAGUE_FORMAT_SUCCESS,
+  DELETE_LEAGUE_FORMAT_FAILED,
   CLEAR_STANDINGS_RESULTS,
   CLEAR_STANDINGS_FORMATS,
   CLEAR_STANDINGS_LEAGUE_FORMAT
@@ -27,7 +33,9 @@ const initialState = {
   getLeagueFormatLoading: false,
   getLeagueFormatFailed: {},
   connectFormatLoading: false,
-  connectFormatFailed: {}
+  connectFormatFailed: {},
+  updateFormatLoading: false,
+  updateFormatFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -113,6 +121,45 @@ export default (state = initialState, action) => {
         connectFormatLoading: true,
         connectFormatFailed: {},
         leagueFormat: action.payload
+      };
+    case UPDATE_LEAGUE_FORMAT_LOADING:
+      return {
+        ...state,
+        updateFormatLoading: true,
+        updateFormatFailed: {}
+      };
+    case UPDATE_LEAGUE_FORMAT_SUCCESS:
+      return {
+        ...state,
+        updateFormatLoading: false,
+        updateFormatFailed: {},
+        leagueFormat: action.payload
+      };
+    case UPDATE_LEAGUE_FORMAT_FAILED:
+      return {
+        ...state,
+        updateFormatLoading: false,
+        leagueFormat: {},
+        updateFormatFailed: action.payload
+      };
+    case DELETE_LEAGUE_FORMAT_LOADING:
+      return {
+        ...state,
+        deleteFormatLoading: true,
+        deleteFormatFailed: {}
+      };
+    case DELETE_LEAGUE_FORMAT_SUCCESS:
+      return {
+        ...state,
+        deleteFormatLoading: false,
+        leagueFormat: action.payload,
+        deleteFormatFailed: {}
+      };
+    case DELETE_LEAGUE_FORMAT_FAILED:
+      return {
+        ...state,
+        deleteFormatLoading: false,
+        deleteFormatFailed: action.payload
       };
     case CLEAR_STANDINGS_RESULTS:
       return {
