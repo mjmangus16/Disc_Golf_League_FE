@@ -93,7 +93,7 @@ export const connectFormatToLeague = (
     type: CONNECT_FORMAT_TO_LEAGUE_LOADING
   });
   axiosWithAuth()
-    .post(`/league/${league_id}/add/format/${standings_format_id}`)
+    .post(`api/standings/league/${league_id}/add/format/${standings_format_id}`)
     .then(res => {
       dispatch({
         type: CONNECT_FORMAT_TO_LEAGUE_SUCCESS,
@@ -104,6 +104,53 @@ export const connectFormatToLeague = (
       console.log(err);
       dispatch({
         type: CONNECT_FORMAT_TO_LEAGUE_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const updateLeagueFormat = (
+  league_id,
+  standings_format_id
+) => dispatch => {
+  dispatch({
+    type: UPDATE_LEAGUE_FORMAT_LOADING
+  });
+  axiosWithAuth()
+    .put(
+      `api/standings/league/${league_id}/update/format/${standings_format_id}`
+    )
+    .then(res => {
+      dispatch({
+        type: UPDATE_LEAGUE_FORMAT_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: UPDATE_LEAGUE_FORMAT_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const deleteLeagueFormat = league_id => dispatch => {
+  dispatch({
+    type: DELETE_LEAGUE_FORMAT_LOADING
+  });
+  axiosWithAuth()
+    .delete(`api/standings/league/${league_id}/delete`)
+    .then(res => {
+      dispatch({
+        type: DELETE_LEAGUE_FORMAT_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: DELETE_LEAGUE_FORMAT_FAILED,
         payload: err.response.data
       });
     });
