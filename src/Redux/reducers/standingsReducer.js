@@ -8,6 +8,9 @@ import {
   GET_STANDINGS_FORMAT_BY_LEAGUE_ID_LOADING,
   GET_STANDINGS_FORMAT_BY_LEAGUE_ID_SUCCESS,
   GET_STANDINGS_FORMAT_BY_LEAGUE_ID_FAILED,
+  CONNECT_FORMAT_TO_LEAGUE_LOADING,
+  CONNECT_FORMAT_TO_LEAGUE_SUCCESS,
+  CONNECT_FORMAT_TO_LEAGUE_FAILED,
   CLEAR_STANDINGS_RESULTS,
   CLEAR_STANDINGS_FORMATS,
   CLEAR_STANDINGS_LEAGUE_FORMAT
@@ -22,7 +25,9 @@ const initialState = {
   getFormatsFailed: {},
   leagueFormat: {},
   getLeagueFormatLoading: false,
-  getLeagueFormatFailed: {}
+  getLeagueFormatFailed: {},
+  connectFormatLoading: false,
+  connectFormatFailed: {}
 };
 
 export default (state = initialState, action) => {
@@ -89,6 +94,26 @@ export default (state = initialState, action) => {
         leagueFormat: {}
       };
     }
+    case CONNECT_FORMAT_TO_LEAGUE_LOADING:
+      return {
+        ...state,
+        connectFormatLoading: true,
+        connectFormatFailed: {}
+      };
+    case CONNECT_FORMAT_TO_LEAGUE_SUCCESS:
+      return {
+        ...state,
+        connectFormatLoading: true,
+        connectFormatFailed: {},
+        leagueFormat: action.payload
+      };
+    case CONNECT_FORMAT_TO_LEAGUE_FAILED:
+      return {
+        ...state,
+        connectFormatLoading: true,
+        connectFormatFailed: {},
+        leagueFormat: action.payload
+      };
     case CLEAR_STANDINGS_RESULTS:
       return {
         ...state,

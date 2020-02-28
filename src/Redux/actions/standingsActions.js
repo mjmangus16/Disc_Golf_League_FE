@@ -9,6 +9,9 @@ import {
   GET_STANDINGS_FORMAT_BY_LEAGUE_ID_LOADING,
   GET_STANDINGS_FORMAT_BY_LEAGUE_ID_SUCCESS,
   GET_STANDINGS_FORMAT_BY_LEAGUE_ID_FAILED,
+  CONNECT_FORMAT_TO_LEAGUE_LOADING,
+  CONNECT_FORMAT_TO_LEAGUE_SUCCESS,
+  CONNECT_FORMAT_TO_LEAGUE_FAILED,
   CLEAR_STANDINGS_RESULTS,
   CLEAR_STANDINGS_FORMATS,
   CLEAR_STANDINGS_LEAGUE_FORMAT
@@ -70,6 +73,31 @@ export const getStandingsResults = league_id => dispatch => {
       console.log(err);
       dispatch({
         type: GET_STANDINGS_BY_LEAGUE_ID_FAILED,
+        payload: err.response.data
+      });
+    });
+};
+
+export const connectFormatToLeague = (
+  league_id,
+  standings_format_id,
+  data
+) => dispatch => {
+  dispatch({
+    type: CONNECT_FORMAT_TO_LEAGUE_LOADING
+  });
+  axiosWithAuth()
+    .post(`/league/${league_id}/add/format/${standings_format_id}`)
+    .then(res => {
+      dispatch({
+        type: CONNECT_FORMAT_TO_LEAGUE_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: CONNECT_FORMAT_TO_LEAGUE_FAILED,
         payload: err.response.data
       });
     });

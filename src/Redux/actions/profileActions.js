@@ -34,7 +34,6 @@ export const updateProfile = (id, changes, closeModal) => dispatch => {
   dispatch({
     type: UPDATE_PROFILE_LOADING
   });
-  console.log(changes);
   axiosWithAuth()
     .put(`/api/users/update/${id}`, changes)
     .then(res => {

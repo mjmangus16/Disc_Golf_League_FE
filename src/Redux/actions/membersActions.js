@@ -50,8 +50,6 @@ export const getMemberByMemberId = (league_id, member_id) => async dispatch => {
     const rounds = await axiosWithAuth().get(
       `api/participants/league/${league_id}/member/${member_id}`
     );
-
-    console.log(member);
     dispatch({
       type: GET_MEMBER_BY_MEMBER_ID_SUCCESS,
       member: member.data,
