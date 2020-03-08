@@ -21,12 +21,31 @@ import useStyles from "../LeagueStyles";
 const StandingsView = ({ rounds, standings }) => {
   const classes = useStyles();
 
+  const handlePointsPerRound = parts => {
+    const round_ids = rounds.map(r => r.round_id);
+
+    return round_ids.map(r => {
+      console.log(r);
+      let played = parts.filter(p => {
+        console.log(p);
+        if (r === p.rounds_id) {
+          return p.points;
+        } else {
+          return 0;
+        }
+      });
+      return <TableCell>{played}</TableCell>;
+    });
+  };
+
   return (
     <div>
       <TableContainer
         style={{
-          maxWidth: 550,
-          margin: "25px auto"
+          maxWidth: 750,
+          margin: "25px auto",
+          overFlow: "hidden",
+          scroll: "auto"
         }}
       >
         <Table className={classes.table} aria-label="simple table">
@@ -62,6 +81,7 @@ const StandingsView = ({ rounds, standings }) => {
                       {st[0]}
                     </TableCell>
                     <TableCell align="center">{total}</TableCell>
+                    {handlePointsPerRound(st[1])}
                     <TableCell align="center">
                       {Math.round(total / st[1].length)}
                     </TableCell>

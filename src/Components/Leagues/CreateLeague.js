@@ -150,7 +150,7 @@ const CreateLeague = ({
         to the league.
       </Typography>
       <div className={classes.headerContainer}>
-        <Grid container spacing={1}>
+        <Grid container justify="center" spacing={1}>
           <Grid item xs={12} sm={8}>
             <TextField
               error={createNewLeagueFailed.name ? true : false}
@@ -247,22 +247,26 @@ const CreateLeague = ({
               onChange={e => handleChange(e)}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              error={createNewLeagueFailed.location ? true : false}
-              helperText={
-                createNewLeagueFailed.location && createNewLeagueFailed.location
-              }
-              label="Location ( Course )"
-              margin="dense"
-              variant="outlined"
-              fullWidth
-              required
-              value={leagueData.location}
-              name="location"
-              onChange={e => handleChange(e)}
-            />
-          </Grid>
+          {!leagueData.type.includes("Travel") && (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error={createNewLeagueFailed.location ? true : false}
+                helperText={
+                  createNewLeagueFailed.location &&
+                  createNewLeagueFailed.location
+                }
+                label="Location ( Course )"
+                margin="dense"
+                variant="outlined"
+                fullWidth
+                required
+                value={leagueData.location}
+                name="location"
+                onChange={e => handleChange(e)}
+              />
+            </Grid>
+          )}
+
           <Grid item xs={12} sm={4}>
             <TextField
               error={createNewLeagueFailed.year ? true : false}
@@ -320,7 +324,7 @@ const CreateLeague = ({
                 createNewLeagueFailed["length"] &&
                 createNewLeagueFailed["length"]
               }
-              label="Season Length"
+              label="Season Length (# of Weeks)"
               margin="dense"
               variant="outlined"
               fullWidth
