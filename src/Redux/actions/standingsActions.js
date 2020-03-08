@@ -70,17 +70,13 @@ export const getStandingsResults = (league_id, members) => dispatch => {
   axiosWithAuth()
     .get(`api/standings/league/${league_id}/results`)
     .then(res => {
-      let adjusted = res.data.map(mem => {
-        for (let i = 0; i < members.length; i++) {
-          if (mem[0].member_id === members[i].member_id) {
-            return [members[i].l_name, members[i].f_name, ...res.data];
-          }
-        }
+      let adjusted = res.data.map(st => {
+        let member = members.filter(mem => mem.member_id === st[0].member_id);
+        return [`${member[0].l_name}, ${member[0].f_name}`, [...st]];
       });
-      console.log(adjusted);
       dispatch({
         type: GET_STANDINGS_BY_LEAGUE_ID_SUCCESS,
-        payload: res.data
+        payload: adjusted
       });
     })
     .catch(err => {
