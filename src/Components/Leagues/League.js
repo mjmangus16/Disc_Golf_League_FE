@@ -74,7 +74,6 @@ const League = ({
       clearScheduleData();
       clearLeagueData();
       clearMembersData();
-      clearRoundsData();
       clearStandingsFormats();
       clearStandingsLeagueFormat();
     };
@@ -84,10 +83,6 @@ const League = ({
     if (members.length > 0) {
       const league_id = match.params.league_id;
       getStandingsResults(league_id, members);
-
-      return () => {
-        clearStandingsResults();
-      };
     }
   }, [members]);
 

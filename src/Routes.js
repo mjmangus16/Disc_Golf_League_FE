@@ -13,6 +13,7 @@ import UpdateSchedule from "./Components/Leagues/LeagueSchedule/UpdateSchedule";
 import CreateRound from "./Components/Leagues/LeagueRounds/CreateRound";
 import ViewRound from "./Components/Leagues/LeagueRounds/ViewRound";
 import LeagueMember from "./Components/Leagues/LeagueMembers/LeagueMember";
+import StandingsView from "./Components/Leagues/LeagueStandings/StandingsView";
 
 export default () => {
   return (
@@ -48,6 +49,11 @@ export default () => {
         exact
         path="/league/:league_id/member/:member_id"
         component={LeagueMember}
+      />
+      <ProtectedRoute
+        exact
+        path="/league/:league_id/viewStandings"
+        component={StandingsView}
       />
       <AdminProtectedRoute
         exact

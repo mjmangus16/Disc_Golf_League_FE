@@ -51,7 +51,7 @@ const StandingsPanel = ({
             variant="contained"
             color="secondary"
             size="small"
-            onClick={() => history.push(`/league/${league_id}/setStandings`)}
+            onClick={() => history.push(`/league/${league_id}/viewStandings`)}
             style={{
               margin: "0px auto 0px 0px"
             }}
