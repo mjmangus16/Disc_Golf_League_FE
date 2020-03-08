@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import TableContainer from "@material-ui/core/TableContainer";
 import {
   Typography,
-  Grid,
+  TableContainer,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Paper,
   CircularProgress,
   Button
 } from "@material-ui/core";
 import moment from "moment";
-import { Link } from "react-router-dom";
-import { green } from "@material-ui/core/colors";
-import useStyles from "../LeagueStyles";
 
-import RoundCard from "./RoundCard";
+import useStyles from "../LeagueStyles";
 
 const RoundsPanel = ({
   league_id,

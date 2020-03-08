@@ -55,7 +55,8 @@ const League = ({
   clearStandingsFormats,
   clearStandingsLeagueFormat,
   admin,
-  user_id
+  user_id,
+  members
 }) => {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
@@ -66,7 +67,6 @@ const League = ({
     getRoundsByLeagueId(league_id);
     getScheduleByLeagueId(league_id);
     getMembersByLeagueId(league_id);
-    getStandingsResults(league_id);
     getStandingsFormats();
     getStandingsFormatByLeagueId(league_id);
 
@@ -75,11 +75,21 @@ const League = ({
       clearLeagueData();
       clearMembersData();
       clearRoundsData();
-      clearStandingsResults();
       clearStandingsFormats();
       clearStandingsLeagueFormat();
     };
   }, []);
+
+  useEffect(() => {
+    if (members.length > 0) {
+      const league_id = match.params.league_id;
+      getStandingsResults(league_id, members);
+
+      return () => {
+        clearStandingsResults();
+      };
+    }
+  }, [members]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -141,7 +151,8 @@ const mapStateToProps = state => ({
   editLeagueLoading: state.leagues.editLeagueLoading,
   admin: state.auth.admin,
   user_id: state.auth.user_id,
-  owner_id: state.leagues.selectedLeague.owner_id
+  owner_id: state.leagues.selectedLeague.owner_id,
+  members: state.members.members
 });
 
 export default connect(mapStateToProps, {

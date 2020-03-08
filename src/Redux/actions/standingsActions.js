@@ -65,11 +65,19 @@ export const getStandingsFormatByLeagueId = league_id => dispatch => {
     });
 };
 
-export const getStandingsResults = league_id => dispatch => {
+export const getStandingsResults = (league_id, members) => dispatch => {
   dispatch({ type: GET_STANDINGS_BY_LEAGUE_ID_LOADING });
   axiosWithAuth()
     .get(`api/standings/league/${league_id}/results`)
     .then(res => {
+      let adjusted = res.data.map(mem => {
+        for (let i = 0; i < members.length; i++) {
+          if (mem[0].member_id === members[i].member_id) {
+            return [members[i].l_name, members[i].f_name, ...res.data];
+          }
+        }
+      });
+      console.log(adjusted);
       dispatch({
         type: GET_STANDINGS_BY_LEAGUE_ID_SUCCESS,
         payload: res.data

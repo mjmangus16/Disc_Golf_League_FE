@@ -1,7 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Typography, Button } from "@material-ui/core";
+import {
+  Typography,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  CircularProgress,
+  Button
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({}));
@@ -14,7 +25,7 @@ const StandingsPanel = ({ league_id, history, admin, user_id, owner_id }) => {
           variant="contained"
           color="secondary"
           size="small"
-          //   onClick={() => history.push(`/league/${league_id}/updateSchedule`)}
+          onClick={() => history.push(`/league/${league_id}/setStandings`)}
           style={{
             margin: "0px auto 0px 0px"
           }}
