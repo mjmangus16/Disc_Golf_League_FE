@@ -14,6 +14,7 @@ import CreateRound from "./Components/Leagues/LeagueRounds/CreateRound";
 import ViewRound from "./Components/Leagues/LeagueRounds/ViewRound";
 import LeagueMember from "./Components/Leagues/LeagueMembers/LeagueMember";
 import StandingsView from "./Components/Leagues/LeagueStandings/StandingsView";
+import SetStandings from "./Components/Leagues/LeagueStandings/SetStandings";
 
 export default () => {
   return (
@@ -74,6 +75,11 @@ export default () => {
         exact
         path="/league/:league_id/createRound"
         component={CreateRound}
+      />
+      <AdminProtectedRoute
+        exact
+        path="/league/:league_id/setStandings"
+        component={SetStandings}
       />
     </>
   );
