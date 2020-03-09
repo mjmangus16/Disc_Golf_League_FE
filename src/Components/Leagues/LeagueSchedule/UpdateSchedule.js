@@ -47,11 +47,7 @@ const UpdateSchedule = ({
         <WeekItem
           data={{
             date: moment(new Date()).format("YYYYMMDD"),
-            all: "",
-            rec: "",
-            int: "",
-            adv: "",
-            open: ""
+            info: ""
           }}
           key={`thisIsTheAddedWeekItem`}
           i={container.length}
@@ -103,7 +99,11 @@ const UpdateSchedule = ({
             You must submit the blank week before you can add another one.
           </Typography>
         )}
-        <Grid container style={{ width: "90%", margin: "auto" }}>
+        <Grid
+          container
+          justify="center"
+          style={{ width: "90%", margin: "auto" }}
+        >
           {sched ? sched : <WeekItem />}
         </Grid>
       </div>

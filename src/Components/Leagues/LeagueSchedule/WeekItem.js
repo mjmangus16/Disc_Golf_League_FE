@@ -25,11 +25,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
   const [missing, setMissing] = useState();
   const [week, setWeek] = useState({
     date: moment(new Date()).format("YYYYMMDD"),
-    all: "",
-    rec: "",
-    int: "",
-    adv: "",
-    open: ""
+    info: ""
   });
 
   useEffect(() => {
@@ -46,13 +42,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
 
   const submitWeek = () => {
     if (week.date !== "") {
-      if (
-        week.all !== "" ||
-        week.rec !== "" ||
-        week.int !== "" ||
-        week.adv !== "" ||
-        week.open !== ""
-      ) {
+      if (week.info !== "") {
         setMissing(false);
         submit(week);
       } else {
@@ -65,13 +55,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
 
   const updateWeek = () => {
     if (week.date !== "") {
-      if (
-        week.all !== "" ||
-        week.rec !== "" ||
-        week.int !== "" ||
-        week.adv !== "" ||
-        week.open !== ""
-      ) {
+      if (week.info !== "") {
         setMissing(false);
         setTrigger(false);
         update(week);
@@ -84,7 +68,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
   };
 
   return (
-    <Grid item>
+    <Grid item style={{ width: "100%" }}>
       <Grid
         container
         alignItems="center"
@@ -117,7 +101,7 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             </Typography>
           )}
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} style={{ textAlign: "left" }}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
               disabled={!trigger && !blank}
@@ -135,18 +119,21 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={12}>
           <TextField
             disabled={!trigger && !blank}
-            label="all"
+            label="Info"
             margin="dense"
             variant="outlined"
-            value={week.all}
-            name="all"
+            value={week.info}
+            name="info"
             onChange={e => handleChange(e)}
+            fullWidth
+            multiline
+            rows={4}
           />
         </Grid>
-        <Grid item xs={6} sm={4}>
+        {/* <Grid item xs={6} sm={4}>
           <TextField
             disabled={!trigger && !blank}
             label="recreational"
@@ -189,8 +176,8 @@ const WeekItem = ({ data, i, length, remove, submit, update, blank }) => {
             name="open"
             onChange={e => handleChange(e)}
           />
-        </Grid>
-        <Grid item xs={12} sm={8} style={{ margin: "auto" }}>
+        </Grid> */}
+        <Grid item xs={12} style={{ margin: "auto" }}>
           {blank || trigger ? (
             <Button
               fullWidth
