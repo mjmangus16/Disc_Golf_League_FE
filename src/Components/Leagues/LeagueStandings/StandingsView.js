@@ -22,20 +22,26 @@ const StandingsView = ({ rounds, standings, leagueFormat }) => {
   const classes = useStyles();
 
   const handlePointsPerRound = parts => {
-    const round_ids = rounds.map(r => r.round_id);
+    console.log(rounds);
+    console.log(parts);
+    let displayCells = [];
 
-    return round_ids.map(r => {
-      console.log(r);
-      let played = parts.filter(p => {
-        console.log(p);
-        if (r === p.rounds_id) {
-          return p.points;
-        } else {
-          return 0;
+    for (let i = 0; i < rounds.length; i++) {
+      let match = false;
+      let points = "N/A";
+      for (let j = 0; j < parts.length; j++) {
+        if (rounds[i].round_id === parts[j].round_id) {
+          match = true;
+          points = parts[j].points;
         }
-      });
-      return <TableCell>{played}</TableCell>;
-    });
+      }
+      displayCells.unshift(
+        <TableCell align="center" className={classes.tableTypoH}>
+          {points}
+        </TableCell>
+      );
+    }
+    return displayCells;
   };
 
   return (
@@ -94,7 +100,7 @@ const StandingsView = ({ rounds, standings, leagueFormat }) => {
                     <TableCell align="center">{total}</TableCell>
                     {handlePointsPerRound(st[1])}
                     <TableCell align="center">
-                      {Math.round(total / st[1].length)}
+                      {(total / st[1].length).toFixed(2)}
                     </TableCell>
                   </TableRow>
                 );

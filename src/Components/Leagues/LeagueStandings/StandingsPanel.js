@@ -91,9 +91,7 @@ const StandingsPanel = ({
                     {st[0]}
                   </TableCell>
                   <TableCell align="center">{total}</TableCell>
-                  <TableCell align="center">
-                    {Math.round(total / st[1].length)}
-                  </TableCell>
+                  <TableCell align="center">{total / st[1].length}</TableCell>
                 </TableRow>
               );
             })}
