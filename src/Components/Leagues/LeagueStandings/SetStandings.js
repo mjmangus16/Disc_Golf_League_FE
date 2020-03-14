@@ -5,6 +5,7 @@ import {
   getStandingsFormats,
   getStandingsFormatByLeagueId,
   updateLeagueFormat,
+  connectFormatToLeague,
   clearStandingsFormats,
   clearStandingsLeagueFormat
 } from "../../../Redux/actions/standingsActions";
@@ -46,7 +47,11 @@ const SetStandings = ({
 
   const handleFormatSelection = standings_format_id => {
     setSelectedId(standings_format_id);
-    updateLeagueFormat(1, standings_format_id);
+    if (leagueFormat.standings_format_id) {
+      updateLeagueFormat(league_id, standings_format_id);
+    } else {
+      connectFormatToLeague(league_id, standings_format_id);
+    }
   };
 
   const displayFormats = () => {
@@ -112,6 +117,7 @@ export default connect(mapStateToProps, {
   getStandingsFormats,
   getStandingsFormatByLeagueId,
   updateLeagueFormat,
+  connectFormatToLeague,
   clearStandingsFormats,
   clearStandingsLeagueFormat
 })(SetStandings);
