@@ -27,6 +27,7 @@ const SetStandings = ({
   getStandingsFormats,
   getStandingsFormatByLeagueId,
   updateLeagueFormat,
+  connectFormatToLeague,
   clearStandingsFormats,
   clearStandingsLeagueFormat,
   standingsFormats,
