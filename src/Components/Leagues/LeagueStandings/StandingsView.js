@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -18,7 +18,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import useStyles from "../LeagueStyles";
 
-const StandingsView = ({ rounds, standings }) => {
+const StandingsView = ({ rounds, standings, leagueFormat }) => {
   const classes = useStyles();
 
   const handlePointsPerRound = parts => {
@@ -39,7 +39,18 @@ const StandingsView = ({ rounds, standings }) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: 750,
+        margin: "auto"
+      }}
+    >
+      <Typography variant="h6" gutterbottom style={{ marginBottom: 25 }}>
+        Standings Type Name: {leagueFormat.name}
+      </Typography>
+      <Typography variant="body" gutterbottom>
+        Description: {leagueFormat.description}
+      </Typography>
       <TableContainer
         style={{
           maxWidth: 750,
@@ -102,7 +113,8 @@ StandingsView.propTypes = {
   user_id: PropTypes.number,
   owner_id: PropTypes.number,
   standings: PropTypes.array,
-  rounds: PropTypes.array
+  rounds: PropTypes.array,
+  leagueFormat: PropTypes.array
 };
 
 const mapStateToProps = state => ({
@@ -112,7 +124,8 @@ const mapStateToProps = state => ({
   user_id: state.auth.user_id,
   owner_id: state.leagues.selectedLeague.owner_id,
   standings: state.standings.standings,
-  rounds: state.rounds.rounds
+  rounds: state.rounds.rounds,
+  leagueFormat: state.standings.leagueFormat
 });
 
 export default connect(mapStateToProps, {})(StandingsView);

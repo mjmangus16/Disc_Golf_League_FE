@@ -90,8 +90,7 @@ export const getStandingsResults = (league_id, members) => dispatch => {
 
 export const connectFormatToLeague = (
   league_id,
-  standings_format_id,
-  data
+  standings_format_id
 ) => dispatch => {
   dispatch({
     type: CONNECT_FORMAT_TO_LEAGUE_LOADING
@@ -120,6 +119,7 @@ export const updateLeagueFormat = (
   dispatch({
     type: UPDATE_LEAGUE_FORMAT_LOADING
   });
+  console.log(league_id, standings_format_id);
   axiosWithAuth()
     .put(
       `api/standings/league/${league_id}/update/format/${standings_format_id}`

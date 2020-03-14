@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   getStandingsFormats,
   getStandingsFormatByLeagueId,
+  updateLeagueFormat,
   clearStandingsFormats,
   clearStandingsLeagueFormat
 } from "../../../Redux/actions/standingsActions";
@@ -24,42 +25,42 @@ import {
 const SetStandings = ({
   getStandingsFormats,
   getStandingsFormatByLeagueId,
+  updateLeagueFormat,
   clearStandingsFormats,
   clearStandingsLeagueFormat,
   standingsFormats,
   leagueFormat,
+  league_id,
   match
 }) => {
-  const [formatInfo, setFormatInfo] = useState("TESTING");
   const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     const league_id = match.params.league_id;
     getStandingsFormats();
     getStandingsFormatByLeagueId(league_id);
-    return () => {
-      clearStandingsFormats();
-    };
+    // return () => {
+    //   clearStandingsFormats();
+    // };
   }, []);
 
-  useEffect(() => {
-    const info = standingsFormats.filter(
-      form => form.standings_format_id === selectedId
-    );
-    if (info.length > 0) {
-      setFormatInfo(info[0].description);
-      console.log(info);
-    }
-  }, [selectedId]);
+  const handleFormatSelection = standings_format_id => {
+    setSelectedId(standings_format_id);
+    updateLeagueFormat(1, standings_format_id);
+  };
 
   const displayFormats = () => {
     return standingsFormats.map(form => {
       return (
         <Grid item xs={3}>
           <Button
-            variant="outlined"
+            variant={
+              leagueFormat.standings_format_id === form.standings_format_id
+                ? "contained"
+                : "outlined"
+            }
             fullWidth
-            onClick={() => setSelectedId(form.standings_format_id)}
+            onClick={() => handleFormatSelection(form.standings_format_id)}
           >
             {form.name}
           </Button>
@@ -70,10 +71,16 @@ const SetStandings = ({
 
   return (
     <div style={{ maxWidth: "960px", margin: "auto" }}>
+      <Typography variant="h6" style={{ marginBottom: 25 }}>
+        Set the format for your leagues standings.
+      </Typography>
+      <Typography color="error" style={{ marginBottom: 25 }}>
+        ** There is currently only one format to choose from**{" "}
+      </Typography>
       <Grid container justify="space-evenly">
         {displayFormats()}
       </Grid>
-      <div>{formatInfo}</div>
+      <div style={{ marginTop: 25 }}>{leagueFormat.description}</div>
     </div>
   );
 };
@@ -86,6 +93,7 @@ SetStandings.propTypes = {
   owner_id: PropTypes.number,
   getStandingsFormats: PropTypes.func.isRequired,
   getStandingsFormatByLeagueId: PropTypes.func.isRequired,
+  updateLeagueFormat: PropTypes.func.isRequired,
   clearStandingsFormats: PropTypes.func.isRequired,
   clearStandingsLeagueFormat: PropTypes.func.isRequired
 };
@@ -103,6 +111,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getStandingsFormats,
   getStandingsFormatByLeagueId,
+  updateLeagueFormat,
   clearStandingsFormats,
   clearStandingsLeagueFormat
 })(SetStandings);

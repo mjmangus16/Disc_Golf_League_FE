@@ -72,10 +72,10 @@ const League = ({
 
     return () => {
       clearScheduleData();
-      clearLeagueData();
+      // clearLeagueData();
       clearMembersData();
       clearStandingsFormats();
-      clearStandingsLeagueFormat();
+      // clearStandingsLeagueFormat();
     };
   }, []);
 

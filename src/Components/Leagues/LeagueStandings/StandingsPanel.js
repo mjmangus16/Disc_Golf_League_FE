@@ -27,7 +27,6 @@ const StandingsPanel = ({
   standings
 }) => {
   const classes = useStyles();
-
   return (
     <div>
       <Grid container justify="space-around">
