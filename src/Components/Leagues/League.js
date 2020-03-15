@@ -76,7 +76,8 @@ const League = ({
       clearMembersData();
       clearStandingsFormats();
       clearRoundsData();
-      // clearStandingsLeagueFormat();
+      clearStandingsLeagueFormat();
+      clearStandingsResults();
     };
   }, []);
 

@@ -6,6 +6,12 @@ import {
   clearRoundsData
 } from "../../../Redux/actions/roundsActions";
 import {
+  getStandingsResults,
+  getStandingsFormatByLeagueId,
+  clearStandingsResults,
+  clearStandingsLeagueFormat
+} from "../../../Redux/actions/standingsActions";
+import {
   Grid,
   Typography,
   TableContainer,
@@ -28,19 +34,32 @@ const StandingsView = ({
   leagueFormat,
   clearRoundsData,
   getRoundsByLeagueId,
+  members,
+  getStandingsResults,
+  getStandingsFormatByLeagueId,
+  clearStandingsResults,
+  clearStandingsLeagueFormat,
   match
 }) => {
   const classes = useStyles();
 
   useEffect(() => {
     const league_id = match.params.league_id;
-
     getRoundsByLeagueId(league_id);
+    getStandingsFormatByLeagueId(league_id);
 
     return () => {
       clearRoundsData();
+      clearStandingsLeagueFormat();
     };
   }, []);
+
+  useEffect(() => {
+    if (members.length > 0) {
+      const league_id = match.params.league_id;
+      getStandingsResults(league_id, members);
+    }
+  }, [members]);
 
   const handlePointsPerRound = parts => {
     console.log(rounds);
@@ -152,10 +171,15 @@ const mapStateToProps = state => ({
   owner_id: state.leagues.selectedLeague.owner_id,
   standings: state.standings.standings,
   rounds: state.rounds.rounds,
-  leagueFormat: state.standings.leagueFormat
+  leagueFormat: state.standings.leagueFormat,
+  members: state.members.members
 });
 
 export default connect(mapStateToProps, {
   getRoundsByLeagueId,
-  clearRoundsData
+  clearRoundsData,
+  getStandingsResults,
+  clearStandingsResults,
+  getStandingsFormatByLeagueId,
+  clearStandingsLeagueFormat
 })(StandingsView);
