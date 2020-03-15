@@ -14,7 +14,7 @@ import {
   CircularProgress,
   Button
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import FilterListIcon from "@material-ui/icons/FilterList";
 
 import useStyles from "../LeagueStyles";
 
