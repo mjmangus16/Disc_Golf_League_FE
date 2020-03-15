@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
+  getRoundsByLeagueId,
+  clearRoundsData
+} from "../../../Redux/actions/roundsActions";
+import {
   Grid,
   Typography,
   TableContainer,
@@ -18,8 +22,25 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 
 import useStyles from "../LeagueStyles";
 
-const StandingsView = ({ rounds, standings, leagueFormat }) => {
+const StandingsView = ({
+  rounds,
+  standings,
+  leagueFormat,
+  clearRoundsData,
+  getRoundsByLeagueId,
+  match
+}) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    const league_id = match.params.league_id;
+
+    getRoundsByLeagueId(league_id);
+
+    return () => {
+      clearRoundsData();
+    };
+  }, []);
 
   const handlePointsPerRound = parts => {
     console.log(rounds);
@@ -134,4 +155,7 @@ const mapStateToProps = state => ({
   leagueFormat: state.standings.leagueFormat
 });
 
-export default connect(mapStateToProps, {})(StandingsView);
+export default connect(mapStateToProps, {
+  getRoundsByLeagueId,
+  clearRoundsData
+})(StandingsView);
