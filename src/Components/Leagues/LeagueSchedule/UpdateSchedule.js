@@ -7,7 +7,7 @@ import {
   getScheduleByLeagueId,
   updateWeekInSchedule
 } from "../../../Redux/actions/scheduleActions";
-import { Typography, Grid, Button } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import moment from "moment";
 import WeekItem from "./WeekItem";
 
@@ -24,7 +24,6 @@ const UpdateSchedule = ({
 }) => {
   const classes = useStyles();
   const [sched, setSched] = useState([]);
-  const [addError, setAddError] = useState(false);
 
   useEffect(() => {
     getScheduleByLeagueId(match.params.league_id);
@@ -92,11 +91,6 @@ const UpdateSchedule = ({
         {editLeagueFailed.error && (
           <Typography color="error" style={{ marginTop: 10 }}>
             {editLeagueFailed.error}
-          </Typography>
-        )}
-        {addError && (
-          <Typography>
-            You must submit the blank week before you can add another one.
           </Typography>
         )}
         <Grid

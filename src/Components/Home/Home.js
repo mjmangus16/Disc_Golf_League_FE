@@ -7,6 +7,18 @@ import {
   getLeaguesByVal
 } from "../../Redux/actions/leaguesActions";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
+import { clearLeagueData } from "../../Redux/actions/leaguesActions";
+import { clearScheduleData } from "../../Redux/actions/scheduleActions";
+import {
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
+  clearStandingsResults
+} from "../../Redux/actions/standingsActions";
+import { clearRoundsData } from "../../Redux/actions/roundsActions";
+import {
+  clearMembersData,
+  clearSelectedMemberData
+} from "../../Redux/actions/membersActions";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 
@@ -78,20 +90,34 @@ const states = [
 ];
 
 const Home = ({
-  breadcrumbs,
-  addBreadcrumb,
   getAllLeagues,
   getLeaguesByState,
   getLeaguesByVal,
   allLeagues,
   loading,
   failed,
-  width
+  width,
+  clearLeagueData,
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
+  clearStandingsResults,
+  clearRoundsData,
+  clearScheduleData,
+  clearMembersData,
+  clearSelectedMemberData
 }) => {
   const classes = useStyles();
   const [selectedState, setSelectedState] = useState("All");
   useEffect(() => {
     getAllLeagues();
+    clearScheduleData();
+    clearLeagueData();
+    clearStandingsFormats();
+    clearRoundsData();
+    clearStandingsLeagueFormat();
+    clearStandingsResults();
+    clearMembersData();
+    clearSelectedMemberData();
   }, []);
 
   const selectState = state => {
@@ -177,5 +203,13 @@ export default connect(mapStateToProps, {
   getAllLeagues,
   getLeaguesByState,
   getLeaguesByVal,
-  addBreadcrumb
+  addBreadcrumb,
+  clearLeagueData,
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
+  clearStandingsResults,
+  clearRoundsData,
+  clearScheduleData,
+  clearMembersData,
+  clearSelectedMemberData
 })(withWidth()(Home));

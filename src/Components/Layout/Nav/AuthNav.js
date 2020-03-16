@@ -133,20 +133,22 @@ const AuthNav = ({
             Profile
           </Button>
         </Link>
-        <Link to="/createLeague" className={classes.link}>
-          <Button
-            size="large"
-            className={classes.navLinkDesktop}
-            onClick={() => {
-              addBreadcrumb({
-                name: "Create League",
-                url: "/createleague"
-              });
-            }}
-          >
-            Create League
-          </Button>
-        </Link>
+        {admin && (
+          <Link to="/createLeague" className={classes.link}>
+            <Button
+              size="large"
+              className={classes.navLinkDesktop}
+              onClick={() => {
+                addBreadcrumb({
+                  name: "Create League",
+                  url: "/createleague"
+                });
+              }}
+            >
+              Create League
+            </Button>
+          </Link>
+        )}
 
         <Button
           size="large"

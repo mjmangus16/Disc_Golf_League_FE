@@ -154,12 +154,7 @@ const LeagueMember = ({
                     <TableCell align="center" className={classes.tableTypoH}>
                       Date
                     </TableCell>
-                    <TableCell align="center" className={classes.tableTypoH}>
-                      Type
-                    </TableCell>
-                    <TableCell align="center" className={classes.tableTypoH}>
-                      Location
-                    </TableCell>
+
                     <TableCell align="center" className={classes.tableTypoH}>
                       Score
                     </TableCell>
@@ -171,12 +166,7 @@ const LeagueMember = ({
                       <TableCell align="center" className={classes.tableTypo}>
                         {moment(new Date(round.date)).format("MM/DD/YY")}
                       </TableCell>
-                      <TableCell align="center" className={classes.tableTypo}>
-                        {round.type}
-                      </TableCell>
-                      <TableCell align="center" className={classes.tableTypo}>
-                        {round.location ? round.location : "N/A"}
-                      </TableCell>
+
                       <TableCell align="center" className={classes.tableTypo}>
                         {round.score}
                       </TableCell>

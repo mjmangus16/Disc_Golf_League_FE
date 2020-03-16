@@ -27,35 +27,52 @@ const StandingsPanel = ({
   standings
 }) => {
   const classes = useStyles();
+
+  const displayStandings = () => {
+    return standings.map(st => {
+      let total = 0;
+      st[1].forEach(p => {
+        total += p.points;
+      });
+      return (
+        <TableRow key={st[0]} className={classes.tableRow}>
+          <TableCell component="th" scope="row" className={classes.tableTypo}>
+            {st[0]}
+          </TableCell>
+          <TableCell align="center" className={classes.tableTypo}>
+            {total}
+          </TableCell>
+          <TableCell align="center" className={classes.tableTypo}>
+            {(total / st[1].length).toFixed(2)}
+          </TableCell>
+        </TableRow>
+      );
+    });
+  };
+
   return (
     <div>
       <Grid container justify="space-around">
         {admin && user_id === owner_id && (
-          <Grid item>
+          <Grid item className={classes.standingsPanelButton}>
             <Button
               variant="contained"
               color="secondary"
               size="small"
               onClick={() => history.push(`/league/${league_id}/setStandings`)}
-              style={{
-                margin: "0px auto 0px 0px"
-              }}
             >
               Set Standings Format
             </Button>
           </Grid>
         )}
-        <Grid item>
+        <Grid item className={classes.standingsPanelButton}>
           <Button
             variant="contained"
             color="secondary"
             size="small"
             onClick={() => history.push(`/league/${league_id}/viewStandings`)}
-            style={{
-              margin: "0px auto 0px 0px"
-            }}
           >
-            View Extended Standings
+            Extended Standings
           </Button>
         </Grid>
       </Grid>
@@ -65,7 +82,7 @@ const StandingsPanel = ({
           margin: "25px auto"
         }}
       >
-        <Table className={classes.table} aria-label="simple table">
+        <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="left" className={classes.tableTypoH}>
@@ -79,25 +96,7 @@ const StandingsPanel = ({
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {standings.map(st => {
-              let total = 0;
-              st[1].forEach(p => {
-                total += p.points;
-              });
-              return (
-                <TableRow key={st[0]}>
-                  <TableCell component="th" scope="row">
-                    {st[0]}
-                  </TableCell>
-                  <TableCell align="center">{total}</TableCell>
-                  <TableCell align="center">
-                    {(total / st[1].length).toFixed(2)}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
+          <TableBody>{displayStandings()}</TableBody>
         </Table>
       </TableContainer>
     </div>

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Select, FormControl, MenuItem, InputLabel } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -54,7 +54,9 @@ const MobileSelector = ({
           All States
         </MenuItem>
         {states.map(st => (
-          <MenuItem value={st}>{st}</MenuItem>
+          <MenuItem value={st} key={st}>
+            {st}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     display: "grid",
     gridTemplateColumns: "1fr 3fr",
     gridTemplateRows: "60px auto",
-    margin: "auto auto 15px",
+    margin: "auto",
     maxWidth: 1200,
     [theme.breakpoints.down("xs")]: {
       gridTemplateColumns: "1fr",
@@ -28,14 +28,14 @@ const useStyles = makeStyles(theme => ({
     margin: "0px auto auto",
     gridColumn: 2,
     gridRow: 2,
-    maxHeight: "650px",
-    overflow: "scroll",
+    maxHeight: "75vh",
+    overflowY: "scroll",
     [theme.breakpoints.down("xs")]: {
       width: "100%",
       gridColumn: "1/3",
       gridRow: 3,
       marginTop: 25,
-      overflow: "none",
+      overflowY: "hidden",
       maxHeight: "none"
     }
   },

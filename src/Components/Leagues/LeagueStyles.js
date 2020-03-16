@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
   },
   createLeagueInfo: {
     margin: theme.spacing(3),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.9rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   updateScheduleContainer: {
@@ -35,45 +35,45 @@ const useStyles = makeStyles(theme => ({
     margin: "auto"
   },
   formTextInput: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   formTextInputScore: {
     textAlign: "center",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   formTextLabel: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   formTextInputScore2: {
     textAlign: "center",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.9rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   createRoundName: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.9rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   formTextLabel2: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.9rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   tableTypoH: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   tableTypo: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.65rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   tableRow: {
@@ -84,39 +84,49 @@ const useStyles = makeStyles(theme => ({
     }
   },
   memberNameHeading: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "1.25rem"
     }
   },
   missingData: {
     marginTop: 25,
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   leagueNameHeading: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "1.15rem"
     }
   },
   roundInfo: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   roundMemberName: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   memberSelectItems: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
     }
   },
   memberInputLabel: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem"
+    }
+  },
+  standingsPanelButton: {
+    [theme.breakpoints.down("xs")]: {
+      margin: 5
+    }
+  },
+  standingsPanelTable: {
+    [theme.breakpoints.down("xs")]: {
+      margin: 5
     }
   }
 }));

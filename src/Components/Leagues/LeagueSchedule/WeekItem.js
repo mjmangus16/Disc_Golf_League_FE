@@ -4,7 +4,6 @@ import {
   Grid,
   TextField,
   Button,
-  Paper,
   IconButton
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/DeleteOutlined";

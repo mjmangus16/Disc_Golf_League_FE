@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { logoutUser } from "../../Redux/actions/authActions";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Button
-} from "@material-ui/core";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 import NoAuthNav from "./Nav/NoAuthNav";
 import AuthNav from "./Nav/AuthNav";
@@ -31,7 +23,6 @@ const AppBar_ = ({
   const open = Boolean(anchorEl);
 
   const handleMenu = event => {
-    console.log("working");
     setAnchorEl(event.currentTarget);
   };
 
@@ -102,6 +93,4 @@ const mapStateToProps = state => ({
   admin: state.auth.admin
 });
 
-export default connect(mapStateToProps, { addBreadcrumb, logoutUser })(
-  withWidth()(AppBar_)
-);
+export default connect(mapStateToProps, { addBreadcrumb, logoutUser })(AppBar_);

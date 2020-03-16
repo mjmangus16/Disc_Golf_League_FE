@@ -9,19 +9,9 @@ import {
   clearStandingsFormats,
   clearStandingsLeagueFormat
 } from "../../../Redux/actions/standingsActions";
-import {
-  Grid,
-  Typography,
-  TableContainer,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Paper,
-  CircularProgress,
-  Button
-} from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
+
+import useStyles from "../LeagueStyles";
 
 const SetStandings = ({
   getStandingsFormats,
@@ -35,19 +25,18 @@ const SetStandings = ({
   league_id,
   match
 }) => {
-  const [selectedId, setSelectedId] = useState(null);
-
+  const classes = useStyles();
   useEffect(() => {
     const league_id = match.params.league_id;
     getStandingsFormats();
     getStandingsFormatByLeagueId(league_id);
-    // return () => {
-    //   clearStandingsFormats();
-    // };
+    return () => {
+      clearStandingsFormats();
+      clearStandingsLeagueFormat();
+    };
   }, []);
 
   const handleFormatSelection = standings_format_id => {
-    setSelectedId(standings_format_id);
     if (leagueFormat.standings_format_id) {
       updateLeagueFormat(league_id, standings_format_id);
     } else {
@@ -58,7 +47,7 @@ const SetStandings = ({
   const displayFormats = () => {
     return standingsFormats.map(form => {
       return (
-        <Grid item xs={3}>
+        <Grid item xs={3} key={form.name}>
           <Button
             variant={
               leagueFormat.standings_format_id === form.standings_format_id
@@ -67,6 +56,7 @@ const SetStandings = ({
             }
             fullWidth
             onClick={() => handleFormatSelection(form.standings_format_id)}
+            className={classes.tableTypoH}
           >
             {form.name}
           </Button>
@@ -76,17 +66,27 @@ const SetStandings = ({
   };
 
   return (
-    <div style={{ maxWidth: "960px", margin: "auto" }}>
-      <Typography variant="h6" style={{ marginBottom: 25 }}>
+    <div style={{ maxWidth: "960px", margin: "auto", padding: "0px 15px" }}>
+      <Typography
+        variant="h6"
+        className={classes.tableTypoH}
+        style={{ marginBottom: 25 }}
+      >
         Set the format for your leagues standings.
       </Typography>
-      <Typography color="error" style={{ marginBottom: 25 }}>
+      <Typography
+        color="error"
+        className={classes.tableTypoH}
+        style={{ marginBottom: 25 }}
+      >
         ** There is currently only one format to choose from**{" "}
       </Typography>
       <Grid container justify="space-evenly">
         {displayFormats()}
       </Grid>
-      <div style={{ marginTop: 25 }}>{leagueFormat.description}</div>
+      <div className={classes.tableTypo} style={{ marginTop: 25 }}>
+        {leagueFormat.description}
+      </div>
     </div>
   );
 };

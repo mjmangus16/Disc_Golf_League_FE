@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Typography, Grid, Paper } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import useStyles from "./HomeStyles";
-import Hidden from "@material-ui/core/Hidden";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 
-const LeagueCard = ({ league, width }) => {
+const LeagueCard = ({ league }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
 
@@ -67,13 +65,6 @@ const LeagueCard = ({ league, width }) => {
                 {league.state}
               </Typography>
             </Grid>
-            {/* {!handleSize && (
-              <Grid item xs={3}>
-                <Typography variant="body2" className={classes.columnData}>
-                  {league.zip}
-                </Typography>
-              </Grid>
-            )} */}
           </Grid>
         </Paper>
       </Link>
@@ -81,4 +72,4 @@ const LeagueCard = ({ league, width }) => {
   );
 };
 
-export default withWidth()(LeagueCard);
+export default LeagueCard;

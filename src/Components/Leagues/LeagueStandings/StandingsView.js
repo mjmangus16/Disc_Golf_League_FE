@@ -1,30 +1,21 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  getRoundsByLeagueId,
-  clearRoundsData
-} from "../../../Redux/actions/roundsActions";
+import { getRoundsByLeagueId } from "../../../Redux/actions/roundsActions";
 import {
   getStandingsResults,
-  getStandingsFormatByLeagueId,
-  clearStandingsResults,
-  clearStandingsLeagueFormat
+  getStandingsFormatByLeagueId
 } from "../../../Redux/actions/standingsActions";
+import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import {
-  Grid,
   Typography,
   TableContainer,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
-  Paper,
-  CircularProgress,
-  Button
+  TableRow
 } from "@material-ui/core";
-import FilterListIcon from "@material-ui/icons/FilterList";
 
 import useStyles from "../LeagueStyles";
 
@@ -32,13 +23,11 @@ const StandingsView = ({
   rounds,
   standings,
   leagueFormat,
-  clearRoundsData,
   getRoundsByLeagueId,
   members,
   getStandingsResults,
   getStandingsFormatByLeagueId,
-  clearStandingsResults,
-  clearStandingsLeagueFormat,
+  getMembersByLeagueId,
   match
 }) => {
   const classes = useStyles();
@@ -47,11 +36,7 @@ const StandingsView = ({
     const league_id = match.params.league_id;
     getRoundsByLeagueId(league_id);
     getStandingsFormatByLeagueId(league_id);
-
-    return () => {
-      clearRoundsData();
-      clearStandingsLeagueFormat();
-    };
+    getMembersByLeagueId(league_id);
   }, []);
 
   useEffect(() => {
@@ -62,21 +47,21 @@ const StandingsView = ({
   }, [members]);
 
   const handlePointsPerRound = parts => {
-    console.log(rounds);
-    console.log(parts);
     let displayCells = [];
 
     for (let i = 0; i < rounds.length; i++) {
-      let match = false;
       let points = "N/A";
       for (let j = 0; j < parts.length; j++) {
         if (rounds[i].round_id === parts[j].round_id) {
-          match = true;
           points = parts[j].points;
         }
       }
       displayCells.unshift(
-        <TableCell align="center" className={classes.tableTypoH}>
+        <TableCell
+          align="center"
+          className={classes.tableTypo}
+          key={"round#OfPoints" + points + i}
+        >
           {points}
         </TableCell>
       );
@@ -91,12 +76,25 @@ const StandingsView = ({
         margin: "auto"
       }}
     >
-      <Typography variant="h6" gutterbottom style={{ marginBottom: 25 }}>
-        Standings Type Name: {leagueFormat.name}
-      </Typography>
-      <Typography variant="body" gutterbottom>
-        Description: {leagueFormat.description}
-      </Typography>
+      <div style={{ padding: "0px 15px" }}>
+        <Typography variant="h6" className={classes.tableTypoH}>
+          Standings Format:
+        </Typography>
+        <Typography
+          variant="body1"
+          className={classes.tableTypo}
+          style={{ marginBottom: 25 }}
+        >
+          {leagueFormat.name}
+        </Typography>
+        <Typography variant="h6" className={classes.tableTypoH}>
+          Description:
+        </Typography>
+        <Typography variant="body1" className={classes.tableTypo}>
+          {leagueFormat.description}
+        </Typography>
+      </div>
+
       <TableContainer
         style={{
           maxWidth: 750,
@@ -116,7 +114,11 @@ const StandingsView = ({
               </TableCell>
               {rounds &&
                 rounds.map((r, i) => (
-                  <TableCell align="center" className={classes.tableTypoH}>
+                  <TableCell
+                    align="center"
+                    className={classes.tableTypoH}
+                    key={"roundCell#" + i}
+                  >
                     {i + 1}
                   </TableCell>
                 ))}
@@ -134,12 +136,18 @@ const StandingsView = ({
                 });
                 return (
                   <TableRow key={st[0]}>
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className={classes.tableTypo}
+                    >
                       {st[0]}
                     </TableCell>
-                    <TableCell align="center">{total}</TableCell>
+                    <TableCell align="center" className={classes.tableTypo}>
+                      {total}
+                    </TableCell>
                     {handlePointsPerRound(st[1])}
-                    <TableCell align="center">
+                    <TableCell align="center" className={classes.tableTypo}>
                       {(total / st[1].length).toFixed(2)}
                     </TableCell>
                   </TableRow>
@@ -160,11 +168,10 @@ StandingsView.propTypes = {
   owner_id: PropTypes.number,
   standings: PropTypes.array,
   rounds: PropTypes.array,
-  leagueFormat: PropTypes.array
+  leagueFormat: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  breadcrumbs: state.breadcrumbs.breadcrumbs,
   league_id: state.leagues.selectedLeague.league_id,
   admin: state.auth.admin,
   user_id: state.auth.user_id,
@@ -177,9 +184,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getRoundsByLeagueId,
-  clearRoundsData,
   getStandingsResults,
-  clearStandingsResults,
   getStandingsFormatByLeagueId,
-  clearStandingsLeagueFormat
+  getMembersByLeagueId
 })(StandingsView);

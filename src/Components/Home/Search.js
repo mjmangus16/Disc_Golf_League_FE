@@ -3,7 +3,6 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import {
   Select,
   FormControl,
-  FormHelperText,
   MenuItem,
   InputLabel,
   Button,
@@ -42,7 +41,7 @@ const useStyles = makeStyles(theme => ({
       gridRow: 1,
       margin: "auto",
       width: "95%",
-      maxWidth: 400
+      maxWidth: "95%"
     }
   },
   searchIcon: {
@@ -63,9 +62,6 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: 200
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: 300
     }
   },
   find: {
@@ -86,6 +82,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const types = [
+  "Singles",
+  "Doubles",
+  "Singles Travel",
+  "Doubles Travel",
+  "Putting",
+  "Other"
+];
+
 const HomeSearch = ({ searchHandler, selected, clear }) => {
   const classes = useStyles();
   const [inputText, setInputText] = useState("");
@@ -102,21 +107,44 @@ const HomeSearch = ({ searchHandler, selected, clear }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
+      {searchType !== "Type" ? (
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder={`Search By...`}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput
+            }}
+            inputProps={{ "aria-label": "search" }}
+            value={inputText}
+            onChange={e => setInputText(e.target.value)}
+          />
         </div>
-        <InputBase
-          placeholder={`Search By...`}
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput
-          }}
-          inputProps={{ "aria-label": "search" }}
-          value={inputText}
-          onChange={e => setInputText(e.target.value)}
-        />
-      </div>
+      ) : (
+        <FormControl
+          variant="outlined"
+          className={classes.formControl}
+          margin="dense"
+          fullWidth
+          required
+        >
+          <Select
+            value={types[0]}
+            name="type"
+            onChange={e => setInputText(e.target.value)}
+          >
+            {types.map(ty => (
+              <MenuItem value={ty} key={`typeKey${ty}`}>
+                {ty}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+
       <FormControl
         variant="outlined"
         className={classes.formControl}

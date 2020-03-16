@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import {
   getLeagueById,
   editLeague,
@@ -15,17 +14,12 @@ import {
   getScheduleByLeagueId,
   clearScheduleData
 } from "../../Redux/actions/scheduleActions";
-import {
-  getMembersByLeagueId,
-  clearMembersData
-} from "../../Redux/actions/membersActions";
+import { getMembersByLeagueId } from "../../Redux/actions/membersActions";
 import {
   getStandingsResults,
   getStandingsFormats,
   getStandingsFormatByLeagueId,
-  clearStandingsResults,
-  clearStandingsFormats,
-  clearStandingsLeagueFormat
+  clearStandingsResults
 } from "../../Redux/actions/standingsActions";
 import { CircularProgress } from "@material-ui/core";
 
@@ -47,13 +41,11 @@ const League = ({
   getScheduleByLeagueId,
   clearScheduleData,
   getMembersByLeagueId,
-  clearMembersData,
+
   getStandingsResults,
-  getStandingsFormats,
-  getStandingsFormatByLeagueId,
+
   clearStandingsResults,
-  clearStandingsFormats,
-  clearStandingsLeagueFormat,
+
   admin,
   user_id,
   members
@@ -67,16 +59,11 @@ const League = ({
     getRoundsByLeagueId(league_id);
     getScheduleByLeagueId(league_id);
     getMembersByLeagueId(league_id);
-    getStandingsFormats();
-    getStandingsFormatByLeagueId(league_id);
 
     return () => {
       clearScheduleData();
       clearLeagueData();
-      clearMembersData();
-      clearStandingsFormats();
       clearRoundsData();
-      clearStandingsLeagueFormat();
       clearStandingsResults();
     };
   }, []);
@@ -127,13 +114,10 @@ League.propTypes = {
   getScheduleByLeagueId: PropTypes.func.isRequired,
   clearScheduleData: PropTypes.func.isRequired,
   getMembersByLeagueId: PropTypes.func.isRequired,
-  clearMembersData: PropTypes.func.isRequired,
   getStandingsResults: PropTypes.func.isRequired,
   clearStandingsResults: PropTypes.func.isRequired,
   getStandingsFormats: PropTypes.func.isRequired,
-  clearStandingsFormats: PropTypes.func.isRequired,
   getStandingsFormatByLeagueId: PropTypes.func.isRequired,
-  clearStandingsLeagueFormat: PropTypes.func.isRequired,
   editLeague: PropTypes.func.isRequired,
   user_id: PropTypes.number,
   owner_id: PropTypes.number
@@ -160,12 +144,9 @@ export default connect(mapStateToProps, {
   getScheduleByLeagueId,
   clearScheduleData,
   getMembersByLeagueId,
-  clearMembersData,
   getStandingsResults,
   getStandingsFormats,
   getStandingsFormatByLeagueId,
   clearStandingsResults,
-  clearStandingsFormats,
-  clearStandingsLeagueFormat,
   editLeague
 })(League);

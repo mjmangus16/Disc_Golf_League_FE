@@ -9,6 +9,7 @@ import {
   updateRound,
   clearSelectedRoundData
 } from "../../../Redux/actions/roundsActions";
+import { getLeagueById } from "../../../Redux/actions/leaguesActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import {
   Typography,
@@ -19,10 +20,9 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  IconButton,
-  FormHelperText
+  IconButton
 } from "@material-ui/core";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import { green, red } from "@material-ui/core/colors";
 import moment from "moment";
 import DeleteIcon from "@material-ui/icons/DeleteOutlined";
@@ -30,27 +30,24 @@ import EditIcon from "@material-ui/icons/Edit";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import useStyles from "../LeagueStyles";
-import TypesComp from "./TypesComp";
 
 const ViewRound = ({
   match,
   round,
-  roundLoading,
-  roundFailed,
   members,
   getRoundByRoundId,
   clearSelectedRoundData,
   getMembersByLeagueId,
   addParticipant,
   addParticipantLoading,
-  addParticipantFailed,
   deleteParticipant,
   updateMultipleParticipants,
   updateRound,
   admin,
   width,
   user_id,
-  owner_id
+  owner_id,
+  getLeagueById
 }) => {
   const classes = useStyles();
   const [hover1, setHover1] = useState(false);
@@ -67,7 +64,7 @@ const ViewRound = ({
 
   useEffect(() => {
     const { round_id, league_id } = match.params;
-
+    getLeagueById(league_id);
     getRoundByRoundId(league_id, round_id);
     getMembersByLeagueId(league_id);
 
@@ -327,19 +324,6 @@ const ViewRound = ({
       </Grid>
       <Grid container spacing={1} style={{ width: "50%", margin: "auto" }}>
         <Grid item xs={12}>
-          {!changes ? (
-            <Typography
-              variant="subtitle1"
-              style={{ textTransform: "capitalize" }}
-              className={classes.roundInfo}
-            >
-              {round.type} Round
-            </Typography>
-          ) : (
-            <TypesComp type={type} setType={setType} />
-          )}
-        </Grid>
-        <Grid item xs={12}>
           <Typography variant="subtitle1" className={classes.roundInfo}>
             {moment(new Date(round.date)).format("MM/DD/YY")}
           </Typography>
@@ -350,6 +334,35 @@ const ViewRound = ({
         </Grid>
       </Grid>
       <Grid container style={{ maxWidth: 350, margin: "25px auto auto" }}>
+        <Grid item xs={12}>
+          <Grid
+            container
+            alignItems="center"
+            style={{
+              borderBottom: "1px solid lightGrey",
+              padding: "15px 0px"
+            }}
+          >
+            <Grid item xs={6}>
+              <Typography
+                variant="subtitle2"
+                align="left"
+                className={classes.tableTypoH}
+              >
+                Name
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="subtitle2"
+                align="center"
+                className={classes.tableTypoH}
+              >
+                Score
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
         {error.member && (
           <Grid item xs={12} style={{ margin: "auto" }}>
             <Typography variant="body2" color="error">
@@ -375,13 +388,6 @@ const ViewRound = ({
                 padding: "15px 0px"
               }}
             >
-              {/* {scoresError && (
-                <Grid item xs={12}>
-                  <Typography color="error" align="center" variant="body2">
-                    {scoresError}
-                  </Typography>
-                </Grid>
-              )} */}
               <Grid item xs={6}>
                 <FormControl
                   fullWidth
@@ -447,6 +453,7 @@ const ViewRound = ({
             </Typography>
           </Grid>
         )}
+
         {participants.length > 0 ? (
           participants.map((part, index) => (
             <Grid
@@ -566,5 +573,6 @@ export default connect(mapStateToProps, {
   addParticipant,
   deleteParticipant,
   updateMultipleParticipants,
-  updateRound
+  updateRound,
+  getLeagueById
 })(withWidth()(ViewRound));

@@ -4,17 +4,7 @@ import { connect } from "react-redux";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import { addRoundAndParticipants } from "../../../Redux/actions/roundsActions";
 import { getLeagueById } from "../../../Redux/actions/leaguesActions";
-import {
-  Typography,
-  Grid,
-  TextField,
-  Button,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  FormHelperText
-} from "@material-ui/core";
+import { Typography, Grid, Button } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
   MuiPickersUtilsProvider,
@@ -27,39 +17,21 @@ import { green } from "@material-ui/core/colors";
 import TransferList from "./TransferList";
 import Score from "./Score";
 
-const types = [
-  "None",
-  "Singles",
-  "Doubles",
-  "Singles Travel",
-  "Doubles Travel",
-  "Putting",
-  "Other"
-];
-
 const CreateRound = ({
   getMembersByLeagueId,
   addRoundAndParticipants,
   getLeagueById,
-  leagueType,
   members,
   match,
-  history,
-  addRoundFailed
+  history
 }) => {
   const classes = useStyles();
-  const inputLabel = useRef(null);
-  const [labelWidth, setLabelWidth] = useState(0);
-  React.useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, []);
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [type, setType] = useState("None");
   const [scoresError, setScoresError] = useState(null);
   const [dateError, setDateError] = useState(null);
 
@@ -67,13 +39,9 @@ const CreateRound = ({
     const { league_id } = match.params;
     getLeagueById(league_id);
     getMembersByLeagueId(league_id);
-  }, []);
 
-  useEffect(() => {
-    if (leagueType) {
-      setType(leagueType);
-    }
-  }, [leagueType]);
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     setLeft(
@@ -105,8 +73,7 @@ const CreateRound = ({
       const { league_id } = match.params;
       const round = {
         league_id,
-        date: moment(date).format("MM/DD/YYYY"),
-        type
+        date: moment(date).format("MM/DD/YYYY")
       };
 
       const participants = right.map(x => {
@@ -146,7 +113,7 @@ const CreateRound = ({
         alignItems="center"
         style={{ maxWidth: 350, margin: "auto" }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
               error={dateError ? true : false}
@@ -166,7 +133,7 @@ const CreateRound = ({
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <FormControl margin="dense" fullWidth required style={{ width: 125 }}>
             <InputLabel id="demo-simple-select-outlined-label" ref={inputLabel}>
               Round Type
@@ -187,7 +154,7 @@ const CreateRound = ({
               <FormHelperText>{addRoundFailed.type}</FormHelperText>
             )}
           </FormControl>
-        </Grid>
+        </Grid> */}
       </Grid>
       {!toggle ? (
         <div>

@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   schedItem3: {
-    padding: "10px 20px",
+    padding: "2.5px 20px",
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.8rem"
     }
@@ -45,6 +45,22 @@ const SchedulePanel = ({
   owner_id
 }) => {
   const classes = useStyles();
+
+  const displayInfo = string => {
+    let formatted = string.split("\n");
+    return formatted.map((s, i) => {
+      return (
+        <Typography
+          variant="body1"
+          className={classes.schedItem3}
+          key={"scheduleInfo" + i}
+        >
+          {s}
+        </Typography>
+      );
+    });
+  };
+
   return (
     <div>
       {admin && user_id === owner_id && (
@@ -96,9 +112,7 @@ const SchedulePanel = ({
                     {moment(week.date).format("MMMM Do YYYY")}
                   </Typography>
                 </div>
-                <Typography variant="body1" className={classes.schedItem3}>
-                  {week.info}
-                </Typography>
+                {displayInfo(week.info)}
 
                 {/* <ul style={{ listStyle: "none" }}>
                   {Object.entries(week).map((d, i) => {

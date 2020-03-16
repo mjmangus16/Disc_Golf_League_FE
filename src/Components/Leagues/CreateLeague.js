@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { createNewLeague } from "../../Redux/actions/leaguesActions";
 import {
   Typography,
@@ -14,7 +13,6 @@ import {
   InputLabel,
   FormHelperText
 } from "@material-ui/core";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 import useStyles from "./LeagueStyles";
 import { green } from "@material-ui/core/colors";
 
@@ -165,6 +163,7 @@ const CreateLeague = ({
               value={leagueData.name}
               name="name"
               onChange={e => handleChange(e)}
+              // className={classes.formTextInput}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -425,6 +424,4 @@ const mapStateToProps = state => ({
   createNewLeagueFailed: state.leagues.createNewLeagueFailed
 });
 
-export default connect(mapStateToProps, { createNewLeague })(
-  withWidth()(CreateLeague)
-);
+export default connect(mapStateToProps, { createNewLeague })(CreateLeague);

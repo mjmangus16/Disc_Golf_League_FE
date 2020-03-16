@@ -20,7 +20,7 @@ import {
   EDIT_LEAGUE_SUCCESS,
   EDIT_LEAGUE_FAILED,
   CLEAR_LEAGUE_DATA,
-  CLEAR_LEAGUES
+  CLEAR_USER_LEAGUES
 } from "../types";
 
 const initialState = {
@@ -171,7 +171,7 @@ export default (state = initialState, action) => {
         createNewLeagueLoading: false,
         createNewLeagueFailed: {}
       };
-    case CLEAR_LEAGUES:
+    case CLEAR_USER_LEAGUES:
       return {
         ...state,
         leagues: [],

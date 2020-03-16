@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { submitMemberToLeague } from "../../../Redux/actions/membersActions";
@@ -18,7 +18,6 @@ import {
 import TableContainer from "@material-ui/core/TableContainer";
 import { green } from "@material-ui/core/colors";
 import useStyles from "../LeagueStyles";
-import MemberCard from "./MemberCard";
 
 const MembersPanel = ({
   history,

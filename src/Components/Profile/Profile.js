@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { logoutUser } from "../../Redux/actions/authActions";
 import {
   getProfile,
@@ -9,6 +8,17 @@ import {
   clearErrors
 } from "../../Redux/actions/profileActions";
 import { clearLeagueData } from "../../Redux/actions/leaguesActions";
+import { clearScheduleData } from "../../Redux/actions/scheduleActions";
+import {
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
+  clearStandingsResults
+} from "../../Redux/actions/standingsActions";
+import { clearRoundsData } from "../../Redux/actions/roundsActions";
+import {
+  clearMembersData,
+  clearSelectedMemberData
+} from "../../Redux/actions/membersActions";
 
 import ProfileHeader from "./ProfileHeader";
 import UpdateDialog from "./UpdateDialog";
@@ -21,7 +31,6 @@ import useStyles from "./ProfileStyles";
 const Profile = ({
   admin,
   email,
-  breadcrumbs,
   history,
   get_loading,
   getProfile,
@@ -34,10 +43,28 @@ const Profile = ({
   clearErrors,
   update_success,
   logoutUser,
-  clearLeagueData
+  clearLeagueData,
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
+  clearStandingsResults,
+  clearRoundsData,
+  clearScheduleData,
+  clearMembersData,
+  clearSelectedMemberData
 }) => {
   const classes = useStyles();
   const [updateOpen, setUpdateOpen] = useState(false);
+
+  useEffect(() => {
+    clearScheduleData();
+    clearLeagueData();
+    clearStandingsFormats();
+    clearRoundsData();
+    clearStandingsLeagueFormat();
+    clearStandingsResults();
+    clearMembersData();
+    clearSelectedMemberData();
+  }, []);
 
   useEffect(() => {
     if (email) {
@@ -113,7 +140,6 @@ Profile.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  breadcrumbs: state.breadcrumbs.breadcrumbs,
   errors: state.profile.errors,
   email: state.auth.email,
   f_name: state.profile.f_name,
@@ -130,5 +156,12 @@ export default connect(mapStateToProps, {
   updateProfile,
   clearErrors,
   logoutUser,
-  clearLeagueData
+  clearLeagueData,
+  clearStandingsFormats,
+  clearStandingsLeagueFormat,
+  clearStandingsResults,
+  clearRoundsData,
+  clearScheduleData,
+  clearMembersData,
+  clearSelectedMemberData
 })(Profile);

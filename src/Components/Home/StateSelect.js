@@ -7,8 +7,8 @@ import MobileStateSelect from "./MobileStateSelect";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    maxHeight: "650px",
-    overflow: "scroll"
+    maxHeight: "75vh",
+    overflowY: "scroll"
   },
   list: {
     listStyle: "none",

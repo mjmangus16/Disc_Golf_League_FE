@@ -8,7 +8,7 @@ import {
   SIGNIN_LOADING,
   SIGNIN_FAILED,
   SET_CURRENT_USER,
-  CLEAR_LEAGUES,
+  CLEAR_USER_LEAGUES,
   CLEAR_PROFILE,
   CLEAR_LEAGUE_DATA
 } from "../types";
@@ -74,7 +74,7 @@ export const logoutUser = () => dispatch => {
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
   dispatch({
-    type: CLEAR_LEAGUES
+    type: CLEAR_USER_LEAGUES
   });
   dispatch({
     type: CLEAR_LEAGUE_DATA

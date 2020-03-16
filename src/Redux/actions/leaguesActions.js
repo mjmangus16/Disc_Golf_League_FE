@@ -20,7 +20,8 @@ import {
   EDIT_LEAGUE_LOADING,
   EDIT_LEAGUE_SUCCESS,
   EDIT_LEAGUE_FAILED,
-  CLEAR_LEAGUE_DATA
+  CLEAR_LEAGUE_DATA,
+  CLEAR_USER_LEAGUES
 } from "../types";
 
 export const getAllLeagues = () => dispatch => {
@@ -185,4 +186,8 @@ export const editLeague = (league_data, redirect) => dispatch => {
 
 export const clearLeagueData = () => dispatch => {
   dispatch({ type: CLEAR_LEAGUE_DATA });
+};
+
+export const clearUserLeagues = () => dispatch => {
+  dispatch({ type: CLEAR_USER_LEAGUES });
 };

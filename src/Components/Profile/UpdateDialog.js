@@ -10,13 +10,12 @@ import {
   Button,
   Typography,
   Toolbar,
-  Box,
   IconButton
 } from "@material-ui/core";
 import useStyles from "./ProfileStyles";
 import { green, red } from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/DeleteOutlined";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 
 const UpdateDialog = ({
   open,

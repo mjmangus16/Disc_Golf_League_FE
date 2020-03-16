@@ -63,9 +63,7 @@ const RoundsPanel = ({
                     <TableCell align="center" className={classes.tableTypoH}>
                       Date
                     </TableCell>
-                    <TableCell align="center" className={classes.tableTypoH}>
-                      Type
-                    </TableCell>
+
                     <TableCell align="center" className={classes.tableTypoH}>
                       Participants
                     </TableCell>
@@ -88,9 +86,7 @@ const RoundsPanel = ({
                       <TableCell align="center" className={classes.tableTypo}>
                         {moment(new Date(round.date)).format("MM/DD/YY")}
                       </TableCell>
-                      <TableCell align="center" className={classes.tableTypo}>
-                        {round.type}
-                      </TableCell>
+
                       <TableCell align="center" className={classes.tableTypo}>
                         {round.participants}
                       </TableCell>

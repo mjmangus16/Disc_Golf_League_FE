@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Button, Grid, IconButton } from "@material-ui/core";
 import useStyles from "./ProfileStyles";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import EditIcon from "@material-ui/icons/Edit";
 import { green } from "@material-ui/core/colors";
-
-// const newComponent = (props) => {
-//   const [hook, setHooke] = useState();
-
-//   useEffect(() => {
-
-//   })
-
-//   return <div></div>
-// }
-
-// export default newComponent
 
 const ProfileHeader = ({
   org_name,
