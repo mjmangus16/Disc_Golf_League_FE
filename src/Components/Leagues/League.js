@@ -21,6 +21,7 @@ import {
   getStandingsFormatByLeagueId,
   clearStandingsResults
 } from "../../Redux/actions/standingsActions";
+import { clearBreadcrumb } from "../../Redux/actions/breadcrumbActions";
 import { CircularProgress } from "@material-ui/core";
 
 import LeagueHeader from "./LeagueHeader/LeagueHeader";
@@ -41,11 +42,9 @@ const League = ({
   getScheduleByLeagueId,
   clearScheduleData,
   getMembersByLeagueId,
-
   getStandingsResults,
-
   clearStandingsResults,
-
+  clearBreadcrumb,
   admin,
   user_id,
   members
@@ -59,6 +58,7 @@ const League = ({
     getRoundsByLeagueId(league_id);
     getScheduleByLeagueId(league_id);
     getMembersByLeagueId(league_id);
+    clearBreadcrumb();
 
     return () => {
       clearScheduleData();
@@ -148,5 +148,6 @@ export default connect(mapStateToProps, {
   getStandingsFormats,
   getStandingsFormatByLeagueId,
   clearStandingsResults,
-  editLeague
+  editLeague,
+  clearBreadcrumb
 })(League);

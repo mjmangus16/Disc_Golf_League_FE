@@ -7,10 +7,10 @@ import {
   updateMember,
   clearSelectedMemberData
 } from "../../../Redux/actions/membersActions";
+import { initBreadcrumb } from "../../../Redux/actions/breadcrumbActions";
 import {
   Typography,
   Grid,
-  Toolbar,
   Button,
   CircularProgress,
   IconButton,
@@ -21,7 +21,7 @@ import {
   TableRow
 } from "@material-ui/core";
 import TableContainer from "@material-ui/core/TableContainer";
-import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import useStyles from "../LeagueStyles";
 import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment";
@@ -44,7 +44,8 @@ const LeagueMember = ({
   admin,
   width,
   user_id,
-  owner_id
+  owner_id,
+  initBreadcrumb
 }) => {
   const classes = useStyles();
   const [trigger, setTrigger] = useState(false);
@@ -53,6 +54,7 @@ const LeagueMember = ({
   useEffect(() => {
     const { league_id, member_id } = match.params;
     getMemberByMemberId(league_id, member_id);
+    initBreadcrumb(league_id);
 
     return () => {
       clearSelectedMemberData();
@@ -218,5 +220,6 @@ export default connect(mapStateToProps, {
   getMemberByMemberId,
   clearSelectedMemberData,
   removeMemberFromLeague,
-  updateMember
+  updateMember,
+  initBreadcrumb
 })(withWidth()(LeagueMember));

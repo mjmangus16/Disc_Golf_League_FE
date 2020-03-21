@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
@@ -7,13 +7,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import AppBar from "./Components/Layout/AppBar";
 import Breadcrumbs from "./Components/Layout/Breadcrumbs";
 import Routes from "./Routes";
-import {
-  red,
-  blueGrey,
-  blue,
-  lightBlue,
-  brown
-} from "@material-ui/core/colors";
+import { blue, brown } from "@material-ui/core/colors";
 import { decodeToken } from "./utils/decodeToken";
 
 decodeToken();

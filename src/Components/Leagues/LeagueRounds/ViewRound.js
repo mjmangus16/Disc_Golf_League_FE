@@ -11,6 +11,7 @@ import {
 } from "../../../Redux/actions/roundsActions";
 import { getLeagueById } from "../../../Redux/actions/leaguesActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
+import { initBreadcrumb } from "../../../Redux/actions/breadcrumbActions";
 import {
   Typography,
   Button,
@@ -47,7 +48,8 @@ const ViewRound = ({
   width,
   user_id,
   owner_id,
-  getLeagueById
+  getLeagueById,
+  initBreadcrumb
 }) => {
   const classes = useStyles();
   const [hover1, setHover1] = useState(false);
@@ -67,6 +69,7 @@ const ViewRound = ({
     getLeagueById(league_id);
     getRoundByRoundId(league_id, round_id);
     getMembersByLeagueId(league_id);
+    initBreadcrumb(league_id);
 
     return () => {
       clearSelectedRoundData();
@@ -574,5 +577,6 @@ export default connect(mapStateToProps, {
   deleteParticipant,
   updateMultipleParticipants,
   updateRound,
-  getLeagueById
+  getLeagueById,
+  initBreadcrumb
 })(withWidth()(ViewRound));

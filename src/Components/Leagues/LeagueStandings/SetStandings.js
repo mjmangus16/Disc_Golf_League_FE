@@ -9,6 +9,7 @@ import {
   clearStandingsFormats,
   clearStandingsLeagueFormat
 } from "../../../Redux/actions/standingsActions";
+import { initBreadcrumb } from "../../../Redux/actions/breadcrumbActions";
 import { Grid, Typography, Button } from "@material-ui/core";
 
 import useStyles from "../LeagueStyles";
@@ -23,13 +24,15 @@ const SetStandings = ({
   standingsFormats,
   leagueFormat,
   league_id,
-  match
+  match,
+  initBreadcrumb
 }) => {
   const classes = useStyles();
   useEffect(() => {
     const league_id = match.params.league_id;
     getStandingsFormats();
     getStandingsFormatByLeagueId(league_id);
+    initBreadcrumb(league_id);
     return () => {
       clearStandingsFormats();
       clearStandingsLeagueFormat();
@@ -119,6 +122,7 @@ export default connect(mapStateToProps, {
   getStandingsFormatByLeagueId,
   updateLeagueFormat,
   connectFormatToLeague,
+  initBreadcrumb,
   clearStandingsFormats,
   clearStandingsLeagueFormat
 })(SetStandings);

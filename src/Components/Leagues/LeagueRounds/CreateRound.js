@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import { addRoundAndParticipants } from "../../../Redux/actions/roundsActions";
 import { getLeagueById } from "../../../Redux/actions/leaguesActions";
+import { initBreadcrumb } from "../../../Redux/actions/breadcrumbActions";
 import { Typography, Grid, Button } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
@@ -23,7 +24,8 @@ const CreateRound = ({
   getLeagueById,
   members,
   match,
-  history
+  history,
+  initBreadcrumb
 }) => {
   const classes = useStyles();
   const [hover1, setHover1] = useState(false);
@@ -39,6 +41,7 @@ const CreateRound = ({
     const { league_id } = match.params;
     getLeagueById(league_id);
     getMembersByLeagueId(league_id);
+    initBreadcrumb(league_id);
 
     window.scrollTo(0, 0);
   }, []);
@@ -258,5 +261,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getMembersByLeagueId,
   addRoundAndParticipants,
-  getLeagueById
+  getLeagueById,
+  initBreadcrumb
 })(CreateRound);

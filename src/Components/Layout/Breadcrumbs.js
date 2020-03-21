@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Breadcrumbs, Paper } from "@material-ui/core";
+import { Typography, Breadcrumbs } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,20 +23,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Breadcrumbs_ = ({ league_id }) => {
+const Breadcrumbs_ = ({ league_id, crumbs }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      {/* <Breadcrumbs aria-label="breadcrumb">
-        <Typography color="textPrimary" className={classes.crumbText}>
-          <Link color="inherit" to={`/league/${league_id}`}>
-            {"Back To League Home"}
-          </Link>
-        </Typography>
-      </Breadcrumbs> */}
+      {crumbs && (
+        <Breadcrumbs aria-label="breadcrumb">
+          <Typography color="textPrimary" className={classes.crumbText}>
+            <Link color="inherit" to={`/league/${league_id}`}>
+              Return To League Home Page
+            </Link>
+          </Typography>
+        </Breadcrumbs>
+      )}
     </div>
   );
 };
 
-export default Breadcrumbs_;
+const mapStateToProps = state => ({
+  crumbs: state.breadcrumbs.crumb,
+  league_id: state.breadcrumbs.id
+});
+
+export default connect(mapStateToProps, {})(Breadcrumbs_);

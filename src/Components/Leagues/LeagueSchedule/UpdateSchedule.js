@@ -7,6 +7,7 @@ import {
   getScheduleByLeagueId,
   updateWeekInSchedule
 } from "../../../Redux/actions/scheduleActions";
+import { initBreadcrumb } from "../../../Redux/actions/breadcrumbActions";
 import { Typography, Grid } from "@material-ui/core";
 import moment from "moment";
 import WeekItem from "./WeekItem";
@@ -20,13 +21,16 @@ const UpdateSchedule = ({
   removeWeekFromSchedule,
   editLeagueFailed,
   getScheduleByLeagueId,
-  match
+  match,
+  initBreadcrumb
 }) => {
   const classes = useStyles();
   const [sched, setSched] = useState([]);
 
   useEffect(() => {
-    getScheduleByLeagueId(match.params.league_id);
+    const league_id = match.params.league_id;
+    initBreadcrumb(league_id);
+    getScheduleByLeagueId(league_id);
   }, []);
 
   useEffect(() => {
@@ -116,7 +120,6 @@ UpdateSchedule.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  breadcrumbs: state.breadcrumbs.breadcrumbs,
   schedule: state.schedule.schedule,
   editLeagueFailed: state.leagues.editLeagueFailed,
   league_id: state.leagues.selectedLeague.league_id
@@ -126,5 +129,6 @@ export default connect(mapStateToProps, {
   submitSchedule,
   removeWeekFromSchedule,
   updateWeekInSchedule,
-  getScheduleByLeagueId
+  getScheduleByLeagueId,
+  initBreadcrumb
 })(UpdateSchedule);

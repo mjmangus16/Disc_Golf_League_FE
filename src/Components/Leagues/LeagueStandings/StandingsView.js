@@ -7,6 +7,7 @@ import {
   getStandingsFormatByLeagueId
 } from "../../../Redux/actions/standingsActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
+import { initBreadcrumb } from "../../../Redux/actions/breadcrumbActions";
 import {
   Typography,
   TableContainer,
@@ -28,7 +29,8 @@ const StandingsView = ({
   getStandingsResults,
   getStandingsFormatByLeagueId,
   getMembersByLeagueId,
-  match
+  match,
+  initBreadcrumb
 }) => {
   const classes = useStyles();
 
@@ -37,6 +39,7 @@ const StandingsView = ({
     getRoundsByLeagueId(league_id);
     getStandingsFormatByLeagueId(league_id);
     getMembersByLeagueId(league_id);
+    initBreadcrumb(league_id);
   }, []);
 
   useEffect(() => {
@@ -186,5 +189,6 @@ export default connect(mapStateToProps, {
   getRoundsByLeagueId,
   getStandingsResults,
   getStandingsFormatByLeagueId,
-  getMembersByLeagueId
+  getMembersByLeagueId,
+  initBreadcrumb
 })(StandingsView);

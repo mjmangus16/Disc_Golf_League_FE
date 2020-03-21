@@ -1,7 +1,13 @@
-import { ADD_BREADCRUMB, SELECT_BREADCRUMB } from "../types";
+import {
+  ADD_BREADCRUMB,
+  SELECT_BREADCRUMB,
+  INIT_BREADCRUMB,
+  CLEAR_BREADCRUMB
+} from "../types";
 
 const initialState = {
-  breadcrumbs: [{ name: "Home", url: "/" }]
+  crumb: false,
+  id: null
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +21,17 @@ export default (state = initialState, action) => {
       return {
         ...state,
         breadcrumbs: action.payload
+      };
+    case INIT_BREADCRUMB:
+      return {
+        ...state,
+        crumb: true,
+        id: action.payload
+      };
+    case CLEAR_BREADCRUMB:
+      return {
+        crumb: false,
+        id: null
       };
     default:
       return state;
