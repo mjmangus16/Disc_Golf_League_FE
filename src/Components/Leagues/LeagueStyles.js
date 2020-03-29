@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
   missingData: {
     marginTop: 25,
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.75rem"
+      fontSize: "0.8rem"
     }
   },
   leagueNameHeading: {

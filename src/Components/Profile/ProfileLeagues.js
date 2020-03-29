@@ -147,8 +147,17 @@ const ProfileLeagues = ({
           </TableContainer>
         ) : (
           <div className={classes.noLeagues}>
-            <Typography variant="body1">
+            <Typography variant="body1" gutterBottom>
               You have no leagues to display.
+            </Typography>
+            <Typography
+              variant="body2"
+              color="error"
+              style={{ margin: "25px auto auto", width: "75%" }}
+            >
+              {!admin
+                ? "Get in contact with a leagues manager to have them link your membership to this account."
+                : "Create a league to get started!"}
             </Typography>
           </div>
         )}

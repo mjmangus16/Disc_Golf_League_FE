@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { submitMemberToLeague } from "../../../Redux/actions/membersActions";
+import {
+  submitMemberToLeague,
+  sortMembersByName,
+  sortMembersByRounds
+} from "../../../Redux/actions/membersActions";
 import {
   Typography,
   Grid,
@@ -13,7 +17,8 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
+  TableSortLabel
 } from "@material-ui/core";
 import TableContainer from "@material-ui/core/TableContainer";
 import { green } from "@material-ui/core/colors";
@@ -30,7 +35,11 @@ const MembersPanel = ({
   submitMemberToLeague,
   admin,
   user_id,
-  owner_id
+  owner_id,
+  sortMembersByName,
+  sortMembersByRounds,
+  sortOrderName,
+  sortOrderRounds
 }) => {
   const classes = useStyles();
   const [hover, setHover] = useState(false);
@@ -178,11 +187,33 @@ const MembersPanel = ({
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" className={classes.tableTypoH}>
-                      Name
+                    <TableCell
+                      align="center"
+                      className={classes.tableTypoH}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => sortMembersByName(members, sortOrderName)}
+                    >
+                      <TableSortLabel
+                        active={sortOrderName !== null}
+                        direction={sortOrderName ? "asc" : "desc"}
+                      >
+                        Name
+                      </TableSortLabel>
                     </TableCell>
-                    <TableCell align="center" className={classes.tableTypoH}>
-                      Rounds
+                    <TableCell
+                      align="center"
+                      className={classes.tableTypoH}
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        sortMembersByRounds(members, sortOrderRounds)
+                      }
+                    >
+                      <TableSortLabel
+                        active={sortOrderRounds !== null}
+                        direction={sortOrderRounds ? "asc" : "desc"}
+                      >
+                        Rounds
+                      </TableSortLabel>
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -248,9 +279,13 @@ const mapStateToProps = state => ({
   submitFailed: state.members.submitMemberFailed,
   admin: state.auth.admin,
   user_id: state.auth.user_id,
-  owner_id: state.leagues.selectedLeague.owner_id
+  owner_id: state.leagues.selectedLeague.owner_id,
+  sortOrderName: state.members.sortOrderName,
+  sortOrderRounds: state.members.sortOrderRounds
 });
 
 export default connect(mapStateToProps, {
-  submitMemberToLeague
+  submitMemberToLeague,
+  sortMembersByName,
+  sortMembersByRounds
 })(MembersPanel);

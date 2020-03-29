@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import {
+  sortStandingsByName,
+  sortStandingsByAverage,
+  sortStandingsByTotal
+} from "../../../Redux/actions/standingsActions";
 import {
   Grid,
   Typography,
@@ -12,9 +17,9 @@ import {
   TableRow,
   Paper,
   CircularProgress,
-  Button
+  Button,
+  TableSortLabel
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 import useStyles from "../LeagueStyles";
 
@@ -24,9 +29,21 @@ const StandingsPanel = ({
   admin,
   user_id,
   owner_id,
-  standings
+  standings,
+  sortStandingsByName,
+  sortStandingsByAverage,
+  sortStandingsByTotal,
+  sortOrderName,
+  sortOrderTotal,
+  sortOrderAverage
 }) => {
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   if (standings.length > 0) sortStandingsByName(standings, sortOrderName);
+  // }, [standings]);
+
+  console.log(standings);
 
   const displayStandings = () => {
     return standings.map(st => {
@@ -35,7 +52,7 @@ const StandingsPanel = ({
         total += p.points;
       });
       return (
-        <TableRow key={st[0]} className={classes.tableRow}>
+        <TableRow key={st[0]}>
           <TableCell component="th" scope="row" className={classes.tableTypo}>
             {st[0]}
           </TableCell>
@@ -65,40 +82,82 @@ const StandingsPanel = ({
             </Button>
           </Grid>
         )}
-        <Grid item className={classes.standingsPanelButton}>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            onClick={() => history.push(`/league/${league_id}/viewStandings`)}
-          >
-            Extended Standings
-          </Button>
-        </Grid>
+        {standings.length > 0 && (
+          <Grid item className={classes.standingsPanelButton}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => history.push(`/league/${league_id}/viewStandings`)}
+            >
+              Extended Standings
+            </Button>
+          </Grid>
+        )}
       </Grid>
-      <TableContainer
-        style={{
-          maxWidth: 550,
-          margin: "25px auto"
-        }}
-      >
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left" className={classes.tableTypoH}>
-                Name
-              </TableCell>
-              <TableCell align="center" className={classes.tableTypoH}>
-                Total Points
-              </TableCell>
-              <TableCell align="center" className={classes.tableTypoH}>
-                Average Points
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{displayStandings()}</TableBody>
-        </Table>
-      </TableContainer>
+      {standings.length > 0 ? (
+        <TableContainer
+          style={{
+            maxWidth: 550,
+            margin: "25px auto"
+          }}
+        >
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align="left"
+                  className={classes.tableTypoH}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => sortStandingsByName(standings, sortOrderName)}
+                >
+                  <TableSortLabel
+                    active={sortOrderName !== null}
+                    direction={sortOrderName ? "asc" : "desc"}
+                  >
+                    Name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableTypoH}
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    sortStandingsByTotal(standings, sortOrderTotal)
+                  }
+                >
+                  <TableSortLabel
+                    active={sortOrderTotal !== null}
+                    direction={sortOrderTotal ? "asc" : "desc"}
+                  >
+                    Total Points
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableTypoH}
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    sortStandingsByAverage(standings, sortOrderAverage)
+                  }
+                >
+                  <TableSortLabel
+                    active={sortOrderAverage !== null}
+                    direction={sortOrderAverage ? "asc" : "desc"}
+                  >
+                    Average Points
+                  </TableSortLabel>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{displayStandings()}</TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography className={classes.missingData}>
+          You have not set your standings yet.
+        </Typography>
+      )}
     </div>
   );
 };
@@ -118,7 +177,14 @@ const mapStateToProps = state => ({
   admin: state.auth.admin,
   user_id: state.auth.user_id,
   owner_id: state.leagues.selectedLeague.owner_id,
-  standings: state.standings.standings
+  standings: state.standings.standings,
+  sortOrderName: state.standings.sortOrderName,
+  sortOrderTotal: state.standings.sortOrderTotal,
+  sortOrderAverage: state.standings.sortOrderAverage
 });
 
-export default connect(mapStateToProps, {})(StandingsPanel);
+export default connect(mapStateToProps, {
+  sortStandingsByName,
+  sortStandingsByAverage,
+  sortStandingsByTotal
+})(StandingsPanel);

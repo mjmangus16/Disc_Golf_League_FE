@@ -19,7 +19,11 @@ import {
   DELETE_LEAGUE_FORMAT_FAILED,
   CLEAR_STANDINGS_RESULTS,
   CLEAR_STANDINGS_FORMATS,
-  CLEAR_STANDINGS_LEAGUE_FORMAT
+  CLEAR_STANDINGS_LEAGUE_FORMAT,
+  SORT_STANDINGS_BY_NAME,
+  SORT_STANDINGS_BY_TOTAL,
+  SORT_STANDINGS_BY_AVERAGE,
+  SORT_STANDINGS_BY_ROUND
 } from "../types";
 
 const initialState = {
@@ -35,7 +39,12 @@ const initialState = {
   connectFormatLoading: false,
   connectFormatFailed: {},
   updateFormatLoading: false,
-  updateFormatFailed: {}
+  updateFormatFailed: {},
+  sortOrderName: null,
+  sortOrderTotal: null,
+  sortOrderAverage: null,
+  sortOrderRound: null,
+  sortOrderRoundDir: null
 };
 
 export default (state = initialState, action) => {
@@ -181,6 +190,50 @@ export default (state = initialState, action) => {
         getLeagueFormatLoading: false,
         getLeagueFormatFailed: {},
         leagueFormat: {}
+      };
+    case SORT_STANDINGS_BY_NAME:
+      return {
+        ...state,
+        standings: action.payload,
+        sortOrderName:
+          state.sortOrderName == null ? false : !state.sortOrderName,
+        sortOrderTotal: null,
+        sortOrderAverage: null,
+        sortOrderRound: null,
+        sortOrderRoundDir: null
+      };
+    case SORT_STANDINGS_BY_AVERAGE:
+      return {
+        ...state,
+        standings: action.payload,
+        sortOrderName: null,
+        sortOrderTotal: null,
+        sortOrderAverage:
+          state.sortOrderAverage == null ? false : !state.sortOrderAverage,
+        sortOrderRound: null,
+        sortOrderRoundDir: null
+      };
+    case SORT_STANDINGS_BY_TOTAL:
+      return {
+        ...state,
+        standings: action.payload,
+        sortOrderName: null,
+        sortOrderTotal:
+          state.sortOrderTotal == null ? false : !state.sortOrderTotal,
+        sortOrderAverage: null,
+        sortOrderRound: null,
+        sortOrderRoundDir: null
+      };
+    case SORT_STANDINGS_BY_ROUND:
+      return {
+        ...state,
+        standings: action.payload,
+        sortOrderName: null,
+        sortOrderTotal: null,
+        sortOrderAverage: null,
+        sortOrderRound: action.round,
+        sortOrderRoundDir:
+          state.sortOrderRoundDir == null ? false : !state.sortOrderRoundDir
       };
     default:
       return state;

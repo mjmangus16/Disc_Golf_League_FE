@@ -14,7 +14,9 @@ import {
   UPDATE_ROUND_SUCCESS,
   UPDATE_ROUND_FAILED,
   CLEAR_ROUNDS,
-  CLEAR_SELECTED_ROUND_DATA
+  CLEAR_SELECTED_ROUND_DATA,
+  SORT_ROUND_BY_NAME,
+  SORT_ROUND_BY_SCORE
 } from "../types";
 
 export const getRoundsByLeagueId = league_id => dispatch => {
@@ -181,4 +183,34 @@ export const clearRoundsData = () => dispatch => {
 
 export const clearSelectedRoundData = () => dispatch => {
   dispatch({ type: CLEAR_SELECTED_ROUND_DATA });
+};
+
+export const sortRoundByName = (participants, order) => dispatch => {
+  if (order === null || order === true) {
+    participants.sort((a, b) => {
+      return a.l_name.toLowerCase() <= b.l_name.toLowerCase() ? -1 : 1;
+    });
+  } else {
+    participants.sort((a, b) => {
+      return a.l_name.toLowerCase() >= b.l_name.toLowerCase() ? -1 : 1;
+    });
+  }
+
+  dispatch({
+    type: SORT_ROUND_BY_NAME,
+    payload: participants
+  });
+};
+
+export const sortRoundByScore = (participants, order) => dispatch => {
+  if (order === null || order === true) {
+    participants.sort((a, b) => a.score - b.score);
+  } else {
+    participants.sort((a, b) => b.score - a.score);
+  }
+
+  dispatch({
+    type: SORT_ROUND_BY_SCORE,
+    payload: participants
+  });
 };

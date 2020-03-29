@@ -3,6 +3,7 @@ import { Typography, Button, Grid, IconButton } from "@material-ui/core";
 import useStyles from "./ProfileStyles";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import EditIcon from "@material-ui/icons/Edit";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { green } from "@material-ui/core/colors";
 
 const ProfileHeader = ({
@@ -25,7 +26,7 @@ const ProfileHeader = ({
 
   const displayUpdate = () => {
     if (!get_loading) {
-      if (isWidthDown("sm", width)) {
+      if (isWidthDown("xs", width)) {
         return (
           <IconButton color="secondary" size="medium" onClick={handleOpen}>
             <EditIcon />
@@ -51,7 +52,7 @@ const ProfileHeader = ({
   };
 
   const displayCreate = () => {
-    if (admin && !isWidthDown("sm", width)) {
+    if (admin && !isWidthDown("xs", width)) {
       return (
         <Button
           onMouseEnter={() => setHover(true)}
@@ -66,6 +67,19 @@ const ProfileHeader = ({
         >
           Create New League
         </Button>
+      );
+    } else {
+      return (
+        <IconButton
+          size="medium"
+          onClick={handleOpen}
+          style={{
+            color: green[600],
+            borderColor: green[600]
+          }}
+        >
+          <AddCircleIcon />
+        </IconButton>
       );
     }
   };

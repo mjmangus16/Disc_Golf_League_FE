@@ -17,7 +17,9 @@ import {
   UPDATE_MEMBER_FAILED,
   CLEAR_MEMBER_UPDATE_SUCCESS,
   CLEAR_MEMBERS,
-  CLEAR_SELECTED_MEMBER_DATA
+  CLEAR_SELECTED_MEMBER_DATA,
+  SORT_MEMBERS_BY_NAME,
+  SORT_MEMBERS_BY_ROUNDS
 } from "../types";
 
 export const getMembersByLeagueId = league_id => dispatch => {
@@ -161,4 +163,34 @@ export const clearMembersData = () => dispatch => {
 
 export const clearSelectedMemberData = () => dispatch => {
   dispatch({ type: CLEAR_SELECTED_MEMBER_DATA });
+};
+
+export const sortMembersByName = (members, order) => dispatch => {
+  if (order === null || order === true) {
+    members.sort((a, b) => {
+      return a.l_name.toLowerCase() <= b.l_name.toLowerCase() ? -1 : 1;
+    });
+  } else {
+    members.sort((a, b) => {
+      return a.l_name.toLowerCase() >= b.l_name.toLowerCase() ? -1 : 1;
+    });
+  }
+
+  dispatch({
+    type: SORT_MEMBERS_BY_NAME,
+    payload: members
+  });
+};
+
+export const sortMembersByRounds = (members, order) => dispatch => {
+  if (order === null || order === true) {
+    members.sort((a, b) => a.rounds - b.rounds);
+  } else {
+    members.sort((a, b) => b.rounds - a.rounds);
+  }
+
+  dispatch({
+    type: SORT_MEMBERS_BY_ROUNDS,
+    payload: members
+  });
 };

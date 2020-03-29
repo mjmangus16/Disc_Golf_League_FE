@@ -16,7 +16,9 @@ import {
   UPDATE_MEMBER_FAILED,
   CLEAR_MEMBER_UPDATE_SUCCESS,
   CLEAR_MEMBERS,
-  CLEAR_SELECTED_MEMBER_DATA
+  CLEAR_SELECTED_MEMBER_DATA,
+  SORT_MEMBERS_BY_NAME,
+  SORT_MEMBERS_BY_ROUNDS
 } from "../types";
 
 const initialState = {
@@ -31,7 +33,9 @@ const initialState = {
   removeMemberFailed: {},
   updateMemberLoading: false,
   updateMemberFailed: {},
-  update_success: false
+  update_success: false,
+  sortOrderName: null,
+  sortOrderRounds: null
 };
 
 export default (state = initialState, action) => {
@@ -148,6 +152,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         member: {}
+      };
+    case SORT_MEMBERS_BY_NAME:
+      return {
+        ...state,
+        members: action.payload,
+        sortOrderName:
+          state.sortOrderName == null ? false : !state.sortOrderName,
+        sortOrderRounds: null
+      };
+    case SORT_MEMBERS_BY_ROUNDS:
+      return {
+        ...state,
+        members: action.payload,
+        sortOrderRounds:
+          state.sortOrderRounds == null ? false : !state.sortOrderRounds,
+        sortOrderName: null
       };
     default:
       return state;

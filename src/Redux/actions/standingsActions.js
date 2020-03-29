@@ -20,7 +20,11 @@ import {
   DELETE_LEAGUE_FORMAT_FAILED,
   CLEAR_STANDINGS_RESULTS,
   CLEAR_STANDINGS_FORMATS,
-  CLEAR_STANDINGS_LEAGUE_FORMAT
+  CLEAR_STANDINGS_LEAGUE_FORMAT,
+  SORT_STANDINGS_BY_NAME,
+  SORT_STANDINGS_BY_TOTAL,
+  SORT_STANDINGS_BY_AVERAGE,
+  SORT_STANDINGS_BY_ROUND
 } from "../types";
 
 export const getStandingsFormats = () => dispatch => {
@@ -168,4 +172,127 @@ export const clearStandingsFormats = () => dispatch => {
 };
 export const clearStandingsLeagueFormat = () => dispatch => {
   dispatch({ type: CLEAR_STANDINGS_LEAGUE_FORMAT });
+};
+
+export const sortStandingsByName = (standings, order) => dispatch => {
+  if (order === null || order === true) {
+    standings.sort((a, b) => {
+      return a[0].toLowerCase() <= b[0].toLowerCase() ? -1 : 1;
+    });
+  } else {
+    standings.sort((a, b) => {
+      return a[0].toLowerCase() >= b[0].toLowerCase() ? -1 : 1;
+    });
+  }
+
+  dispatch({
+    type: SORT_STANDINGS_BY_NAME,
+    payload: standings
+  });
+};
+
+export const sortStandingsByTotal = (standings, order) => dispatch => {
+  if (order === null || order === true) {
+    standings.sort((a, b) => {
+      let sumA = 0;
+      let sumB = 0;
+
+      a[1].forEach(r => (sumA += r.points));
+      b[1].forEach(r => (sumB += r.points));
+
+      if (sumA >= sumB) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    console.log(standings);
+  } else {
+    standings.sort((a, b) => {
+      let sumA = 0;
+      let sumB = 0;
+
+      a[1].forEach(r => (sumA += r.points));
+      b[1].forEach(r => (sumB += r.points));
+
+      if (sumA >= sumB) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  dispatch({
+    type: SORT_STANDINGS_BY_TOTAL,
+    payload: standings
+  });
+};
+
+export const sortStandingsByAverage = (standings, order) => dispatch => {
+  if (order === null || order === true) {
+    standings.sort((a, b) => {
+      let sumA = 0;
+      let sumB = 0;
+
+      a[1].forEach(r => (sumA += r.points));
+      b[1].forEach(r => (sumB += r.points));
+
+      if (sumA / a[1].length >= sumB / b[1].length) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    console.log(standings);
+  } else {
+    standings.sort((a, b) => {
+      let sumA = 0;
+      let sumB = 0;
+
+      a[1].forEach(r => (sumA += r.points));
+      b[1].forEach(r => (sumB += r.points));
+
+      if (sumA / a[1].length >= sumB / b[1].length) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  dispatch({
+    type: SORT_STANDINGS_BY_AVERAGE,
+    payload: standings
+  });
+};
+
+export const sortStandingsByRound = (standings, order, dir) => dispatch => {
+  if (dir === null || dir === true) {
+    standings.sort((a, b) => {
+      if (!a[1][order] && !b[1][order]) {
+        return 0;
+      } else if (!a[1][order]) {
+        return 1;
+      } else if (!b[1][order]) {
+        return -1;
+      }
+      return a[1][order].points - b[1][order].points;
+    });
+  } else {
+    standings.sort((a, b) => {
+      if (!a[1][order] && !b[1][order]) {
+        return 0;
+      } else if (!a[1][order] || !b[1][order]) {
+        return 0;
+      }
+      return b[1][order].points - a[1][order].points;
+    });
+  }
+
+  dispatch({
+    type: SORT_STANDINGS_BY_ROUND,
+    payload: standings,
+    round: order
+  });
 };

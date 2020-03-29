@@ -17,20 +17,20 @@ const useStyles = makeStyles(theme => ({
     margin: "10px 0px 10px auto",
     textAlign: "right",
     width: "50%",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "0.8rem",
       margin: "5px 0px 5px auto"
     }
   },
   schedItem3: {
     padding: "2.5px 20px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "0.8rem"
     }
   },
   missingData: {
     marginTop: 25,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "0.8rem"
     }
   }

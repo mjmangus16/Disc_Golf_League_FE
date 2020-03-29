@@ -7,7 +7,9 @@ import {
   deleteParticipant,
   updateMultipleParticipants,
   updateRound,
-  clearSelectedRoundData
+  clearSelectedRoundData,
+  sortRoundByName,
+  sortRoundByScore
 } from "../../../Redux/actions/roundsActions";
 import { getLeagueById } from "../../../Redux/actions/leaguesActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
@@ -21,7 +23,8 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  IconButton
+  IconButton,
+  TableSortLabel
 } from "@material-ui/core";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import { green, red } from "@material-ui/core/colors";
@@ -49,7 +52,11 @@ const ViewRound = ({
   user_id,
   owner_id,
   getLeagueById,
-  initBreadcrumb
+  initBreadcrumb,
+  sortRoundByName,
+  sortRoundByScore,
+  sortOrderName,
+  sortOrderScore
 }) => {
   const classes = useStyles();
   const [hover1, setHover1] = useState(false);
@@ -351,8 +358,16 @@ const ViewRound = ({
                 variant="subtitle2"
                 align="left"
                 className={classes.tableTypoH}
+                onClick={() =>
+                  sortRoundByName(round.participants, sortOrderName)
+                }
               >
-                Name
+                <TableSortLabel
+                  active={sortOrderName !== null}
+                  direction={sortOrderName ? "asc" : "desc"}
+                >
+                  Name
+                </TableSortLabel>
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -360,8 +375,16 @@ const ViewRound = ({
                 variant="subtitle2"
                 align="center"
                 className={classes.tableTypoH}
+                onClick={() =>
+                  sortRoundByScore(round.participants, sortOrderScore)
+                }
               >
-                Score
+                <TableSortLabel
+                  active={sortOrderScore !== null}
+                  direction={sortOrderScore ? "asc" : "desc"}
+                >
+                  Score
+                </TableSortLabel>
               </Typography>
             </Grid>
           </Grid>
@@ -566,7 +589,9 @@ const mapStateToProps = state => ({
   addParticipantFailed: state.rounds.addParticipantFailed,
   admin: state.auth.admin,
   user_id: state.auth.user_id,
-  owner_id: state.leagues.selectedLeague.owner_id
+  owner_id: state.leagues.selectedLeague.owner_id,
+  sortOrderName: state.rounds.sortOrderName,
+  sortOrderScore: state.rounds.sortOrderScore
 });
 
 export default connect(mapStateToProps, {
@@ -578,5 +603,7 @@ export default connect(mapStateToProps, {
   updateMultipleParticipants,
   updateRound,
   getLeagueById,
-  initBreadcrumb
+  initBreadcrumb,
+  sortRoundByName,
+  sortRoundByScore
 })(withWidth()(ViewRound));

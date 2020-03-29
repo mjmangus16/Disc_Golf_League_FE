@@ -13,7 +13,9 @@ import {
   UPDATE_ROUND_SUCCESS,
   UPDATE_ROUND_FAILED,
   CLEAR_ROUNDS,
-  CLEAR_SELECTED_ROUND_DATA
+  CLEAR_SELECTED_ROUND_DATA,
+  SORT_ROUND_BY_NAME,
+  SORT_ROUND_BY_SCORE
 } from "../types";
 
 const initialState = {
@@ -27,7 +29,9 @@ const initialState = {
   addParticipantLoading: false,
   addParticipantFailed: {},
   updateRoundLoading: false,
-  updateRoundFailed: {}
+  updateRoundFailed: {},
+  sortOrderName: null,
+  sortOrderScore: null
 };
 
 export default (state = initialState, action) => {
@@ -130,6 +134,28 @@ export default (state = initialState, action) => {
       return {
         ...state,
         round: {}
+      };
+    case SORT_ROUND_BY_NAME:
+      return {
+        ...state,
+        round: {
+          ...state.round,
+          participants: action.payload
+        },
+        sortOrderName:
+          state.sortOrderName == null ? false : !state.sortOrderName,
+        sortOrderScore: null
+      };
+    case SORT_ROUND_BY_SCORE:
+      return {
+        ...state,
+        round: {
+          ...state.round,
+          participants: action.payload
+        },
+        sortOrderName: null,
+        sortOrderScore:
+          state.sortOrderScore == null ? false : !state.sortOrderScore
       };
     default:
       return state;

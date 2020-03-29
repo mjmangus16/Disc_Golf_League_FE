@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { getRoundsByLeagueId } from "../../../Redux/actions/roundsActions";
 import {
   getStandingsResults,
-  getStandingsFormatByLeagueId
+  getStandingsFormatByLeagueId,
+  sortStandingsByName,
+  sortStandingsByAverage,
+  sortStandingsByTotal,
+  sortStandingsByRound
 } from "../../../Redux/actions/standingsActions";
 import { getMembersByLeagueId } from "../../../Redux/actions/membersActions";
 import { initBreadcrumb } from "../../../Redux/actions/breadcrumbActions";
@@ -15,7 +19,8 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
+  TableSortLabel
 } from "@material-ui/core";
 
 import useStyles from "../LeagueStyles";
@@ -30,7 +35,16 @@ const StandingsView = ({
   getStandingsFormatByLeagueId,
   getMembersByLeagueId,
   match,
-  initBreadcrumb
+  initBreadcrumb,
+  sortStandingsByName,
+  sortStandingsByAverage,
+  sortStandingsByTotal,
+  sortOrderName,
+  sortOrderTotal,
+  sortOrderAverage,
+  sortOrderRound,
+  sortStandingsByRound,
+  sortOrderRoundDir
 }) => {
   const classes = useStyles();
 
@@ -109,11 +123,30 @@ const StandingsView = ({
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left" className={classes.tableTypoH}>
-                Name
+              <TableCell
+                align="left"
+                className={classes.tableTypoH}
+                onClick={() => sortStandingsByName(standings, sortOrderName)}
+              >
+                <TableSortLabel
+                  active={sortOrderName !== null}
+                  direction={sortOrderName ? "asc" : "desc"}
+                >
+                  Name
+                </TableSortLabel>
               </TableCell>
-              <TableCell align="center" className={classes.tableTypoH}>
-                Total Points
+              <TableCell
+                align="center"
+                className={classes.tableTypoH}
+                style={{ cursor: "pointer" }}
+                onClick={() => sortStandingsByTotal(standings, sortOrderTotal)}
+              >
+                <TableSortLabel
+                  active={sortOrderTotal !== null}
+                  direction={sortOrderTotal ? "asc" : "desc"}
+                >
+                  Total Points
+                </TableSortLabel>
               </TableCell>
               {rounds &&
                 rounds.map((r, i) => (
@@ -121,12 +154,33 @@ const StandingsView = ({
                     align="center"
                     className={classes.tableTypoH}
                     key={"roundCell#" + i}
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      sortStandingsByRound(standings, i, sortOrderRoundDir)
+                    }
                   >
-                    {i + 1}
+                    <TableSortLabel
+                      active={sortOrderRound === i}
+                      direction={sortOrderRoundDir ? "asc" : "desc"}
+                    >
+                      {i + 1}
+                    </TableSortLabel>
                   </TableCell>
                 ))}
-              <TableCell align="center" className={classes.tableTypoH}>
-                Average Points
+              <TableCell
+                align="center"
+                className={classes.tableTypoH}
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  sortStandingsByAverage(standings, sortOrderAverage)
+                }
+              >
+                <TableSortLabel
+                  active={sortOrderAverage !== null}
+                  direction={sortOrderAverage ? "asc" : "desc"}
+                >
+                  Average Points
+                </TableSortLabel>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -182,7 +236,12 @@ const mapStateToProps = state => ({
   standings: state.standings.standings,
   rounds: state.rounds.rounds,
   leagueFormat: state.standings.leagueFormat,
-  members: state.members.members
+  members: state.members.members,
+  sortOrderName: state.standings.sortOrderName,
+  sortOrderTotal: state.standings.sortOrderTotal,
+  sortOrderAverage: state.standings.sortOrderAverage,
+  sortOrderRound: state.standings.sortOrderRound,
+  sortOrderRoundDir: state.standings.sortOrderRoundDir
 });
 
 export default connect(mapStateToProps, {
@@ -190,5 +249,9 @@ export default connect(mapStateToProps, {
   getStandingsResults,
   getStandingsFormatByLeagueId,
   getMembersByLeagueId,
-  initBreadcrumb
+  initBreadcrumb,
+  sortStandingsByName,
+  sortStandingsByAverage,
+  sortStandingsByTotal,
+  sortStandingsByRound
 })(StandingsView);
